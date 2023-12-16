@@ -1,8 +1,9 @@
 import { randomUUID } from "crypto";
+import { Value } from "./value-objects/value";
 
 interface LaunchProps {
   serviceId: String;
-  value: Number;
+  value: Value;
   shiftId: String;
   projectId: String;
 }
@@ -12,7 +13,7 @@ export class Launch {
   public serviceId: String;
   public projectId: String;
   public shiftId: String;
-  public value: Number;
+  public value: Value;
 
   constructor(props: LaunchProps, id?: String) {
     this.id = id ?? randomUUID();
