@@ -1,23 +1,24 @@
 import { randomUUID } from "crypto";
 
+interface TeamProps {
+  name: String;
+  leaderId: String;
+  type: String;
+  contract: String;
+}
+
 export class Team {
   public id: String;
   public name: String;
-  public leader: String;
+  public leaderId: String;
   public type: String;
   public contract: String;
 
-  constructor(
-    name: String,
-    leader: String,
-    type: String,
-    contract: String,
-    id?: String
-  ) {
+  constructor(props: TeamProps, id?: String) {
     this.id = id ?? randomUUID();
-    this.name = name;
-    this.leader = leader;
-    this.type = type;
-    this.contract = contract;
+    this.name = props.name;
+    this.leaderId = props.leaderId;
+    this.type = props.type;
+    this.contract = props.contract;
   }
 }

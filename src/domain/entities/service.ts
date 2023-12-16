@@ -1,11 +1,15 @@
 import { randomUUID } from "crypto";
 
+interface ServiceProps{
+    description: String
+}
+
 export class Service {
   public id: String;
-  public launchs: String;
+  public description: String;
 
-  constructor(launchs: String, id?: String) {
+  constructor(props:ServiceProps, id?: String) {
     this.id = id ?? randomUUID();
-    this.launchs = launchs;
+    this.description = props.description;
   }
 }

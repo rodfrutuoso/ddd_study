@@ -7,8 +7,8 @@ interface OpenShiftInterface {
 
 export class OpenShift {
   execute({ teamId, date }: OpenShiftInterface) {
-    const shift = new Shift(teamId, date);
+    const shift = new Shift({teamId, date});
 
-    return shift
+    return shift;
   }
 }
