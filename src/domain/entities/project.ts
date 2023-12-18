@@ -1,21 +1,10 @@
-import { randomUUID } from "crypto";
+import { Entity } from "../../core/entities/entity";
 
 interface ProjectProps {
-    project: String, 
-    description: String, 
-    utd: String
+    project: string, 
+    description: string, 
+    utd: string
 }
 
-export class Project {
-  public id: String;
-  public project: String;
-  public description: String;
-  public utd: String;
-
-  constructor(props:ProjectProps, id?: String) {
-    this.id = id ?? randomUUID();
-    this.project = props.project;
-    this.description = props.description;
-    this.utd = props.utd;
-  }
+export class Project extends Entity<ProjectProps> {
 }

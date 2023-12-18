@@ -1,18 +1,17 @@
-import { randomUUID } from "crypto";
+import { Entity } from "../../core/entities/entity";
 
 interface ShiftProps {
-  teamId: String;
+  teamId: string;
   date: Date;
 }
 
-export class Shift {
-  public id: String;
-  public teamId: String;
-  public date: Date;
-
-  constructor(props: ShiftProps, id?: String) {
-    this.id = id ?? randomUUID();
-    this.teamId = props.teamId;
-    this.date = props.date;
+export class Shift extends Entity<ShiftProps> {
+  get teamId(){
+    return this.props.teamId
   }
+
+  get date(){
+    return this.props.date
+  }
+
 }

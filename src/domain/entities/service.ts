@@ -1,15 +1,9 @@
-import { randomUUID } from "crypto";
+import { Entity } from "../../core/entities/entity";
 
-interface ServiceProps{
-    description: String
+interface ServiceProps {
+  description: string;
 }
 
-export class Service {
-  public id: String;
-  public description: String;
+export class Service extends Entity<ServiceProps> {
 
-  constructor(props:ServiceProps, id?: String) {
-    this.id = id ?? randomUUID();
-    this.description = props.description;
-  }
 }

@@ -1,15 +1,9 @@
-import { randomUUID } from "crypto";
+import { Entity } from "../../core/entities/entity";
 
-interface TeamLeaderProps{
-    name:String
+interface TeamLeaderProps {
+  name: string;
 }
 
-export class TeamLeader {
-  public id: String;
-  public name: String;
-
-  constructor(props: TeamLeaderProps, id?: String) {
-    this.name = props.name;
-    this.id = id ?? randomUUID();
-  }
+export class TeamLeader extends Entity<TeamLeaderProps> {
+  
 }
