@@ -1,7 +1,8 @@
 import { Entity } from "../../core/entities/entity";
 
 interface ServiceProps {
-  description: string;
+  code: string,
+  description: string,
 }
 
 export class Service extends Entity<ServiceProps> {
