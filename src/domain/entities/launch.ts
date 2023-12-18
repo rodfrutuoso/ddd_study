@@ -1,6 +1,6 @@
 import { Value } from "./value-objects/value";
-import { Entity } from "../../core/entities/entity";
-import { UniqueEntityId } from "../../core/entities/unique-entity-id";
+import { Entity } from "@/core/entities/entity";
+import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 
 interface LaunchProps {
   value: Value;

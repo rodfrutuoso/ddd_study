@@ -1,4 +1,3 @@
-import { expect, test } from "vitest";
 import { OpenShift } from "./open-shift";
 import { ShitRepository } from "../repositories/shift-repository";
 import { Shift } from "../entities/shift";

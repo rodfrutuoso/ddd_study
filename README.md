@@ -9,3 +9,4 @@ eu tenho que que lançar o serviço de uma obra
 - > npx tsc --init
 - > npm i vitest -D
 - > npx vitest run
+- > npm i vite-tsconfig-paths - D `configurar caminhos para os testes`

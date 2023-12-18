@@ -14,5 +14,10 @@
     "@types/node": "^20.10.4",
     "typescript": "^5.3.3",
     "vitest": "^1.0.4"
+  },
+  "dependencies": {
+    "-": "^0.0.1",
+    "D": "^1.0.0",
+    "vite-tsconfig-paths": "^4.2.2"
   }
 }
