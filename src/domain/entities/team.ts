@@ -14,10 +14,48 @@ interface TeamProps {
 }
 
 export class Team extends Entity<TeamProps> {
-  static create(
-    props: Optinal<TeamProps, "created_at">,
-    id?: UniqueEntityId
-  ) {
+  get name() {
+    return this.props.name;
+  }
+  get leaderId() {
+    return this.props.leaderId.value;
+  }
+  get supervisorId() {
+    return this.props.supervisorId.value;
+  }
+  get coordinatorId() {
+    return this.props.coordinatorId.value;
+  }
+  get type() {
+    return this.props.type;
+  }
+  get contract() {
+    return this.props.contract;
+  }
+  get deactivation_date() {
+    return this.props.deactivation_date;
+  }
+  get created_at() {
+    return this.props.created_at;
+  }
+
+  set name(name:string){
+    this.props.name = name
+  }
+  set leaderId(leaderId:string){
+    this.props.leaderId = leaderId
+  }
+  set supervisorId(supervisorId:string){
+    this.props.supervisorId = supervisorId
+  }
+  set coordinatorId(coordinatorId:string){
+    this.props.coordinatorId = coordinatorId
+  }
+  set deactivation_date(deactivation_date:Date){
+    this.props.deactivation_date = new Date()
+  }
+  
+  static create(props: Optinal<TeamProps, "created_at">, id?: UniqueEntityId) {
     const team = new Team(
       {
         ...props,

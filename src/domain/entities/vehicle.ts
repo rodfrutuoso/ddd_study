@@ -10,19 +10,35 @@ interface VehicleProps {
 }
 
 export class Vehicle extends Entity<VehicleProps> {
-    static create(
-        props: Optinal<VehicleProps, "created_at">,
-        id?: UniqueEntityId
-      ) {
-        const vehicle = new Vehicle(
-          {
-            ...props,
-            created_at: new Date(),
-          },
-          id
-        );
-    
-        return vehicle;
-      }
+  get teamId() {
+    return this.props.teamId.value;
+  }
+  get plate() {
+    return this.props.plate;
+  }
+  get type() {
+    return this.props.type;
+  }
+  get created_at() {
+    return this.props.created_at;
+  }
 
+  set teamId(teamId: UniqueEntityId){
+    this.props.teamId = teamId
+  }
+
+  static create(
+    props: Optinal<VehicleProps, "created_at">,
+    id?: UniqueEntityId
+  ) {
+    const vehicle = new Vehicle(
+      {
+        ...props,
+        created_at: new Date(),
+      },
+      id
+    );
+
+    return vehicle;
+  }
 }

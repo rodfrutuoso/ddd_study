@@ -16,22 +16,59 @@ interface ShiftProps {
 }
 
 export class Shift extends Entity<ShiftProps> {
-  get teamId(){
-    return this.props.teamId.value
+  get teamId() {
+    return this.props.teamId.value;
   }
 
-  get date(){
-    return this.props.date
+  get date() {
+    return this.props.date;
   }
 
-  get shift_start(){
-    return this.props.shift_start
+  get shift_end() {
+    return this.props.shift_end;
   }
 
-  static create(
-    props: Optinal<ShiftProps, "created_at">,
-    id?: UniqueEntityId
-  ) {
+  get shift_start() {
+    return this.props.shift_start;
+  }
+
+  get transit_start() {
+    return this.props.transit_start;
+  }
+
+  get transit_end() {
+    return this.props.transit_end;
+  }
+
+  get odometer_start() {
+    return this.props.odometer_start;
+  }
+
+  get odometer_end() {
+    return this.props.odometer_end;
+  }
+
+  get vehicle_id() {
+    return this.props.vehicle_id.value;
+  }
+
+  get created_at() {
+    return this.props.created_at;
+  }
+
+  set vehicle_id(vehicle_id: UniqueEntityId){
+    this.props.vehicle_id = vehicle_id
+  }
+
+  set odometer_end(odometer_end: UniqueEntityId){
+    this.props.odometer_end = odometer_end
+  }
+
+  set odometer_start(odometer_start: UniqueEntityId){
+    this.props.odometer_start = odometer_start
+  }
+
+  static create(props: Optinal<ShiftProps, "created_at">, id?: UniqueEntityId) {
     const shift = new Shift(
       {
         ...props,
@@ -42,6 +79,4 @@ export class Shift extends Entity<ShiftProps> {
 
     return shift;
   }
-
 }
-
