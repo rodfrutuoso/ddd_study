@@ -56,42 +56,40 @@ export class TeamLeader extends Entity<TeamLeaderProps> {
     return this.props.updated_at;
   }
 
-  set email(email:string){
-    this.props.email = email
-    this.touch()
+  set email(email: string) {
+    this.props.email = email;
+    this.touch();
   }
 
-  set password(password:string){
-    this.props.password = password
-    this.touch()
+  set password(password: string) {
+    this.props.password = password;
+    this.touch();
   }
 
-  set deactivation_date(deactivation_date:any){
-    this.props.deactivation_date = new Date()
-    this.touch()
+  set deactivation_date(deactivation_date: any) {
+    this.props.deactivation_date = new Date();
+    this.touch();
   }
 
-  set teamId(teamId: UniqueEntityId){
-    this.props.teamId = teamId
-    this.touch()
-  }
-  
-  private touch (){
-    this.props.updated_at = new Date()
+  set teamId(teamId: UniqueEntityId) {
+    this.props.teamId = teamId;
+    this.touch();
   }
 
-
+  private touch() {
+    this.props.updated_at = new Date();
+  }
 
   static create(
     props: Optinal<TeamLeaderProps, "created_at">,
-    id?: UniqueEntityId
+    id?: UniqueEntityId,
   ) {
     const teamLeader = new TeamLeader(
       {
         ...props,
         created_at: new Date(),
       },
-      id
+      id,
     );
 
     return teamLeader;

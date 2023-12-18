@@ -26,7 +26,7 @@ export class OpenShift {
     shift_start,
     vehicle_id,
   }: OpenShiftInterface) {
-    //const shift = new Shift({ teamId, date });
+    // const shift = new Shift({ teamId, date });
     const shift = Shift.create({
       teamId: new UniqueEntityId(teamId),
       odometer_end,

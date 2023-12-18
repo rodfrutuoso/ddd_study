@@ -56,16 +56,16 @@ export class Shift extends Entity<ShiftProps> {
     return this.props.created_at;
   }
 
-  set vehicle_id(vehicle_id: UniqueEntityId){
-    this.props.vehicle_id = vehicle_id
+  set vehicle_id(vehicle_id: UniqueEntityId) {
+    this.props.vehicle_id = vehicle_id;
   }
 
-  set odometer_end(odometer_end: UniqueEntityId){
-    this.props.odometer_end = odometer_end
+  set odometer_end(odometer_end: UniqueEntityId) {
+    this.props.odometer_end = odometer_end;
   }
 
-  set odometer_start(odometer_start: UniqueEntityId){
-    this.props.odometer_start = odometer_start
+  set odometer_start(odometer_start: UniqueEntityId) {
+    this.props.odometer_start = odometer_start;
   }
 
   static create(props: Optinal<ShiftProps, "created_at">, id?: UniqueEntityId) {
@@ -74,7 +74,7 @@ export class Shift extends Entity<ShiftProps> {
         ...props,
         created_at: new Date(),
       },
-      id
+      id,
     );
 
     return shift;

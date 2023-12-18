@@ -30,20 +30,20 @@ export class Project extends Entity<ProjectProps> {
     return this.props.project_group;
   }
 
-  set description(description:string) {
-    this.props.description = description
+  set description(description: string) {
+    this.props.description = description;
   }
 
-  set utd(utd:string) {
-     this.props.utd = utd
+  set utd(utd: string) {
+    this.props.utd = utd;
   }
 
   set city(city: string) {
-    this.props.city = city
+    this.props.city = city;
   }
 
-  set project_group(project_group:string) {
-    this.props.project_group = project_group
+  set project_group(project_group: string) {
+    this.props.project_group = project_group;
   }
 
   static create(props: ProjectProps, id?: UniqueEntityId) {
@@ -52,7 +52,7 @@ export class Project extends Entity<ProjectProps> {
         ...props,
         created_at: new Date(),
       },
-      id
+      id,
     );
 
     return project;

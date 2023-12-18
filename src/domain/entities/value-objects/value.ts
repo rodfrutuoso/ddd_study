@@ -5,10 +5,9 @@ export class Value {
     this.number = number;
   }
 
-  static verifyNumberIsNotNegative(number:number){
-    const valueNumber = Math.abs(number)
-    
-    return new Value(valueNumber)
-  }
+  static verifyNumberIsNotNegative(number: number) {
+    const valueNumber = Math.abs(number);
 
+    return new Value(valueNumber);
+  }
 }

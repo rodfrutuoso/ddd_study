@@ -10,3 +10,6 @@ eu tenho que que lançar o serviço de uma obra
 - > npm i vitest -D
 - > npx vitest run
 - > npm i vite-tsconfig-paths - D `configurar caminhos para os testes`
+
+## 2ª parte
+- > npm i eslint @rocketseat/eslint-config -D

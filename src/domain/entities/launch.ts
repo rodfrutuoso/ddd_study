@@ -12,15 +12,17 @@ export class Launch extends Entity<LaunchProps> {
   get shiftId() {
     return this.props.shiftId.value;
   }
+
   get value() {
     return this.props.value.number;
   }
+
   get projectId() {
     return this.props.projectId;
   }
 
-  set value(value: Value){
-    this.props.value = value
+  set value(value: Value) {
+    this.props.value = value;
   }
 
   static create(props: LaunchProps, id?: UniqueEntityId) {
@@ -29,10 +31,9 @@ export class Launch extends Entity<LaunchProps> {
         ...props,
         created_at: new Date(),
       },
-      id
+      id,
     );
 
     return launch;
   }
 }
-

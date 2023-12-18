@@ -3,9 +3,7 @@ import { ShitRepository } from "../repositories/shift-repository";
 import { Shift } from "../entities/shift";
 
 const fakeShiftRepository: ShitRepository = {
-  create: async (shift: Shift): Promise<void> => {
-    return;
-  },
+  create: async (shift: Shift): Promise<void> => {},
 };
 
 test("open a shift", async () => {
