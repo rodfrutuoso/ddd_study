@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { OpenShift } from "./open-shift";
-import { InMemoryShitRepository } from "test/repositories/in-memory-shift-repository";
+import { InMemoryShiftRepository } from "test/repositories/in-memory-shift-repository";
 
-let inMemoryShitRepository: InMemoryShitRepository;
+let inMemoryShitRepository: InMemoryShiftRepository;
 let sut: OpenShift; // system under test
 
 describe("Open a Shift", () => {
   beforeEach(() => {
-    inMemoryShitRepository = new InMemoryShitRepository();
+    inMemoryShitRepository = new InMemoryShiftRepository();
     sut = new OpenShift(inMemoryShitRepository);
   });
 

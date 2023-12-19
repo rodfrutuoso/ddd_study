@@ -2,7 +2,7 @@
 /* eslint-disable camelcase */
 import { UniqueEntityId } from "../../../../core/entities/unique-entity-id";
 import { Shift } from "../../enterprise/entities/shift";
-import { ShitRepository } from "../repositories/shift-repository";
+import { ShiftRepository } from "../repositories/shift-repository";
 
 interface OpenShiftInterfaceRequest {
   teamId: string;
@@ -21,7 +21,7 @@ interface OpenShiftInterfaceResponse {
 }
 
 export class OpenShift {
-  constructor(private shiftRepository: ShitRepository) {}
+  constructor(private shiftRepository: ShiftRepository) {}
 
   async execute({
     teamId,
