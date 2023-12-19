@@ -26,7 +26,6 @@ export class RegisterProjectShift {
     fieldReturn,
     outOfSchedule,
   }: RegisterProjectShiftInterfaceRequest): Promise<RegisterProjectShiftInterfaceResponse> {
-    // const shift = new Shift({ teamId, date });
     const projectShift = ProjectShift.create({
       shiftId: new UniqueEntityId(shiftId),
       projectId: new UniqueEntityId(projectId),
