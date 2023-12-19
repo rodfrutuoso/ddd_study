@@ -1,23 +1,24 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { LaunchService } from "./launch-service";
-import { LaunchRepository } from "@/domain/shifts/application/repositories/launch-repository";
-import { Launch } from "../../enterprise/entities/launch";
+import { InMemorylaunchRepository } from "test/repositories/in-memory-launch-repository";
 
-const fakeLaunchRepository: LaunchRepository = {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  create: async (launch: Launch): Promise<void> => {},
-};
+let inMemoryLaunchRepository: InMemorylaunchRepository;
+let sut: LaunchService; // system under test
 
-test("lanch a service", async () => {
-  const launchService = new LaunchService(fakeLaunchRepository);
-
-  const result = await launchService.execute({
-    projectShiftId: "1",
-    value: 35.5,
-    serviceId: "2",
+describe("Launch Service", () => {
+  beforeEach(() => {
+    inMemoryLaunchRepository = new InMemorylaunchRepository();
+    sut = new LaunchService(inMemoryLaunchRepository);
   });
+  it("should be able to launch a service of a specific project in a shift", async () => {
+    const result = await sut.execute({
+      projectShiftId: "1",
+      value: 35.5,
+      serviceId: "2",
+    });
 
-  expect(result.launch.projectShiftId.toValue()).toEqual("1");
-  expect(result.launch.value.number).toEqual(35.5);
-  expect(result.launch.id).toBeTruthy();
+    expect(result.launch.projectShiftId.toValue()).toEqual("1");
+    expect(result.launch.value.number).toEqual(35.5);
+    expect(result.launch.id).toBeTruthy();
+  });
 });

@@ -5,7 +5,7 @@ import { InMemoryProjectShitRepository } from "test/repositories/in-memory-proje
 let inMemoryProjectShitRepository: InMemoryProjectShitRepository;
 let sut: RegisterProjectShift; // system under test
 
-describe("Register Project-Shift", () => {
+describe("Register a Project-Shift", () => {
   beforeEach(() => {
     inMemoryProjectShitRepository = new InMemoryProjectShitRepository();
     sut = new RegisterProjectShift(inMemoryProjectShitRepository);
