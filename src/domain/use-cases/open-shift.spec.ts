@@ -4,6 +4,7 @@ import { ShitRepository } from "../repositories/shift-repository";
 import { Shift } from "../entities/shift";
 
 const fakeShiftRepository: ShitRepository = {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   create: async (shift: Shift): Promise<void> => {},
 };
 

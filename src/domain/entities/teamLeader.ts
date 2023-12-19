@@ -25,8 +25,8 @@ export class TeamLeader extends Entity<TeamLeaderProps> {
     return this.props.cpf;
   }
 
-  get email() {
-    return this.props.email!;
+  get email(): string | undefined {
+    return this.props.email;
   }
 
   set email(email: string) {
@@ -56,8 +56,8 @@ export class TeamLeader extends Entity<TeamLeaderProps> {
     return this.props.type;
   }
 
-  get deactivation_date() {
-    return this.props.deactivation_date!;
+  get deactivation_date(): Date | undefined {
+    return this.props.deactivation_date;
   }
 
   set deactivation_date(_deactivation_date: Date) {
@@ -83,14 +83,14 @@ export class TeamLeader extends Entity<TeamLeaderProps> {
 
   static create(
     props: Optinal<TeamLeaderProps, "created_at">,
-    id?: UniqueEntityId,
+    id?: UniqueEntityId
   ) {
     const teamLeader = new TeamLeader(
       {
         ...props,
         created_at: new Date(),
       },
-      id,
+      id
     );
 
     return teamLeader;

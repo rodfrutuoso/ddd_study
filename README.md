@@ -13,3 +13,4 @@ eu tenho que que lançar o serviço de uma obra
 
 ## 2ª parte
 - > npm i eslint @rocketseat/eslint-config -D
+- > npm i eslint-plugin-vitest-globals -D

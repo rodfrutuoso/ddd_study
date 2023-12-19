@@ -14,32 +14,32 @@ export class Project extends Entity<ProjectProps> {
     return this.props.project;
   }
 
-  get description() {
-    return this.props.description!;
+  get description(): string | undefined {
+    return this.props.description;
   }
 
   set description(description: string) {
     this.props.description = description;
   }
 
-  get utd() {
-    return this.props.utd!;
+  get utd(): string | undefined {
+    return this.props.utd;
   }
 
   set utd(utd: string) {
     this.props.utd = utd;
   }
 
-  get city() {
-    return this.props.city!;
+  get city(): string | undefined {
+    return this.props.city;
   }
 
   set city(city: string) {
     this.props.city = city;
   }
 
-  get group() {
-    return this.props.group!;
+  get group(): string | undefined {
+    return this.props.group;
   }
 
   set group(group: string) {

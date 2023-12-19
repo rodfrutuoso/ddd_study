@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-constructor */
 /* eslint-disable camelcase */
 import { UniqueEntityId } from "../../core/entities/unique-entity-id";
 import { Shift } from "../entities/shift";

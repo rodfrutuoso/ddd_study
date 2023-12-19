@@ -2,7 +2,6 @@
 import { Entity } from "@/core/entities/entity";
 import { Optinal } from "@/core/entities/types/optional";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
-import { Nullable } from "vitest";
 
 interface TeamProps {
   name: string;
@@ -32,16 +31,16 @@ export class Team extends Entity<TeamProps> {
     this.props.leaderId = leaderId;
   }
 
-  get supervisorId() {
-    return this.props.supervisorId!;
+  get supervisorId(): UniqueEntityId | undefined {
+    return this.props.supervisorId;
   }
 
   set supervisorId(supervisorId: UniqueEntityId) {
     this.props.supervisorId = supervisorId;
   }
 
-  get coordinatorId() {
-    return this.props.coordinatorId!;
+  get coordinatorId(): UniqueEntityId | undefined {
+    return this.props.coordinatorId;
   }
 
   set coordinatorId(coordinatorId: UniqueEntityId) {
@@ -56,8 +55,8 @@ export class Team extends Entity<TeamProps> {
     return this.props.contract;
   }
 
-  get deactivation_date() {
-    return this.props.deactivation_date!;
+  get deactivation_date(): Date | undefined {
+    return this.props.deactivation_date;
   }
 
   set deactivation_date(deactivation_date: Date) {
