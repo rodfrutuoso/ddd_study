@@ -4,13 +4,13 @@ import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 
 interface LaunchProps {
   value: Value;
-  shiftId: UniqueEntityId;
-  projectId: UniqueEntityId;
+  serviceId: UniqueEntityId;
+  projectShiftId: UniqueEntityId;
 }
 
 export class Launch extends Entity<LaunchProps> {
-  get shiftId() {
-    return this.props.shiftId;
+  get serviceId() {
+    return this.props.serviceId;
   }
 
   get value() {
@@ -21,8 +21,8 @@ export class Launch extends Entity<LaunchProps> {
     this.props.value = value;
   }
 
-  get projectId() {
-    return this.props.projectId;
+  get projectShiftId() {
+    return this.props.projectShiftId;
   }
 
   static create(props: LaunchProps, id?: UniqueEntityId) {

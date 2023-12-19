@@ -11,7 +11,7 @@ const fakeShiftRepository: ShitRepository = {
 test("open a shift", async () => {
   const openShift = new OpenShift(fakeShiftRepository);
 
-  const shift = await openShift.execute({
+  const result = await openShift.execute({
     teamId: "1",
     date: new Date("2023-12-15 00:00:00"),
     odometer_end: 1200,
@@ -21,7 +21,7 @@ test("open a shift", async () => {
     vehicle_id: "2",
   });
 
-  expect(shift.teamId.toValue()).toEqual("1");
-  expect(shift.shift_start).toEqual("18:10:01");
-  expect(shift.date).toEqual(new Date("2023-12-15 00:00:00"));
+  expect(result.shift.teamId.toValue()).toEqual("1");
+  expect(result.shift.shift_start).toEqual("18:10:01");
+  expect(result.shift.date).toEqual(new Date("2023-12-15 00:00:00"));
 });
