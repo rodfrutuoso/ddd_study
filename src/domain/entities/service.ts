@@ -11,12 +11,12 @@ export class Service extends Entity<ServiceProps> {
     return this.props.code;
   }
 
-  get description() {
-    return this.props.description;
-  }
-
   set code(code: string) {
     this.props.code = code;
+  }
+
+  get description() {
+    return this.props.description;
   }
 
   set description(description: string) {
@@ -27,7 +27,6 @@ export class Service extends Entity<ServiceProps> {
     const service = new Service(
       {
         ...props,
-        created_at: new Date(),
       },
       id,
     );

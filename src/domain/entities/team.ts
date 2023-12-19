@@ -1,6 +1,8 @@
+/* eslint-disable camelcase */
 import { Entity } from "@/core/entities/entity";
 import { Optinal } from "@/core/entities/types/optional";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
+import { Nullable } from "vitest";
 
 interface TeamProps {
   name: string;
@@ -18,16 +20,32 @@ export class Team extends Entity<TeamProps> {
     return this.props.name;
   }
 
+  set name(name: string) {
+    this.props.name = name;
+  }
+
   get leaderId() {
-    return this.props.leaderId.value;
+    return this.props.leaderId;
+  }
+
+  set leaderId(leaderId: UniqueEntityId) {
+    this.props.leaderId = leaderId;
   }
 
   get supervisorId() {
-    return this.props.supervisorId.value;
+    return this.props.supervisorId!;
+  }
+
+  set supervisorId(supervisorId: UniqueEntityId) {
+    this.props.supervisorId = supervisorId;
   }
 
   get coordinatorId() {
-    return this.props.coordinatorId.value;
+    return this.props.coordinatorId!;
+  }
+
+  set coordinatorId(coordinatorId: UniqueEntityId) {
+    this.props.coordinatorId = coordinatorId;
   }
 
   get type() {
@@ -39,31 +57,15 @@ export class Team extends Entity<TeamProps> {
   }
 
   get deactivation_date() {
-    return this.props.deactivation_date;
-  }
-
-  get created_at() {
-    return this.props.created_at;
-  }
-
-  set name(name: string) {
-    this.props.name = name;
-  }
-
-  set leaderId(leaderId: string) {
-    this.props.leaderId = leaderId;
-  }
-
-  set supervisorId(supervisorId: string) {
-    this.props.supervisorId = supervisorId;
-  }
-
-  set coordinatorId(coordinatorId: string) {
-    this.props.coordinatorId = coordinatorId;
+    return this.props.deactivation_date!;
   }
 
   set deactivation_date(deactivation_date: Date) {
     this.props.deactivation_date = new Date();
+  }
+
+  get created_at() {
+    return this.props.created_at;
   }
 
   static create(props: Optinal<TeamProps, "created_at">, id?: UniqueEntityId) {

@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { Entity } from "@/core/entities/entity";
 import { Optinal } from "@/core/entities/types/optional";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
@@ -25,35 +26,7 @@ export class TeamLeader extends Entity<TeamLeaderProps> {
   }
 
   get email() {
-    return this.props.email;
-  }
-
-  get password() {
-    return this.props.password;
-  }
-
-  get teamId() {
-    return this.props.teamId.value;
-  }
-
-  get type() {
-    return this.props.type;
-  }
-
-  get deactivation_date() {
-    return this.props.deactivation_date;
-  }
-
-  get created_at() {
-    return this.props.created_at;
-  }
-
-  get created_by() {
-    return this.props.created_by.value;
-  }
-
-  get updated_at() {
-    return this.props.updated_at;
+    return this.props.email!;
   }
 
   set email(email: string) {
@@ -61,19 +34,47 @@ export class TeamLeader extends Entity<TeamLeaderProps> {
     this.touch();
   }
 
+  get password() {
+    return this.props.password;
+  }
+
   set password(password: string) {
     this.props.password = password;
     this.touch();
   }
 
-  set deactivation_date(deactivation_date: any) {
-    this.props.deactivation_date = new Date();
-    this.touch();
+  get teamId() {
+    return this.props.teamId;
   }
 
   set teamId(teamId: UniqueEntityId) {
     this.props.teamId = teamId;
     this.touch();
+  }
+
+  get type() {
+    return this.props.type;
+  }
+
+  get deactivation_date() {
+    return this.props.deactivation_date!;
+  }
+
+  set deactivation_date(_deactivation_date: Date) {
+    this.props.deactivation_date = new Date();
+    this.touch();
+  }
+
+  get created_at() {
+    return this.props.created_at;
+  }
+
+  get created_by() {
+    return this.props.created_by;
+  }
+
+  get updated_at() {
+    return this.props.updated_at;
   }
 
   private touch() {

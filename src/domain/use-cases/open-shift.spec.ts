@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { OpenShift } from "./open-shift";
 import { ShitRepository } from "../repositories/shift-repository";
 import { Shift } from "../entities/shift";
@@ -19,7 +20,7 @@ test("open a shift", async () => {
     vehicle_id: "2",
   });
 
-  expect(shift.teamId).toEqual("1");
+  expect(shift.teamId.toValue()).toEqual("1");
   expect(shift.shift_start).toEqual("18:10:01");
   expect(shift.date).toEqual(new Date("2023-12-15 00:00:00"));
 });

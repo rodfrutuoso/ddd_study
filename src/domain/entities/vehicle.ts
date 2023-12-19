@@ -11,7 +11,11 @@ interface VehicleProps {
 
 export class Vehicle extends Entity<VehicleProps> {
   get teamId() {
-    return this.props.teamId.value;
+    return this.props.teamId;
+  }
+
+  set teamId(teamId: UniqueEntityId) {
+    this.props.teamId = teamId;
   }
 
   get plate() {
@@ -24,10 +28,6 @@ export class Vehicle extends Entity<VehicleProps> {
 
   get created_at() {
     return this.props.created_at;
-  }
-
-  set teamId(teamId: UniqueEntityId) {
-    this.props.teamId = teamId;
   }
 
   static create(

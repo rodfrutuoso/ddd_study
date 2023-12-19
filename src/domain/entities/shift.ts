@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { Entity } from "@/core/entities/entity";
 import { Optinal } from "@/core/entities/types/optional";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
@@ -17,7 +18,7 @@ interface ShiftProps {
 
 export class Shift extends Entity<ShiftProps> {
   get teamId() {
-    return this.props.teamId.value;
+    return this.props.teamId;
   }
 
   get date() {
@@ -44,28 +45,28 @@ export class Shift extends Entity<ShiftProps> {
     return this.props.odometer_start;
   }
 
+  set odometer_start(odometer_start: number) {
+    this.props.odometer_start = odometer_start;
+  }
+
   get odometer_end() {
     return this.props.odometer_end;
   }
 
-  get vehicle_id() {
-    return this.props.vehicle_id.value;
+  set odometer_end(odometer_end: number) {
+    this.props.odometer_end = odometer_end;
   }
 
-  get created_at() {
-    return this.props.created_at;
+  get vehicle_id() {
+    return this.props.vehicle_id;
   }
 
   set vehicle_id(vehicle_id: UniqueEntityId) {
     this.props.vehicle_id = vehicle_id;
   }
 
-  set odometer_end(odometer_end: UniqueEntityId) {
-    this.props.odometer_end = odometer_end;
-  }
-
-  set odometer_start(odometer_start: UniqueEntityId) {
-    this.props.odometer_start = odometer_start;
+  get created_at() {
+    return this.props.created_at;
   }
 
   static create(props: Optinal<ShiftProps, "created_at">, id?: UniqueEntityId) {

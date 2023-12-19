@@ -6,7 +6,7 @@ interface ProjectProps {
   description?: string;
   utd?: string;
   city?: string;
-  project_group?: string;
+  group?: string;
 }
 
 export class Project extends Entity<ProjectProps> {
@@ -15,42 +15,41 @@ export class Project extends Entity<ProjectProps> {
   }
 
   get description() {
-    return this.props.description;
-  }
-
-  get utd() {
-    return this.props.utd;
-  }
-
-  get city() {
-    return this.props.city;
-  }
-
-  get project_group() {
-    return this.props.project_group;
+    return this.props.description!;
   }
 
   set description(description: string) {
     this.props.description = description;
   }
 
+  get utd() {
+    return this.props.utd!;
+  }
+
   set utd(utd: string) {
     this.props.utd = utd;
+  }
+
+  get city() {
+    return this.props.city!;
   }
 
   set city(city: string) {
     this.props.city = city;
   }
 
-  set project_group(project_group: string) {
-    this.props.project_group = project_group;
+  get group() {
+    return this.props.group!;
+  }
+
+  set group(group: string) {
+    this.props.group = group;
   }
 
   static create(props: ProjectProps, id?: UniqueEntityId) {
     const project = new Project(
       {
         ...props,
-        created_at: new Date(),
       },
       id,
     );

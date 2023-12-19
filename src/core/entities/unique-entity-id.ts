@@ -4,11 +4,11 @@ export class UniqueEntityId {
   private value: string;
 
   toString() {
-    this.value;
+    return this.value;
   }
 
   toValue() {
-    this.value;
+    return this.value;
   }
 
   constructor(value?: string) {

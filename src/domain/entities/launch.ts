@@ -10,26 +10,25 @@ interface LaunchProps {
 
 export class Launch extends Entity<LaunchProps> {
   get shiftId() {
-    return this.props.shiftId.value;
+    return this.props.shiftId;
   }
 
   get value() {
-    return this.props.value.number;
-  }
-
-  get projectId() {
-    return this.props.projectId;
+    return this.props.value;
   }
 
   set value(value: Value) {
     this.props.value = value;
   }
 
+  get projectId() {
+    return this.props.projectId;
+  }
+
   static create(props: LaunchProps, id?: UniqueEntityId) {
     const launch = new Launch(
       {
         ...props,
-        created_at: new Date(),
       },
       id,
     );
