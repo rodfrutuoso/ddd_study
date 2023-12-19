@@ -1,7 +1,7 @@
 /* eslint-disable no-useless-constructor */
 /* eslint-disable camelcase */
-import { UniqueEntityId } from "../../core/entities/unique-entity-id";
-import { Shift } from "../entities/shift";
+import { UniqueEntityId } from "../../../../core/entities/unique-entity-id";
+import { Shift } from "../../enterprise/entities/shift";
 import { ShitRepository } from "../repositories/shift-repository";
 
 interface OpenShiftInterface {

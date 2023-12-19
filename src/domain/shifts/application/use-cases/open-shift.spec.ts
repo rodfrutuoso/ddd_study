@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { OpenShift } from "./open-shift";
-import { ShitRepository } from "../repositories/shift-repository";
-import { Shift } from "../entities/shift";
+import { ShitRepository } from "@/domain/shifts/application/repositories/shift-repository";
+import { Shift } from "@/domain/shifts/enterprise/entities/shift";
 
 const fakeShiftRepository: ShitRepository = {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
