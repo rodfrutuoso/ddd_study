@@ -4,8 +4,8 @@ import { Shift } from "@/domain/shifts/enterprise/entities/shift";
 export class InMemoryShiftRepository implements ShiftRepository {
   public items: Shift[] = [];
 
-  async findById(teamId: string) {
-    const shift = this.items.find((item) => item.id.toString() === teamId);
+  async findById(shiftId: string) {
+    const shift = this.items.find((item) => item.id.toString() === shiftId);
 
     if (!shift) return null;
 

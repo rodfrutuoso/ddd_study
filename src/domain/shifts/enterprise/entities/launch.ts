@@ -2,7 +2,7 @@ import { Value } from "./value-objects/value";
 import { Entity } from "@/core/entities/entity";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 
-interface LaunchProps {
+export interface LaunchProps {
   value: Value;
   serviceId: UniqueEntityId;
   projectShiftId: UniqueEntityId;
