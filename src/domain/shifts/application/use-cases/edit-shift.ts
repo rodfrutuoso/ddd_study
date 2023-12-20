@@ -2,6 +2,7 @@
 /* eslint-disable camelcase */
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { ShiftRepository } from "../repositories/shift-repository";
+import { Shift } from "../../enterprise/entities/shift";
 
 interface EditShiftInterfaceRequest {
   shiftId: string;
@@ -11,8 +12,9 @@ interface EditShiftInterfaceRequest {
   vehicle_id?: string;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface EditShiftInterfaceResponse {}
+interface EditShiftInterfaceResponse {
+  shift: Shift;
+}
 
 export class EditShift {
   constructor(private shiftRepository: ShiftRepository) {}
@@ -37,6 +39,6 @@ export class EditShift {
 
     await this.shiftRepository.save(shift);
 
-    return {};
+    return { shift };
   }
 }

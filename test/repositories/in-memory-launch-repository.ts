@@ -20,4 +20,10 @@ export class InMemorylaunchRepository implements LaunchRepository {
 
     this.items.splice(itemIndex, 1);
   }
+
+  async save(launch: Launch) {
+    const itemIndex = this.items.findIndex((item) => item.id === launch.id);
+
+    this.items[itemIndex] = launch;
+  }
 }
