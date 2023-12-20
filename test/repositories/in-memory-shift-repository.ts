@@ -2,6 +2,16 @@ import { ShiftRepository } from "@/domain/shifts/application/repositories/shift-
 import { Shift } from "@/domain/shifts/enterprise/entities/shift";
 
 export class InMemoryShiftRepository implements ShiftRepository {
+  public items: Shift[] = [];
+
+  async findById(teamId: string) {
+    const shift = this.items.find((item) => item.id.toString() === teamId);
+
+    if (!shift) return null;
+
+    return shift;
+  }
+
   async findByTeam(teamId: string) {
     const shift = this.items.find((item) => item.teamId.toString() === teamId);
 
@@ -10,9 +20,13 @@ export class InMemoryShiftRepository implements ShiftRepository {
     return shift;
   }
 
-  public items: Shift[] = [];
-
   async create(shift: Shift) {
     this.items.push(shift);
+  }
+
+  async delete(shift: Shift) {
+    const itemIndex = this.items.findIndex((item) => item.id === shift.id);
+
+    this.items.splice(itemIndex, 1);
   }
 }
