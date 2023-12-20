@@ -19,6 +19,16 @@ export class InMemoryShiftRepository implements ShiftRepository {
     return shift;
   }
 
+  async findBetweenDates(startDate: Date, endDate: Date) {
+    const shiftsBetween = this.items.filter(
+      (shift) => shift.date >= startDate && shift.date >= endDate,
+    );
+
+    if (!shiftsBetween) return undefined;
+
+    return shiftsBetween;
+  }
+
   async save(shift: Shift) {
     const itemIndex = this.items.findIndex((item) => item.id === shift.id);
 
