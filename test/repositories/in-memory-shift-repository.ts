@@ -3,7 +3,6 @@ import { Shift } from "@/domain/shifts/enterprise/entities/shift";
 
 export class InMemoryShiftRepository implements ShiftRepository {
   public items: Shift[] = [];
-
   async findById(shiftId: string) {
     const shift = this.items.find((item) => item.id.toString() === shiftId);
 
@@ -18,6 +17,12 @@ export class InMemoryShiftRepository implements ShiftRepository {
     if (!shift) return null;
 
     return shift;
+  }
+
+  async save(shift: Shift) {
+    const itemIndex = this.items.findIndex((item) => item.id === shift.id);
+
+    this.items[itemIndex] = shift;
   }
 
   async create(shift: Shift) {
