@@ -15,6 +15,7 @@ eu tenho que que lançar o serviço de uma obra
 - > npm i eslint @rocketseat/eslint-config -D
 - > npm i eslint-plugin-vitest-globals -D
 - `Clean Architecture é baseada em desacoplamento`
+- > npm i @faker-js/faker -D
 
 ### Clean Architecture
 Há 4 acamadas Infraestrutura, Adaptadores de Interface, Casos de Uso e Entidades.

@@ -1,17 +1,24 @@
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { Shift, ShiftProps } from "@/domain/shifts/enterprise/entities/shift";
+import { faker } from "@faker-js/faker";
 
-export function makeShift(override: Partial<ShiftProps> = {}) {
-  const shift = Shift.create({
-    teamId: new UniqueEntityId("1"),
-    date: new Date("2023-12-15 00:00:00"),
-    odometer_end: 1200,
-    odometer_start: 1100,
-    shift_start: "08:10:01",
-    shift_end: "18:10:01",
-    vehicle_id: new UniqueEntityId("2"),
-    ...override,
-  });
+export function makeShift(
+  override: Partial<ShiftProps> = {},
+  id?: UniqueEntityId,
+) {
+  const shift = Shift.create(
+    {
+      teamId: new UniqueEntityId(faker.string.uuid()),
+      date: faker.date.anytime(),
+      odometer_end: faker.number.int({ min: 100, max: 1200 }),
+      odometer_start: faker.number.int({ min: 1200, max: 1500 }),
+      shift_start: faker.number.float({ min: 0, max: 0.5 }).toString(),
+      shift_end: faker.number.float({ min: 0.5, max: 1 }).toString(),
+      vehicle_id: new UniqueEntityId(faker.string.uuid()),
+      ...override,
+    },
+    id,
+  );
 
   return shift;
 }
