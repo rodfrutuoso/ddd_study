@@ -21,13 +21,14 @@ describe("Get Shift By Date", () => {
     await inMemoryShitRepository.create(newShift2);
     await inMemoryShitRepository.create(newShift3);
 
-    console.log(inMemoryShitRepository.items);
+    // console.log(inMemoryShitRepository.items);
 
     const result = await sut.execute({
       startDate: new Date("2023-11-12"),
       endDate: new Date("2023-11-15"),
     });
 
-    expect(result).toEqual("abc-123-xyz");
+    expect(result).toHaveLength(2);
+    expect(result).not.toContain(newShift1);
   });
 });

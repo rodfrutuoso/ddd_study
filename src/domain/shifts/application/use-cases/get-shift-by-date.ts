@@ -7,9 +7,7 @@ interface GetShiftByDateInterfaceRequest {
   endDate: Date;
 }
 
-interface GetShiftByDateInterfaceResponse {
-  shift: Array<Shift>;
-}
+type GetShiftByDateInterfaceResponse = Array<Shift> | undefined;
 
 export class GetShiftByDate {
   constructor(private shiftRepository: ShiftRepository) {}
@@ -23,9 +21,9 @@ export class GetShiftByDate {
       endDate,
     );
 
-    if (!shift || shift.length < 1) {
-      throw new Error("No shifts between those dates");
-    }
+    // if (!shift || shift.length < 1) {
+    //   throw new Error("No shifts between those dates");
+    // }
 
     return shift;
   }
