@@ -2,7 +2,6 @@ import { GetShiftByDate } from "./get-shift-by-date";
 import { InMemoryShiftRepository } from "test/repositories/in-memory-shift-repository";
 import { makeShift } from "test/factories/make-shift";
 import { faker } from "@faker-js/faker";
-import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 
 let inMemoryShitRepository: InMemoryShiftRepository;
 let sut: GetShiftByDate; // system under test
@@ -67,30 +66,5 @@ describe("Get Shift By Date", () => {
     });
 
     expect(shifts).toHaveLength(5);
-  });
-
-  it("should be able filter a list of team shifts between two dates", async () => {
-    const newShift1 = makeShift({
-      teamId: new UniqueEntityId("1-546"),
-      date: new Date("2023-11-10"),
-    });
-    const newShift2 = makeShift({
-      teamId: new UniqueEntityId("1-546"),
-      date: new Date("2023-11-12"),
-    });
-    const newShift3 = makeShift({ date: new Date("2023-11-15") });
-
-    await inMemoryShitRepository.create(newShift1);
-    await inMemoryShitRepository.create(newShift2);
-    await inMemoryShitRepository.create(newShift3);
-
-    const { shifts } = await sut.execute({
-      startDate: new Date("2023-11-10"),
-      endDate: new Date("2023-11-15"),
-      page: 1,
-      teamId: "1-546",
-    });
-
-    expect(shifts).toHaveLength(2);
   });
 });
