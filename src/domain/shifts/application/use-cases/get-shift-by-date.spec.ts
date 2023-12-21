@@ -2,7 +2,6 @@
 import { GetShiftByDate } from "./get-shift-by-date";
 import { InMemoryShiftRepository } from "test/repositories/in-memory-shift-repository";
 import { makeShift } from "test/factories/make-shift";
-import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 
 let inMemoryShitRepository: InMemoryShiftRepository;
 let sut: GetShiftByDate; // system under test
@@ -21,6 +20,8 @@ describe("Get Shift By Date", () => {
     await inMemoryShitRepository.create(newShift1);
     await inMemoryShitRepository.create(newShift2);
     await inMemoryShitRepository.create(newShift3);
+
+    console.log(inMemoryShitRepository.items);
 
     const result = await sut.execute({
       startDate: new Date("2023-11-12"),

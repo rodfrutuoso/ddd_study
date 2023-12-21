@@ -8,7 +8,7 @@ interface GetShiftByDateInterfaceRequest {
 }
 
 interface GetShiftByDateInterfaceResponse {
-  shift: Array<Shift> | undefined;
+  shift: Array<Shift>;
 }
 
 export class GetShiftByDate {
@@ -23,8 +23,9 @@ export class GetShiftByDate {
       endDate,
     );
 
-    if (!shift || shift.length < 1)
+    if (!shift || shift.length < 1) {
       throw new Error("No shifts between those dates");
+    }
 
     return shift;
   }

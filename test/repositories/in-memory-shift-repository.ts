@@ -24,7 +24,7 @@ export class InMemoryShiftRepository implements ShiftRepository {
       (shift) => shift.date >= startDate && shift.date >= endDate,
     );
 
-    if (!shiftsBetween) return undefined;
+    // if (!shiftsBetween) return undefined;
 
     return shiftsBetween;
   }
