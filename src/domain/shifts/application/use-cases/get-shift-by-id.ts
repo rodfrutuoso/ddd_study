@@ -2,11 +2,11 @@
 import { Shift } from "../../enterprise/entities/shift";
 import { ShiftRepository } from "../repositories/shift-repository";
 
-interface GetShiftByTeamInterfaceRequest {
-  teamId: string;
+interface GetShiftByIdInterfaceRequest {
+  shiftId: string;
 }
 
-interface GetShiftByTeamInterfaceResponse {
+interface GetShiftByIdInterfaceResponse {
   shift: Shift;
 }
 
@@ -14,9 +14,9 @@ export class GetShiftByTeam {
   constructor(private shiftRepository: ShiftRepository) {}
 
   async execute({
-    teamId,
-  }: GetShiftByTeamInterfaceRequest): Promise<GetShiftByTeamInterfaceResponse> {
-    const shift = await this.shiftRepository.findByTeam(teamId);
+    shiftId,
+  }: GetShiftByIdInterfaceRequest): Promise<GetShiftByIdInterfaceResponse> {
+    const shift = await this.shiftRepository.findById(shiftId);
 
     if (!shift) throw new Error("Shift not found");
 

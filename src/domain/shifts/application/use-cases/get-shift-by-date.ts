@@ -5,9 +5,10 @@ import { ShiftRepository } from "../repositories/shift-repository";
 interface GetShiftByDateInterfaceRequest {
   startDate: Date;
   endDate: Date;
+  page: number;
 }
 
-type GetShiftByDateInterfaceResponse = Array<Shift> | undefined;
+type GetShiftByDateInterfaceResponse = Array<Shift>;
 
 export class GetShiftByDate {
   constructor(private shiftRepository: ShiftRepository) {}
@@ -15,15 +16,13 @@ export class GetShiftByDate {
   async execute({
     startDate,
     endDate,
+    page,
   }: GetShiftByDateInterfaceRequest): Promise<GetShiftByDateInterfaceResponse> {
-    const shift = await this.shiftRepository.findBetweenDates(
+    const shift = await this.shiftRepository.findManyBetweenDates(
       startDate,
       endDate,
+      { page },
     );
-
-    // if (!shift || shift.length < 1) {
-    //   throw new Error("No shifts between those dates");
-    // }
 
     return shift;
   }

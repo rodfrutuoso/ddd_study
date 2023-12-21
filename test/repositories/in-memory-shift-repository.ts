@@ -1,3 +1,4 @@
+import { PaginationParams } from "@/core/repositories/pagination-params";
 import { ShiftRepository } from "@/domain/shifts/application/repositories/shift-repository";
 import { Shift } from "@/domain/shifts/enterprise/entities/shift";
 
@@ -11,20 +12,15 @@ export class InMemoryShiftRepository implements ShiftRepository {
     return shift;
   }
 
-  async findByTeam(teamId: string) {
-    const shift = this.items.find((item) => item.teamId.toString() === teamId);
-
-    if (!shift) return null;
-
-    return shift;
-  }
-
-  async findBetweenDates(startDate: Date, endDate: Date) {
-    const shiftsBetween = this.items.filter(
-      (shift) => shift.date >= startDate && shift.date <= endDate,
-    );
-
-    if (!shiftsBetween) return undefined;
+  async findManyBetweenDates(
+    startDate: Date,
+    endDate: Date,
+    { page }: PaginationParams,
+  ) {
+    const shiftsBetween = this.items
+      .sort((a, b) => b.date.getTime() - a.date.getTime())
+      .filter((shift) => shift.date >= startDate && shift.date <= endDate)
+      .slice((page - 1) * 50, page * 50);
 
     return shiftsBetween;
   }
