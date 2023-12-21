@@ -6,9 +6,12 @@ interface GetShiftByDateInterfaceRequest {
   startDate: Date;
   endDate: Date;
   page: number;
+  teamId?: string;
 }
 
-type GetShiftByDateInterfaceResponse = Array<Shift>;
+interface GetShiftByDateInterfaceResponse {
+  shifts: Array<Shift>;
+}
 
 export class GetShiftByDate {
   constructor(private shiftRepository: ShiftRepository) {}
@@ -17,13 +20,15 @@ export class GetShiftByDate {
     startDate,
     endDate,
     page,
+    teamId,
   }: GetShiftByDateInterfaceRequest): Promise<GetShiftByDateInterfaceResponse> {
-    const shift = await this.shiftRepository.findManyBetweenDates(
+    const shifts = await this.shiftRepository.findManyBetweenDates(
       startDate,
       endDate,
       { page },
+      teamId,
     );
 
-    return shift;
+    return { shifts };
   }
 }

@@ -16,10 +16,12 @@ export class InMemoryShiftRepository implements ShiftRepository {
     startDate: Date,
     endDate: Date,
     { page }: PaginationParams,
+    teamId?: string,
   ) {
     const shiftsBetween = this.items
       .sort((a, b) => b.date.getTime() - a.date.getTime())
       .filter((shift) => shift.date >= startDate && shift.date <= endDate)
+      .filter((shift) => !teamId || shift.teamId.toString() === teamId)
       .slice((page - 1) * 50, page * 50);
 
     return shiftsBetween;

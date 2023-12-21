@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
 import { GetShiftByDate } from "./get-shift-by-date";
 import { InMemoryShiftRepository } from "test/repositories/in-memory-shift-repository";
 import { makeShift } from "test/factories/make-shift";
 import { faker } from "@faker-js/faker";
+import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 
 let inMemoryShitRepository: InMemoryShiftRepository;
 let sut: GetShiftByDate; // system under test
@@ -22,15 +22,15 @@ describe("Get Shift By Date", () => {
     await inMemoryShitRepository.create(newShift2);
     await inMemoryShitRepository.create(newShift3);
 
-    const result = await sut.execute({
+    const { shifts } = await sut.execute({
       startDate: new Date("2023-11-12"),
       endDate: new Date("2023-11-15"),
       page: 1,
     });
 
-    expect(result).toHaveLength(2);
-    expect(result).not.toContain(newShift1);
-    expect(result[0].date).toEqual(new Date("2023-11-15"));
+    expect(shifts).toHaveLength(2);
+    expect(shifts).not.toContain(newShift1);
+    expect(shifts[0].date).toEqual(new Date("2023-11-15"));
   });
 
   it("should be able to get a empty list of shifts when there is no shift between the infomed dates ", async () => {
@@ -42,13 +42,13 @@ describe("Get Shift By Date", () => {
     await inMemoryShitRepository.create(newShift2);
     await inMemoryShitRepository.create(newShift3);
 
-    const result = await sut.execute({
+    const { shifts } = await sut.execute({
       startDate: new Date("2023-11-16"),
       endDate: new Date("2023-11-20"),
       page: 1,
     });
 
-    expect(result).toHaveLength(0);
+    expect(shifts).toHaveLength(0);
   });
 
   it("should be able paginate a list of shifts between two dates", async () => {
@@ -60,14 +60,37 @@ describe("Get Shift By Date", () => {
       );
     }
 
-    console.log(inMemoryShitRepository.items.length);
-
-    const result = await sut.execute({
+    const { shifts } = await sut.execute({
       startDate: new Date("2023-11-12"),
       endDate: new Date("2023-11-15"),
       page: 2,
     });
 
-    expect(result).toHaveLength(5);
+    expect(shifts).toHaveLength(5);
+  });
+
+  it("should be able filter a list of team shifts between two dates", async () => {
+    const newShift1 = makeShift({
+      teamId: new UniqueEntityId("1-546"),
+      date: new Date("2023-11-10"),
+    });
+    const newShift2 = makeShift({
+      teamId: new UniqueEntityId("1-546"),
+      date: new Date("2023-11-12"),
+    });
+    const newShift3 = makeShift({ date: new Date("2023-11-15") });
+
+    await inMemoryShitRepository.create(newShift1);
+    await inMemoryShitRepository.create(newShift2);
+    await inMemoryShitRepository.create(newShift3);
+
+    const { shifts } = await sut.execute({
+      startDate: new Date("2023-11-10"),
+      endDate: new Date("2023-11-15"),
+      page: 1,
+      teamId: "1-546",
+    });
+
+    expect(shifts).toHaveLength(2);
   });
 });

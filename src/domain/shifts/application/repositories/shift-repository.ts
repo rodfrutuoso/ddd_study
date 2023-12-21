@@ -7,6 +7,7 @@ export interface ShiftRepository {
     startDate: Date,
     endDate: Date,
     params: PaginationParams,
+    teamId?: string,
   ): Promise<Array<Shift>>;
   save(shift: Shift): Promise<void>;
   create(shift: Shift): Promise<void>;
