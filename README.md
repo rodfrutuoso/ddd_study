@@ -1,6 +1,9 @@
 # Casos de uso
 eu tenho que abrir um turno para minha equipe
 eu tenho que que lançar o serviço de uma obra
+eu tenho que conseguir filtrar projectShift por data, contrato e por obra
+eu tenho que conseguir filtrar e launch por data, contrato e por serviço
+eu tenho que conseguir filtrar e programacao por data, contrato e por equipe
 
 
 # Comandos utilizados

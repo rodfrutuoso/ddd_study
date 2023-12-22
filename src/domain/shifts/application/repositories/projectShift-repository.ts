@@ -11,4 +11,7 @@ export interface ProjectShiftRepository {
     projectId: string,
     params: PaginationParams,
   ): Promise<Array<ProjectShift>>;
+  save(projectShifit: ProjectShift): Promise<void>;
+  findById(projectShifitId: string): Promise<ProjectShift | null>;
+  delete(projectShifit: ProjectShift): Promise<void>;
 }

@@ -4,22 +4,21 @@ import { InMemoryShiftRepository } from "test/repositories/in-memory-shift-repos
 import { makeShift } from "test/factories/make-shift";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 
-let inMemoryShitRepository: InMemoryShiftRepository;
+let inMemoryShiftRepository: InMemoryShiftRepository;
 let sut: EditShift; // system under test
 
 describe("Edit Shift By Id", () => {
   beforeEach(() => {
-    inMemoryShitRepository = new InMemoryShiftRepository();
-    sut = new EditShift(inMemoryShitRepository);
+    inMemoryShiftRepository = new InMemoryShiftRepository();
+    sut = new EditShift(inMemoryShiftRepository);
   });
 
   it("should be albe to edit a shift by its id", async () => {
-    const newShift = await makeShift(
-      { vehicle_id: new UniqueEntityId("vehicle-id-antes") },
-      new UniqueEntityId("abc-123-xyz"),
-    );
+    const newShift = await makeShift({
+      vehicle_id: new UniqueEntityId("vehicle-id-antes"),
+    });
 
-    await inMemoryShitRepository.create(newShift);
+    await inMemoryShiftRepository.create(newShift);
 
     await sut.execute({
       shiftId: newShift.id.toString(),
@@ -29,7 +28,7 @@ describe("Edit Shift By Id", () => {
       odometer_end: 1400,
     });
 
-    expect(await inMemoryShitRepository.items[0]).toMatchObject({
+    expect(await inMemoryShiftRepository.items[0]).toMatchObject({
       vehicle_id: new UniqueEntityId("vehicle-id-editado"),
       odometer_start: 1200,
       odometer_end: 1400,
@@ -37,12 +36,11 @@ describe("Edit Shift By Id", () => {
   });
 
   it("should not be albe to edit a shift by its id from a user that type is not ADM or PROGRAMAÇÃO", async () => {
-    const newShift = await makeShift(
-      { vehicle_id: new UniqueEntityId("vehicle-id-antes") },
-      new UniqueEntityId("abc-123-xyz"),
-    );
+    const newShift = await makeShift({
+      vehicle_id: new UniqueEntityId("vehicle-id-antes"),
+    });
 
-    await inMemoryShitRepository.create(newShift);
+    await inMemoryShiftRepository.create(newShift);
 
     expect(async () => {
       return await sut.execute({
