@@ -4,6 +4,17 @@ import { ProjectShift } from "@/domain/shifts/enterprise/entities/projectShifit"
 
 export class InMemoryProjectShiftRepository implements ProjectShiftRepository {
   public items: ProjectShift[] = [];
+  async findManyByProject(
+    projectId: string,
+    { page }: PaginationParams,
+  ): Promise<ProjectShift[]> {
+    const projectShifts = this.items
+      .filter((projectShift) => projectShift.projectId.toString() === projectId)
+      .slice((page - 1) * 50, page * 50);
+
+    return projectShifts;
+  }
+
   async findManyByShift(shiftId: string, { page }: PaginationParams) {
     const projectShifts = this.items
       .filter((projectShift) => projectShift.shiftId.toString() === shiftId)

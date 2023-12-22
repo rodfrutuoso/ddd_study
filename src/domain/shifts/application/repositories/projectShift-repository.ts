@@ -7,4 +7,8 @@ export interface ProjectShiftRepository {
     shiftId: string,
     params: PaginationParams,
   ): Promise<Array<ProjectShift>>;
+  findManyByProject(
+    projectId: string,
+    params: PaginationParams,
+  ): Promise<Array<ProjectShift>>;
 }

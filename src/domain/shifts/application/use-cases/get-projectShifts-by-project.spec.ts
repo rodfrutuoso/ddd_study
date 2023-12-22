@@ -1,26 +1,26 @@
-import { GetProjectShiftByShift } from "./get-projectShifts-by-shift";
+import { GetProjectShiftByProject } from "./get-projectShifts-by-project";
 import { InMemoryProjectShiftRepository } from "test/repositories/in-memory-projectShift-repository";
 import { makeProjectShift } from "test/factories/make-projectShift";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 
 let inMemoryShitRepository: InMemoryProjectShiftRepository;
-let sut: GetProjectShiftByShift; // system under test
+let sut: GetProjectShiftByProject; // system under test
 
 describe("Get ProjectShift By Project", () => {
   beforeEach(() => {
     inMemoryShitRepository = new InMemoryProjectShiftRepository();
-    sut = new GetProjectShiftByShift(inMemoryShitRepository);
+    sut = new GetProjectShiftByProject(inMemoryShitRepository);
   });
 
-  it("should be able to get a list of projectshifts of a shift", async () => {
+  it("should be able to get a list of projectshifts of a project", async () => {
     const newProjectShift1 = makeProjectShift({
-      shiftId: new UniqueEntityId("shift1"),
+      projectId: new UniqueEntityId("project1"),
     });
     const newProjectShift2 = makeProjectShift({
-      shiftId: new UniqueEntityId("shift2"),
+      projectId: new UniqueEntityId("project2"),
     });
     const newProjectShift3 = makeProjectShift({
-      shiftId: new UniqueEntityId("shift1"),
+      projectId: new UniqueEntityId("project1"),
     });
 
     await inMemoryShitRepository.create(newProjectShift1);
@@ -28,7 +28,7 @@ describe("Get ProjectShift By Project", () => {
     await inMemoryShitRepository.create(newProjectShift3);
 
     const { projectShifts } = await sut.execute({
-      shiftId: "shift1",
+      projectId: "project1",
       page: 1,
     });
 
@@ -36,7 +36,7 @@ describe("Get ProjectShift By Project", () => {
     expect(projectShifts).not.toContain(newProjectShift2);
   });
 
-  it("should be able to get a empty list of projectShifts when there is no shifts with the informed shiftId ", async () => {
+  it("should be able to get a empty list of projectShifts when there is no shifts with the informed projectId ", async () => {
     const newProjectShift1 = makeProjectShift();
     const newProjectShift2 = makeProjectShift();
     const newProjectShift3 = makeProjectShift();
@@ -46,24 +46,24 @@ describe("Get ProjectShift By Project", () => {
     await inMemoryShitRepository.create(newProjectShift3);
 
     const { projectShifts } = await sut.execute({
-      shiftId: "shift1",
+      projectId: "project1",
       page: 1,
     });
 
     expect(projectShifts).toHaveLength(0);
   });
 
-  it("should be able paginate a list of projectShifts between two dates", async () => {
+  it("should be able paginate a list of projectShifts fo a project", async () => {
     for (let i = 1; i <= 57; i++) {
       await inMemoryShitRepository.create(
         makeProjectShift({
-          shiftId: new UniqueEntityId("shift1"),
+          projectId: new UniqueEntityId("project1"),
         }),
       );
     }
 
     const { projectShifts } = await sut.execute({
-      shiftId: "shift1",
+      projectId: "project1",
       page: 2,
     });
 
