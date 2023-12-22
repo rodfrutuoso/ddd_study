@@ -16,13 +16,13 @@ export class APRMeasure extends Entity<APRMeasureProps> {
   }
 
   static create(props: APRMeasureProps, id?: UniqueEntityId) {
-    const shift = new APRMeasure(
+    const aprMeasure = new APRMeasure(
       {
         ...props,
       },
       id,
     );
 
-    return shift;
+    return aprMeasure;
   }
 }

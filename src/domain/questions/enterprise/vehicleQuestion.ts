@@ -9,7 +9,7 @@ export class VehicleQuestion extends Question<VehicleQuestionProps> {
     props: Optinal<VehicleQuestionProps, "startDate">,
     id?: UniqueEntityId,
   ) {
-    const shift = new VehicleQuestion(
+    const vehicleQuestion = new VehicleQuestion(
       {
         ...props,
         startDate: new Date(),
@@ -17,6 +17,6 @@ export class VehicleQuestion extends Question<VehicleQuestionProps> {
       id,
     );
 
-    return shift;
+    return vehicleQuestion;
   }
 }

@@ -15,7 +15,7 @@ export class APRRisk extends Question<APRRiskProps> {
     props: Optinal<APRRiskProps, "startDate">,
     id?: UniqueEntityId,
   ) {
-    const shift = new APRRisk(
+    const aprRisk = new APRRisk(
       {
         ...props,
         startDate: new Date(),
@@ -23,6 +23,6 @@ export class APRRisk extends Question<APRRiskProps> {
       id,
     );
 
-    return shift;
+    return aprRisk;
   }
 }

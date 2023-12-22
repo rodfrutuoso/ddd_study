@@ -6,7 +6,7 @@ export interface VehicleResponseProps extends ResponseProps {
   shiftId: UniqueEntityId;
 }
 
-export class Vehicle extends Response<VehicleResponseProps> {
+export class VehicleResponse extends Response<VehicleResponseProps> {
   get vehicleId() {
     return this.props.vehicleId;
   }
@@ -16,13 +16,13 @@ export class Vehicle extends Response<VehicleResponseProps> {
   }
 
   static create(props: VehicleResponseProps, id?: UniqueEntityId) {
-    const shift = new Vehicle(
+    const vehicleResponse = new VehicleResponse(
       {
         ...props,
       },
       id,
     );
 
-    return shift;
+    return vehicleResponse;
   }
 }

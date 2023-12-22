@@ -21,13 +21,13 @@ export class SMCResponse extends Response<SMCResponseProps> {
   }
 
   static create(props: SMCResponseProps, id?: UniqueEntityId) {
-    const shift = new SMCResponse(
+    const smcResponse = new SMCResponse(
       {
         ...props,
       },
       id,
     );
 
-    return shift;
+    return smcResponse;
   }
 }

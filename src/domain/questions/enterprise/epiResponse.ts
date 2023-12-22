@@ -16,13 +16,13 @@ export class EPIResponse extends Response<EPIResponseProps> {
   }
 
   static create(props: EPIResponseProps, id?: UniqueEntityId) {
-    const shift = new EPIResponse(
+    const epiResponse = new EPIResponse(
       {
         ...props,
       },
       id,
     );
 
-    return shift;
+    return epiResponse;
   }
 }

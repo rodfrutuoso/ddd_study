@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { RegisterProjectShift } from "./register-projectShift";
-import { InMemoryProjectShitRepository } from "test/repositories/in-memory-projectShift-repository";
+import { InMemoryProjectShiftRepository } from "test/repositories/in-memory-projectShift-repository";
 
-let inMemoryProjectShitRepository: InMemoryProjectShitRepository;
+let inMemoryProjectShitRepository: InMemoryProjectShiftRepository;
 let sut: RegisterProjectShift; // system under test
 
 describe("Register a Project-Shift", () => {
   beforeEach(() => {
-    inMemoryProjectShitRepository = new InMemoryProjectShitRepository();
+    inMemoryProjectShitRepository = new InMemoryProjectShiftRepository();
     sut = new RegisterProjectShift(inMemoryProjectShitRepository);
   });
 

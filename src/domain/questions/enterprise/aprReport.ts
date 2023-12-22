@@ -30,7 +30,7 @@ export class APRReport extends Question<APRReportProps> {
     props: Optinal<APRReportProps, "startDate">,
     id?: UniqueEntityId,
   ) {
-    const shift = new APRReport(
+    const aprReport = new APRReport(
       {
         ...props,
         startDate: new Date(),
@@ -38,6 +38,6 @@ export class APRReport extends Question<APRReportProps> {
       id,
     );
 
-    return shift;
+    return aprReport;
   }
 }

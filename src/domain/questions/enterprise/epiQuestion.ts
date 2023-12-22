@@ -9,7 +9,7 @@ export class EPIQuestion extends Question<EPIQuestionProps> {
     props: Optinal<EPIQuestionProps, "startDate">,
     id?: UniqueEntityId,
   ) {
-    const shift = new EPIQuestion(
+    const epiQuestion = new EPIQuestion(
       {
         ...props,
         startDate: new Date(),
@@ -17,6 +17,6 @@ export class EPIQuestion extends Question<EPIQuestionProps> {
       id,
     );
 
-    return shift;
+    return epiQuestion;
   }
 }

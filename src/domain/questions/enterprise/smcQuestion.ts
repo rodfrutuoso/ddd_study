@@ -10,7 +10,7 @@ export class SMCQuestion extends Question<SMCQuestionProps> {
     props: Optinal<SMCQuestionProps, "startDate">,
     id?: UniqueEntityId,
   ) {
-    const shift = new SMCQuestion(
+    const smcQuestion = new SMCQuestion(
       {
         ...props,
         startDate: new Date(),
@@ -18,6 +18,6 @@ export class SMCQuestion extends Question<SMCQuestionProps> {
       id,
     );
 
-    return shift;
+    return smcQuestion;
   }
 }
