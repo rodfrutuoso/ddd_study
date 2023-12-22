@@ -2,14 +2,20 @@ import { Optinal } from "@/core/entities/types/optional";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { Question, QuestionProps } from "./question";
 
-export type VehicleQuestionProps = QuestionProps;
+export interface APRRiskProps extends QuestionProps {
+  category: string;
+}
 
-export class VehicleQuestion extends Question<VehicleQuestionProps> {
+export class APRRisk extends Question<APRRiskProps> {
+  get category() {
+    return this.props.category;
+  }
+
   static create(
-    props: Optinal<VehicleQuestionProps, "startDate">,
+    props: Optinal<APRRiskProps, "startDate">,
     id?: UniqueEntityId,
   ) {
-    const shift = new VehicleQuestion(
+    const shift = new APRRisk(
       {
         ...props,
         startDate: new Date(),

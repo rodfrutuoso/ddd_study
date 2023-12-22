@@ -1,7 +1,5 @@
 /* eslint-disable camelcase */
 import { Entity } from "@/core/entities/entity";
-import { Optinal } from "@/core/entities/types/optional";
-import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 
 export interface QuestionProps {
   question: string;
@@ -9,7 +7,9 @@ export interface QuestionProps {
   endDate?: Date;
 }
 
-export class Question extends Entity<QuestionProps> {
+export abstract class Question<
+  Props extends QuestionProps,
+> extends Entity<Props> {
   get question() {
     return this.props.question;
   }
@@ -24,20 +24,5 @@ export class Question extends Entity<QuestionProps> {
 
   set endDate(endDate: Date) {
     this.props.endDate = endDate;
-  }
-
-  static create(
-    props: Optinal<QuestionProps, "startDate">,
-    id?: UniqueEntityId,
-  ) {
-    const shift = new Question(
-      {
-        ...props,
-        startDate: new Date(),
-      },
-      id,
-    );
-
-    return shift;
   }
 }
