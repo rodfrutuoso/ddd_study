@@ -19,7 +19,6 @@ describe("Register a Team", () => {
       type: "LM",
       contract: "CENTRO-OESTE",
     });
-    console.log(team);
 
     expect(team.id).toBeTruthy();
     expect(team.name).toEqual("ECOLM0001 - JOAO NUM SEI DAS QUANTAS");
