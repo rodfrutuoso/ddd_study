@@ -26,3 +26,6 @@ Há 4 acamadas Infraestrutura, Adaptadores de Interface, Casos de Uso e Entidade
 2. Adaptadores de Interface: adapta o conteúdo que chega pela estrutura para a camada mais interna. Além disso, é responsável pela proteção dessa camadas mais internas.
 3. Casos de Uso: Eventos da minha aplicação e regras de negócio.
 4. Entidades: Regras de negócio.
+
+# TODO
+[ ] Criar caso de uso para encontrar shift por supervisor e contrato utilizando repositórios de equipes

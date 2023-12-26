@@ -3,7 +3,7 @@ import { Entity } from "@/core/entities/entity";
 import { Optinal } from "@/core/entities/types/optional";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 
-interface TeamProps {
+export interface TeamProps {
   name: string;
   leaderId: UniqueEntityId;
   supervisorId?: UniqueEntityId;
