@@ -1,5 +1,6 @@
 /* eslint-disable no-useless-constructor */
 import { Shift } from "../../enterprise/entities/shift";
+import { Team } from "../../enterprise/entities/team";
 import { ShiftRepository } from "../repositories/shift-repository";
 import { TeamRepository } from "../repositories/team-repository";
 
@@ -22,7 +23,20 @@ export class GetShiftBySupervisor {
     page,
     supervisorId,
   }: GetShiftBySueprvisorInterfaceRequest): Promise<GetShiftBySupervisorInterfaceResponse> {
-    const teams = await this.teamRepository.findMany({ page }, supervisorId);
+    const teams: Team[] = [];
+    let count = 1;
+
+    while (true) {
+      const teamsSearch = await this.teamRepository.findMany(
+        { page: count },
+        supervisorId
+      );
+
+      teamsSearch.map((team) => teams.push(team));
+      count++;
+
+      if (teamsSearch.length === 0) break;
+    }
 
     const teamsId = teams.map((team) => team.id.toString());
 

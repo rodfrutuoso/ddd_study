@@ -22,7 +22,7 @@ export class GetShiftByTeam {
       new Date("1969-12-31"),
       new Date("2100-12-31"),
       { page },
-      teamId,
+      teamId
     );
 
     return { shifts };

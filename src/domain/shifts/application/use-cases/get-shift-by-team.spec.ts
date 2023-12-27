@@ -55,7 +55,7 @@ describe("Get Shift By team", () => {
       await inMemoryShitRepository.create(
         makeShift({
           teamId: new UniqueEntityId("123-456-xyz"),
-        }),
+        })
       );
     }
 

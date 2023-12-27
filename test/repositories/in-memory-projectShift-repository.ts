@@ -6,7 +6,7 @@ export class InMemoryProjectShiftRepository implements ProjectShiftRepository {
   public items: ProjectShift[] = [];
   async save(projectShifit: ProjectShift): Promise<void> {
     const itemIndex = this.items.findIndex(
-      (item) => item.id === projectShifit.id,
+      (item) => item.id === projectShifit.id
     );
 
     this.items[itemIndex] = projectShifit;
@@ -14,7 +14,7 @@ export class InMemoryProjectShiftRepository implements ProjectShiftRepository {
 
   async findById(projectShifitId: string): Promise<ProjectShift | null> {
     const projectShift = this.items.find(
-      (item) => item.id.toString() === projectShifitId,
+      (item) => item.id.toString() === projectShifitId
     );
 
     if (!projectShift) return null;
@@ -24,7 +24,7 @@ export class InMemoryProjectShiftRepository implements ProjectShiftRepository {
 
   async findManyByProject(
     projectId: string,
-    { page }: PaginationParams,
+    { page }: PaginationParams
   ): Promise<ProjectShift[]> {
     const projectShifts = this.items
       .filter((projectShift) => projectShift.projectId.toString() === projectId)
@@ -47,7 +47,7 @@ export class InMemoryProjectShiftRepository implements ProjectShiftRepository {
 
   async delete(projectShifit: ProjectShift) {
     const itemIndex = this.items.findIndex(
-      (item) => item.id === projectShifit.id,
+      (item) => item.id === projectShifit.id
     );
 
     this.items.splice(itemIndex, 1);

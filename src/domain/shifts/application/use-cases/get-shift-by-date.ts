@@ -26,7 +26,7 @@ export class GetShiftByDate {
       startDate,
       endDate,
       { page },
-      teamId,
+      teamId
     );
 
     return { shifts };

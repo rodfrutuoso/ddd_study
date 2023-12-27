@@ -55,7 +55,7 @@ describe("Get Shift By Date", () => {
       await inMemoryShitRepository.create(
         makeShift({
           date: faker.date.between({ from: "2023-11-12", to: "2023-11-15" }),
-        }),
+        })
       );
     }
 

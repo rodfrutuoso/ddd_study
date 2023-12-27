@@ -4,12 +4,15 @@ import { faker } from "@faker-js/faker";
 
 export function makeShift(
   override: Partial<ShiftProps> = {},
-  id?: UniqueEntityId,
+  id?: UniqueEntityId
 ) {
   const shift = Shift.create(
     {
       teamId: new UniqueEntityId(faker.string.uuid()),
-      date: faker.date.anytime(),
+      date: faker.date.between({
+        from: new Date("1969-12-31"),
+        to: new Date("2100-12-31"),
+      }),
       odometer_end: faker.number.int({ min: 100, max: 1200 }),
       odometer_start: faker.number.int({ min: 1200, max: 1500 }),
       shift_start: faker.number.float({ min: 0, max: 0.5 }).toString(),
@@ -17,7 +20,7 @@ export function makeShift(
       vehicle_id: new UniqueEntityId(faker.string.uuid()),
       ...override,
     },
-    id,
+    id
   );
 
   return shift;
