@@ -13,7 +13,7 @@ export class InMemoryTeamRepository implements TeamRepository {
     supervisorId?: string,
     leaderId?: string,
     contract?: string,
-    name?: string,
+    name?: string
   ): Promise<Team[]> {
     const teams = this.items
       // eslint-disable-next-line prettier/prettier
