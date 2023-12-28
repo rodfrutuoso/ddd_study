@@ -17,7 +17,7 @@ describe("Edit Launch By Id", () => {
   it("should be albe to edit a launch by its id", async () => {
     const newLaunch = await makeLaunch(
       { value: new Value(123) },
-      new UniqueEntityId("abc-123-xyz"),
+      new UniqueEntityId("abc-123-xyz")
     );
 
     await inMemoryShitRepository.create(newLaunch);
@@ -36,7 +36,7 @@ describe("Edit Launch By Id", () => {
   it("should not be albe to edit a launch by its id from a user that type is not ADM or PROGRAMAÇÃO", async () => {
     const newLaunch = await makeLaunch(
       { value: new Value(123) },
-      new UniqueEntityId("abc-123-xyz"),
+      new UniqueEntityId("abc-123-xyz")
     );
 
     await inMemoryShitRepository.create(newLaunch);

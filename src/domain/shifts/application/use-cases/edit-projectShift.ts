@@ -5,9 +5,9 @@ import { ProjectShift } from "../../enterprise/entities/projectShifit";
 
 interface EditProjectShiftInterfaceRequest {
   projectShiftId: string;
-  projectStage: string;
-  fieldReturn: string;
-  outOfSchedule: boolean;
+  projectStage?: string;
+  fieldReturn?: string;
+  outOfSchedule?: boolean;
   programmerType: string;
 }
 

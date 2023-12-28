@@ -17,7 +17,10 @@ export class InMemoryTeamRepository implements TeamRepository {
   ): Promise<Team[]> {
     const teams = this.items
       // eslint-disable-next-line prettier/prettier
-      .filter((team) => !supervisorId || team.supervisorId?.toString() === supervisorId)
+      .filter(
+        (team) =>
+          !supervisorId || team.supervisorId?.toString() === supervisorId
+      )
       .filter((team) => !leaderId || team.leaderId.toString() === leaderId)
       .filter((team) => !contract || team.contract === contract)
       .filter((team) => !name || team.name === name)
@@ -26,12 +29,13 @@ export class InMemoryTeamRepository implements TeamRepository {
     return teams;
   }
 
-  //  (teamId: string) namet team = this.items.find((item) => item.id.toString() === teamId);
+  async findById(teamId: string) {
+    const team = this.items.find((item) => item.id.toString() === teamId);
 
-  //     if (!team) return null;
+    if (!team) return null;
 
-  //     return team;
-  //   }
+    return team;
+  }
 
   //   async delete(team: Team) {
   //     const itemIndex = this.items.findIndex((item) => item.id === team.id);
@@ -39,9 +43,9 @@ export class InMemoryTeamRepository implements TeamRepository {
   //     this.items.splice(itemIndex, 1);
   //   }
 
-  //   async save(team: Team) {
-  //     const itemIndex = this.items.findIndex((item) => item.id === team.id);
+  async save(team: Team) {
+    const itemIndex = this.items.findIndex((item) => item.id === team.id);
 
-  //     this.items[itemIndex] = team;
-  //   }
+    this.items[itemIndex] = team;
+  }
 }

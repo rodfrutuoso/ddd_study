@@ -73,7 +73,7 @@ export class Team extends Entity<TeamProps> {
         ...props,
         created_at: new Date(),
       },
-      id,
+      id
     );
 
     return team;

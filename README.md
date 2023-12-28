@@ -29,4 +29,4 @@ Há 4 acamadas Infraestrutura, Adaptadores de Interface, Casos de Uso e Entidade
 4. Entidades: Regras de negócio.
 
 # TODO
-[ ] Criar caso de uso para encontrar shift por supervisor e contrato utilizando repositórios de equipes
+[X] Criar caso de uso para encontrar shift por supervisor e contrato utilizando repositórios de equipes

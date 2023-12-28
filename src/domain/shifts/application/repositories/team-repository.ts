@@ -10,7 +10,7 @@ export interface TeamRepository {
     contract?: string,
     name?: string
   ): Promise<Array<Team>>;
-  //   findById(teamId: string): Promise<Team | null>;
+  findById(teamId: string): Promise<Team | null>;
   //   delete(team: Team): Promise<void>;
-  //   save(team: Team): Promise<void>;
+  save(team: Team): Promise<void>;
 }
