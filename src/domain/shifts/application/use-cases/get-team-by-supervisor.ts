@@ -29,7 +29,7 @@ export class GetTeamBySupervisor {
       supervisorId,
       leaderId,
       contract,
-      name,
+      name
     );
 
     return { teams };

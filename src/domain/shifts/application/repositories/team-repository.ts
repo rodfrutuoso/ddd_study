@@ -8,7 +8,7 @@ export interface TeamRepository {
     supervisorId?: string,
     leaderId?: string,
     contract?: string,
-    name?: string,
+    name?: string
   ): Promise<Array<Team>>;
   //   findById(teamId: string): Promise<Team | null>;
   //   delete(team: Team): Promise<void>;

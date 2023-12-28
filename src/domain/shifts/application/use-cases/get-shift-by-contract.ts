@@ -4,16 +4,16 @@ import { Team } from "../../enterprise/entities/team";
 import { ShiftRepository } from "../repositories/shift-repository";
 import { TeamRepository } from "../repositories/team-repository";
 
-interface GetShiftBySupervisorInterfaceRequest {
+interface GetShiftByContractInterfaceRequest {
   page: number;
-  supervisorId: string;
+  contract: string;
 }
 
-interface GetShiftBySupervisorInterfaceResponse {
+interface GetShiftByContractInterfaceResponse {
   shifts: Array<Shift>;
 }
 
-export class GetShiftBySupervisor {
+export class GetShiftByContract {
   constructor(
     private shiftRepository: ShiftRepository,
     private teamRepository: TeamRepository
@@ -21,15 +21,17 @@ export class GetShiftBySupervisor {
 
   async execute({
     page,
-    supervisorId,
-  }: GetShiftBySupervisorInterfaceRequest): Promise<GetShiftBySupervisorInterfaceResponse> {
+    contract,
+  }: GetShiftByContractInterfaceRequest): Promise<GetShiftByContractInterfaceResponse> {
     const teams: Team[] = [];
     let count = 1;
 
     while (true) {
       const teamsSearch = await this.teamRepository.findMany(
         { page: count },
-        supervisorId
+        undefined,
+        undefined,
+        contract
       );
 
       teamsSearch.map((team) => teams.push(team));

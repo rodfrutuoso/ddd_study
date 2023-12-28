@@ -29,11 +29,6 @@ export class InMemoryShiftRepository implements ShiftRepository {
       )
       .slice((page - 1) * 50, page * 50);
 
-    if (teamsId !== undefined && this.items.length > 3) {
-      console.log(shiftsBetween);
-      console.log(shiftsBetween.length);
-    }
-
     return shiftsBetween;
   }
 
