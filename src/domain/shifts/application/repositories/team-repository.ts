@@ -11,6 +11,6 @@ export interface TeamRepository {
     name?: string
   ): Promise<Array<Team>>;
   findById(teamId: string): Promise<Team | null>;
-  //   delete(team: Team): Promise<void>;
+  delete(team: Team): Promise<void>;
   save(team: Team): Promise<void>;
 }

@@ -37,11 +37,11 @@ export class InMemoryTeamRepository implements TeamRepository {
     return team;
   }
 
-  //   async delete(team: Team) {
-  //     const itemIndex = this.items.findIndex((item) => item.id === team.id);
+  async delete(team: Team) {
+    const itemIndex = this.items.findIndex((item) => item.id === team.id);
 
-  //     this.items.splice(itemIndex, 1);
-  //   }
+    this.items.splice(itemIndex, 1);
+  }
 
   async save(team: Team) {
     const itemIndex = this.items.findIndex((item) => item.id === team.id);
