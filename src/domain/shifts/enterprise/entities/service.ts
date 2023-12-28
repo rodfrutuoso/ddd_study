@@ -28,7 +28,7 @@ export class Service extends Entity<ServiceProps> {
       {
         ...props,
       },
-      id,
+      id
     );
 
     return service;

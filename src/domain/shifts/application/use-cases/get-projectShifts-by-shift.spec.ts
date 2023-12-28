@@ -28,8 +28,8 @@ describe("Get ProjectShift By Project", () => {
     await inMemoryShitRepository.create(newProjectShift3);
 
     const { projectShifts } = await sut.execute({
-      shiftId: "shift1",
       page: 1,
+      shiftId: "shift1",
     });
 
     expect(projectShifts).toHaveLength(2);
@@ -58,7 +58,7 @@ describe("Get ProjectShift By Project", () => {
       await inMemoryShitRepository.create(
         makeProjectShift({
           shiftId: new UniqueEntityId("shift1"),
-        }),
+        })
       );
     }
 

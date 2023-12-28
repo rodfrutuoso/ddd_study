@@ -58,7 +58,7 @@ describe("Get ProjectShift By Project", () => {
       await inMemoryShitRepository.create(
         makeProjectShift({
           projectId: new UniqueEntityId("project1"),
-        }),
+        })
       );
     }
 

@@ -18,9 +18,9 @@ export class GetProjectShiftByProject {
     projectId,
     page,
   }: GetProjectShiftByProjectInterfaceRequest): Promise<GetProjectShiftByProjectInterfaceResponse> {
-    const projectShifts = await this.projectShiftRepository.findManyByProject(
-      projectId,
+    const projectShifts = await this.projectShiftRepository.findMany(
       { page },
+      projectId
     );
 
     return { projectShifts };

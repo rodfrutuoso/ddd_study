@@ -3,13 +3,11 @@ import { ProjectShift } from "@/domain/shifts/enterprise/entities/projectShifit"
 
 export interface ProjectShiftRepository {
   create(projectShift: ProjectShift): Promise<void>;
-  findManyByShift(
-    shiftId: string,
+  findMany(
     params: PaginationParams,
-  ): Promise<Array<ProjectShift>>;
-  findManyByProject(
-    projectId: string,
-    params: PaginationParams,
+    projectId?: string,
+    shiftId?: string,
+    shiftsId?: Array<string>
   ): Promise<Array<ProjectShift>>;
   save(projectShifit: ProjectShift): Promise<void>;
   findById(projectShifitId: string): Promise<ProjectShift | null>;
