@@ -2,25 +2,25 @@
 import { RegisterProject } from "./register-project";
 import { InMemoryProjectRepository } from "test/repositories/in-memory-project-repository";
 
-let inMemoryProjectShitRepository: InMemoryProjectRepository;
+let inMemoryProjectRepository: InMemoryProjectRepository;
 let sut: RegisterProject; // system under test
 
 describe("Register a Project-Shift", () => {
   beforeEach(() => {
-    inMemoryProjectShitRepository = new InMemoryProjectRepository();
-    sut = new RegisterProject(inMemoryProjectShitRepository);
+    inMemoryProjectRepository = new InMemoryProjectRepository();
+    sut = new RegisterProject(inMemoryProjectRepository);
   });
 
   it("should register a project in a specifc shift", async () => {
-    const { newProject } = await sut.execute({
-      project: "B-12345678",
+    const { project } = await sut.execute({
+      projectCode: "B-12345678",
       description: "MP-FAZENDA-DO-SEU-LONGUINHO",
       utd: "ITABERABA",
       city: "ITABERABA",
     });
 
-    expect(newProject.id).toBeTruthy();
-    expect(newProject.utd).toEqual("ITABERABA");
-    expect(newProject.project).toEqual("B-12345678");
+    expect(project.id).toBeTruthy();
+    expect(project.utd).toEqual("ITABERABA");
+    expect(project.projectCode).toEqual("B-12345678");
   });
 });

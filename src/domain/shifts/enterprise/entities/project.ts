@@ -1,8 +1,8 @@
 import { Entity } from "@/core/entities/entity";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 
-interface ProjectProps {
-  project: string;
+export interface ProjectProps {
+  projectCode: string;
   description?: string;
   utd?: string;
   city?: string;
@@ -10,8 +10,8 @@ interface ProjectProps {
 }
 
 export class Project extends Entity<ProjectProps> {
-  get project() {
-    return this.props.project;
+  get projectCode() {
+    return this.props.projectCode;
   }
 
   get description(): string | undefined {

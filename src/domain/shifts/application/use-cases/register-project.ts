@@ -4,7 +4,7 @@ import { Project } from "../../enterprise/entities/project";
 import { ProjectRepository } from "../repositories/project-repository";
 
 interface RegisterProjectInterfaceRequest {
-  project: string;
+  projectCode: string;
   description?: string;
   utd?: string;
   city?: string;
@@ -12,29 +12,29 @@ interface RegisterProjectInterfaceRequest {
 }
 
 interface RegisterProjectInterfaceResponse {
-  newProject: Project;
+  project: Project;
 }
 
 export class RegisterProject {
   constructor(private projectRepository: ProjectRepository) {}
 
   async execute({
-    project,
+    projectCode,
     description,
     utd,
     city,
     group,
   }: RegisterProjectInterfaceRequest): Promise<RegisterProjectInterfaceResponse> {
-    const newProject = Project.create({
-      project,
+    const project = Project.create({
+      projectCode,
       description,
       utd,
       city,
       group,
     });
 
-    await this.projectRepository.create(newProject);
+    await this.projectRepository.create(project);
 
-    return { newProject };
+    return { project };
   }
 }
