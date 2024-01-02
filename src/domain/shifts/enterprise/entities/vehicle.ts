@@ -2,7 +2,7 @@ import { Entity } from "@/core/entities/entity";
 import { Optinal } from "@/core/entities/types/optional";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 
-interface VehicleProps {
+export interface VehicleProps {
   teamId?: UniqueEntityId;
   plate: string;
   type: string;

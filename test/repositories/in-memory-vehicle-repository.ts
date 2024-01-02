@@ -9,8 +9,13 @@ export class InMemoryVehicleRepository implements VehicleRepository {
     this.items.push(vehicle);
   }
 
-  async findMany({ page }: PaginationParams, type: string): Promise<Vehicle[]> {
+  async findMany(
+    { page }: PaginationParams,
+    plate: string,
+    type: string
+  ): Promise<Vehicle[]> {
     const vehicle = this.items
+      .filter((vehicle) => !plate || vehicle.plate === plate)
       .filter((vehicle) => !type || vehicle.type === type)
       .slice((page - 1) * 50, page * 50);
 
