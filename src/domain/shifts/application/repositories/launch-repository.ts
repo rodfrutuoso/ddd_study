@@ -9,6 +9,6 @@ export interface LaunchRepository {
   findMany(
     params: PaginationParams,
     servicesId?: Array<string>,
-    projectShiftId?: string
+    projectShiftsId?: Array<string>
   ): Promise<Array<Launch>>;
 }

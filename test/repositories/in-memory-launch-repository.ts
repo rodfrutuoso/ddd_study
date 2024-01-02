@@ -31,7 +31,7 @@ export class InMemoryLaunchRepository implements LaunchRepository {
   async findMany(
     { page }: PaginationParams,
     servicesId?: Array<string>,
-    projectShiftId?: string
+    projectShiftsId?: Array<string>
   ): Promise<Launch[]> {
     const launchs = this.items
       .filter(
@@ -40,8 +40,9 @@ export class InMemoryLaunchRepository implements LaunchRepository {
           servicesId.includes(projectshift.serviceId.toString())
       )
       .filter(
-        (launch) =>
-          !projectShiftId || launch.projectShiftId.toString() === projectShiftId
+        (projectshift) =>
+          projectShiftsId === undefined ||
+          projectShiftsId.includes(projectshift.projectShiftId.toString())
       )
       .slice((page - 1) * 50, page * 50);
 
