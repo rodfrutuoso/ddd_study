@@ -2,12 +2,12 @@ import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import {
   ProjectShift,
   ProjectShiftProps,
-} from "@/domain/shifts/enterprise/entities/projectShifit";
+} from "@/domain/shifts/enterprise/entities/projectShift";
 import { faker } from "@faker-js/faker";
 
 export function makeProjectShift(
   override: Partial<ProjectShiftProps> = {},
-  id?: UniqueEntityId,
+  id?: UniqueEntityId
 ) {
   const projectshift = ProjectShift.create(
     {
@@ -18,7 +18,7 @@ export function makeProjectShift(
       outOfSchedule: faker.datatype.boolean(),
       ...override,
     },
-    id,
+    id
   );
 
   return projectshift;

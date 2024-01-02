@@ -1,6 +1,6 @@
 /* eslint-disable no-useless-constructor */
 import { ProjectShiftRepository } from "../repositories/projectShift-repository";
-import { ProjectShift } from "../../enterprise/entities/projectShifit";
+import { ProjectShift } from "../../enterprise/entities/projectShift";
 
 interface GetProjectShiftByShiftInterfaceRequest {
   shiftId: string;

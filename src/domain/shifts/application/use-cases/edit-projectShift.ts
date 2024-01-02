@@ -1,7 +1,7 @@
 /* eslint-disable no-useless-constructor */
 /* eslint-disable camelcase */
 import { ProjectShiftRepository } from "../repositories/projectShift-repository";
-import { ProjectShift } from "../../enterprise/entities/projectShifit";
+import { ProjectShift } from "../../enterprise/entities/projectShift";
 
 interface EditProjectShiftInterfaceRequest {
   projectShiftId: string;

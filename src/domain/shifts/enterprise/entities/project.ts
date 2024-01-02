@@ -51,7 +51,7 @@ export class Project extends Entity<ProjectProps> {
       {
         ...props,
       },
-      id,
+      id
     );
 
     return project;

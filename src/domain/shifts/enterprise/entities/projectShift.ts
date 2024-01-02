@@ -47,7 +47,7 @@ export class ProjectShift extends Entity<ProjectShiftProps> {
       {
         ...props,
       },
-      id,
+      id
     );
 
     return projectShift;

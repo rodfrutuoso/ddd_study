@@ -1,7 +1,7 @@
 /* eslint-disable no-useless-constructor */
 /* eslint-disable camelcase */
 import { UniqueEntityId } from "../../../../core/entities/unique-entity-id";
-import { ProjectShift } from "../../enterprise/entities/projectShifit";
+import { ProjectShift } from "../../enterprise/entities/projectShift";
 import { ProjectShiftRepository } from "../repositories/projectShift-repository";
 
 interface RegisterProjectShiftInterfaceRequest {

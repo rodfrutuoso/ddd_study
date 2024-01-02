@@ -1,6 +1,6 @@
 /* eslint-disable no-useless-constructor */
 import { ProjectShiftRepository } from "../repositories/projectShift-repository";
-import { ProjectShift } from "../../enterprise/entities/projectShifit";
+import { ProjectShift } from "../../enterprise/entities/projectShift";
 import { ShiftRepository } from "../repositories/shift-repository";
 import { Shift } from "../../enterprise/entities/shift";
 

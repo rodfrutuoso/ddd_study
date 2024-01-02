@@ -1,6 +1,6 @@
 import { PaginationParams } from "@/core/repositories/pagination-params";
 import { ProjectShiftRepository } from "@/domain/shifts/application/repositories/projectShift-repository";
-import { ProjectShift } from "@/domain/shifts/enterprise/entities/projectShifit";
+import { ProjectShift } from "@/domain/shifts/enterprise/entities/projectShift";
 
 export class InMemoryProjectShiftRepository implements ProjectShiftRepository {
   public items: ProjectShift[] = [];
