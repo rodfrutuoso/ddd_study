@@ -75,7 +75,7 @@ export class Shift extends Entity<ShiftProps> {
         ...props,
         created_at: new Date(),
       },
-      id,
+      id
     );
 
     return shift;

@@ -24,8 +24,6 @@ describe("Get Project By Project", () => {
     await inMemoryProjectRepository.create(newProject2);
     await inMemoryProjectRepository.create(newProject3);
 
-    console.log(inMemoryProjectRepository.items);
-
     const { project } = await sut.execute({
       page: 1,
       projectCode: "B-1012505",
@@ -81,8 +79,6 @@ describe("Get Project By Project", () => {
     await inMemoryProjectRepository.create(newProject1);
     await inMemoryProjectRepository.create(newProject2);
     await inMemoryProjectRepository.create(newProject3);
-
-    console.log(inMemoryProjectRepository.items);
 
     const { project } = await sut.execute({
       page: 1,

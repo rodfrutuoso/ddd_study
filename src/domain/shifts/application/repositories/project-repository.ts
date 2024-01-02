@@ -10,7 +10,7 @@ export interface ProjectRepository {
     city?: string,
     utd?: string
   ): Promise<Array<Project>>;
-  //   save(projectShifit: Project): Promise<void>;
-  //   findById(projectShifitId: string): Promise<Project | null>;
-  //   delete(projectShifit: Project): Promise<void>;
+  save(project: Project): Promise<void>;
+  findById(projectId: string): Promise<Project | null>;
+  //   delete(project: Project): Promise<void>;
 }

@@ -18,7 +18,7 @@ export class Project extends Entity<ProjectProps> {
     return this.props.description;
   }
 
-  set description(description: string) {
+  set description(description: string | undefined) {
     this.props.description = description;
   }
 
@@ -26,7 +26,7 @@ export class Project extends Entity<ProjectProps> {
     return this.props.utd;
   }
 
-  set utd(utd: string) {
+  set utd(utd: string | undefined) {
     this.props.utd = utd;
   }
 
@@ -34,7 +34,7 @@ export class Project extends Entity<ProjectProps> {
     return this.props.city;
   }
 
-  set city(city: string) {
+  set city(city: string | undefined) {
     this.props.city = city;
   }
 
@@ -42,7 +42,7 @@ export class Project extends Entity<ProjectProps> {
     return this.props.group;
   }
 
-  set group(group: string) {
+  set group(group: string | undefined) {
     this.props.group = group;
   }
 

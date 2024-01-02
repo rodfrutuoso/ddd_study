@@ -27,4 +27,18 @@ export class InMemoryProjectRepository implements ProjectRepository {
 
     return project;
   }
+
+  async save(project: Project): Promise<void> {
+    const itemIndex = this.items.findIndex((item) => item.id === project.id);
+
+    this.items[itemIndex] = project;
+  }
+
+  async findById(projectId: string): Promise<Project | null> {
+    const project = this.items.find((item) => item.id.toString() === projectId);
+
+    if (!project) return null;
+
+    return project;
+  }
 }
