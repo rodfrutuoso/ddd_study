@@ -1,5 +1,8 @@
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
-import { Shift, ShiftProps } from "@/domain/shifts/enterprise/entities/shift";
+import {
+  Shift,
+  ShiftProps,
+} from "@/domain/production/shift/enterprise/entities/shift";
 import { faker } from "@faker-js/faker";
 
 export function makeShift(

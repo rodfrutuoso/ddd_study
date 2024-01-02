@@ -2,7 +2,7 @@ import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import {
   Project,
   ProjectProps,
-} from "@/domain/shifts/enterprise/entities/project";
+} from "@/domain/production/project/enterprise/entities/project";
 import { faker } from "@faker-js/faker";
 
 export function makeProject(

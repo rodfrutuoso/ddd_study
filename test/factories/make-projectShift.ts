@@ -2,7 +2,7 @@ import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import {
   ProjectShift,
   ProjectShiftProps,
-} from "@/domain/shifts/enterprise/entities/projectShift";
+} from "@/domain/production/projectShift/enterprise/entities/projectShift";
 import { faker } from "@faker-js/faker";
 
 export function makeProjectShift(

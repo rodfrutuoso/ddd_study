@@ -2,7 +2,7 @@ import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import {
   Service,
   ServiceProps,
-} from "@/domain/shifts/enterprise/entities/service";
+} from "@/domain/production/service/enterprise/entities/service";
 import { faker } from "@faker-js/faker";
 
 export function makeService(

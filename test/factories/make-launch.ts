@@ -2,13 +2,13 @@ import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import {
   Launch,
   LaunchProps,
-} from "@/domain/shifts/enterprise/entities/launch";
-import { Value } from "@/domain/shifts/enterprise/entities/value-objects/value";
+} from "@/domain/production/launch/enterprise/entities/launch";
+import { Value } from "@/domain/production/launch/enterprise/entities/value-objects/value";
 import { faker } from "@faker-js/faker";
 
 export function makeLaunch(
   override: Partial<LaunchProps> = {},
-  id?: UniqueEntityId,
+  id?: UniqueEntityId
 ) {
   const launch = Launch.create(
     {
@@ -17,7 +17,7 @@ export function makeLaunch(
       projectShiftId: new UniqueEntityId(faker.string.uuid()),
       ...override,
     },
-    id,
+    id
   );
 
   return launch;

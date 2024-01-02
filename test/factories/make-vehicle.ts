@@ -2,7 +2,7 @@ import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import {
   Vehicle,
   VehicleProps,
-} from "@/domain/shifts/enterprise/entities/vehicle";
+} from "@/domain/production/vehicle/enterprise/entities/vehicle";
 import { faker } from "@faker-js/faker";
 
 export function makeVehicle(
