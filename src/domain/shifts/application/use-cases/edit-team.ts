@@ -35,7 +35,7 @@ export class EditTeam {
 
     if (!team) throw new Error("Team not found");
 
-    if (programmerType !== "ADM" && programmerType !== "PROGRAMAÇÂO")
+    if (programmerType !== "ADM" && programmerType !== "PROGRAMAÇÃO")
       throw new Error("Not authorized");
 
     team.name = name ?? team.name;

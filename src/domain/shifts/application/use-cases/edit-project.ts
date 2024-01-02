@@ -31,7 +31,7 @@ export class EditProject {
 
     if (!project) throw new Error("Project not found");
 
-    if (programmerType !== "ADM" && programmerType !== "PROGRAMAÇÂO")
+    if (programmerType !== "ADM" && programmerType !== "PROGRAMAÇÃO")
       throw new Error("Not authorized");
 
     project.description = description ?? project.description;

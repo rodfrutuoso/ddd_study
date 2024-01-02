@@ -19,23 +19,17 @@ export class InMemoryServiceRepository implements ServiceRepository {
     return service;
   }
 
-  //   async findById(serviceId: string) {
-  //     const service = this.items.find((item) => item.id.toString() === serviceId);
+  async findById(serviceId: string) {
+    const service = this.items.find((item) => item.id.toString() === serviceId);
 
-  //     if (!service) return null;
+    if (!service) return null;
 
-  //     return service;
-  //   }
+    return service;
+  }
 
-  //   async delete(service: Service) {
-  //     const itemIndex = this.items.findIndex((item) => item.id === service.id);
+  async save(service: Service) {
+    const itemIndex = this.items.findIndex((item) => item.id === service.id);
 
-  //     this.items.splice(itemIndex, 1);
-  //   }
-
-  //   async save(service: Service) {
-  //     const itemIndex = this.items.findIndex((item) => item.id === service.id);
-
-  //     this.items[itemIndex] = service;
-  //   }
+    this.items[itemIndex] = service;
+  }
 }

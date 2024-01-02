@@ -4,13 +4,13 @@ import { InMemoryTeamRepository } from "test/repositories/in-memory-team-reposit
 import { makeTeam } from "test/factories/make-team";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 
-let inMemoryShitRepository: InMemoryTeamRepository;
+let inMemoryTeamRepository: InMemoryTeamRepository;
 let sut: EditTeam; // system under test
 
 describe("Edit Team By Id", () => {
   beforeEach(() => {
-    inMemoryShitRepository = new InMemoryTeamRepository();
-    sut = new EditTeam(inMemoryShitRepository);
+    inMemoryTeamRepository = new InMemoryTeamRepository();
+    sut = new EditTeam(inMemoryTeamRepository);
   });
 
   it("should be albe to edit a team by its id", async () => {
@@ -19,7 +19,7 @@ describe("Edit Team By Id", () => {
       new UniqueEntityId("abc-123-xyz")
     );
 
-    await inMemoryShitRepository.create(newTeam);
+    await inMemoryTeamRepository.create(newTeam);
 
     await sut.execute({
       teamId: newTeam.id.toString(),
@@ -28,11 +28,11 @@ describe("Edit Team By Id", () => {
       deactivation_date: new Date(),
     });
 
-    expect(await inMemoryShitRepository.items[0]).toMatchObject({
+    expect(await inMemoryTeamRepository.items[0]).toMatchObject({
       name: "ECOLM001",
     });
     expect(
-      await inMemoryShitRepository.items[0].deactivation_date
+      await inMemoryTeamRepository.items[0].deactivation_date
     ).toBeInstanceOf(Date);
   });
 
@@ -42,7 +42,7 @@ describe("Edit Team By Id", () => {
       new UniqueEntityId("abc-123-xyz")
     );
 
-    await inMemoryShitRepository.create(newTeam);
+    await inMemoryTeamRepository.create(newTeam);
 
     expect(async () => {
       return await sut.execute({

@@ -30,7 +30,7 @@ export class EditProjectShift {
 
     if (!projectshift) throw new Error("ProjectShift not found");
 
-    if (programmerType !== "ADM" && programmerType !== "PROGRAMAÇÂO")
+    if (programmerType !== "ADM" && programmerType !== "PROGRAMAÇÃO")
       throw new Error("Not authorized");
 
     projectshift.projectStage = projectStage ?? projectshift.projectStage;

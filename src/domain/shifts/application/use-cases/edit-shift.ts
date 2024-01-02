@@ -30,7 +30,7 @@ export class EditShift {
 
     if (!shift) throw new Error("Shift not found");
 
-    if (programmerType !== "ADM" && programmerType !== "PROGRAMAÇÂO")
+    if (programmerType !== "ADM" && programmerType !== "PROGRAMAÇÃO")
       throw new Error("Not authorized");
 
     shift.odometer_end = odometer_end ?? shift.odometer_end;

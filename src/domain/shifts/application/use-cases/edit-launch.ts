@@ -27,7 +27,7 @@ export class EditLaunch {
 
     if (!launch) throw new Error("Launch not found");
 
-    if (programmerType !== "ADM" && programmerType !== "PROGRAMAÇÂO")
+    if (programmerType !== "ADM" && programmerType !== "PROGRAMAÇÃO")
       throw new Error("Not authorized");
 
     launch.value = new Value(value) ?? launch.value;
