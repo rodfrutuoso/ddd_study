@@ -14,7 +14,7 @@ export class Vehicle extends Entity<VehicleProps> {
     return this.props.teamId;
   }
 
-  set teamId(teamId: UniqueEntityId) {
+  set teamId(teamId: UniqueEntityId | undefined) {
     this.props.teamId = teamId;
   }
 
@@ -24,6 +24,10 @@ export class Vehicle extends Entity<VehicleProps> {
 
   get type() {
     return this.props.type;
+  }
+
+  set type(type: string) {
+    this.props.type = type;
   }
 
   get created_at() {
