@@ -3,14 +3,14 @@ import { Optinal } from "@/core/entities/types/optional";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 
 interface VehicleProps {
-  teamId: UniqueEntityId;
+  teamId?: UniqueEntityId;
   plate: string;
   type: string;
   created_at: Date;
 }
 
 export class Vehicle extends Entity<VehicleProps> {
-  get teamId() {
+  get teamId(): UniqueEntityId | undefined {
     return this.props.teamId;
   }
 
@@ -32,14 +32,14 @@ export class Vehicle extends Entity<VehicleProps> {
 
   static create(
     props: Optinal<VehicleProps, "created_at">,
-    id?: UniqueEntityId,
+    id?: UniqueEntityId
   ) {
     const vehicle = new Vehicle(
       {
         ...props,
         created_at: new Date(),
       },
-      id,
+      id
     );
 
     return vehicle;

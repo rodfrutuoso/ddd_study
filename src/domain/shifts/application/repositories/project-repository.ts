@@ -12,5 +12,4 @@ export interface ProjectRepository {
   ): Promise<Array<Project>>;
   save(project: Project): Promise<void>;
   findById(projectId: string): Promise<Project | null>;
-  //   delete(project: Project): Promise<void>;
 }
