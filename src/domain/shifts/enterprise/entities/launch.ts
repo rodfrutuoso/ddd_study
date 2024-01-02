@@ -30,7 +30,7 @@ export class Launch extends Entity<LaunchProps> {
       {
         ...props,
       },
-      id,
+      id
     );
 
     return launch;
