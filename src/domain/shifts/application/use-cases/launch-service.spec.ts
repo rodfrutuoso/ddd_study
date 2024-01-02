@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { LaunchService } from "./launch-service";
-import { InMemorylaunchRepository } from "test/repositories/in-memory-launch-repository";
+import { InMemoryLaunchRepository } from "test/repositories/in-memory-launch-repository";
 
-let inMemoryLaunchRepository: InMemorylaunchRepository;
+let inMemoryLaunchRepository: InMemoryLaunchRepository;
 let sut: LaunchService; // system under test
 
 describe("Launch Service", () => {
   beforeEach(() => {
-    inMemoryLaunchRepository = new InMemorylaunchRepository();
+    inMemoryLaunchRepository = new InMemoryLaunchRepository();
     sut = new LaunchService(inMemoryLaunchRepository);
   });
   it("should be able to launch a service of a specific project in a shift", async () => {

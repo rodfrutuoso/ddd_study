@@ -1,3 +1,4 @@
+import { PaginationParams } from "@/core/repositories/pagination-params";
 import { Launch } from "@/domain/shifts/enterprise/entities/launch";
 
 export interface LaunchRepository {
@@ -5,4 +6,9 @@ export interface LaunchRepository {
   findById(launchId: string): Promise<Launch | null>;
   delete(launch: Launch): Promise<void>;
   save(launch: Launch): Promise<void>;
+  findMany(
+    params: PaginationParams,
+    servicesId?: Array<string>,
+    projectShiftId?: string
+  ): Promise<Array<Launch>>;
 }

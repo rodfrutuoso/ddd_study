@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { DeleteLaunch } from "./delete-launch";
-import { InMemorylaunchRepository } from "test/repositories/in-memory-launch-repository";
+import { InMemoryLaunchRepository } from "test/repositories/in-memory-launch-repository";
 import { makeLaunch } from "test/factories/make-launch";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 
-let inMemoryLaunchRepository: InMemorylaunchRepository;
+let inMemoryLaunchRepository: InMemoryLaunchRepository;
 let sut: DeleteLaunch; // system under test
 
 describe("Delete Launch By Id", () => {
   beforeEach(() => {
-    inMemoryLaunchRepository = new InMemorylaunchRepository();
+    inMemoryLaunchRepository = new InMemoryLaunchRepository();
     sut = new DeleteLaunch(inMemoryLaunchRepository);
   });
 
