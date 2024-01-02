@@ -4,7 +4,7 @@ import { faker } from "@faker-js/faker";
 
 export function makeTeam(
   override: Partial<TeamProps> = {},
-  id?: UniqueEntityId,
+  id?: UniqueEntityId
 ) {
   const team = Team.create(
     {
@@ -23,7 +23,7 @@ export function makeTeam(
         : faker.date.recent(),
       ...override,
     },
-    id,
+    id
   );
 
   return team;

@@ -1,7 +1,7 @@
 import { Entity } from "@/core/entities/entity";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 
-interface ServiceProps {
+export interface ServiceProps {
   code: string;
   description: string;
 }

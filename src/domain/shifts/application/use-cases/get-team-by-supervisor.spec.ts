@@ -55,7 +55,7 @@ describe("Get Team By supervisor", () => {
       await inMemoryTeamRepository.create(
         makeTeam({
           supervisorId: new UniqueEntityId("ECOLM001"),
-        }),
+        })
       );
     }
     // console.log(inMemoryTeamRepository.items);

@@ -2,7 +2,7 @@
 import { Team } from "../../enterprise/entities/team";
 import { TeamRepository } from "../repositories/team-repository";
 
-interface GetTeamByTeamInterfaceRequest {
+interface GetTeamBySupervisorInterfaceRequest {
   page: number;
   supervisorId?: string;
   leaderId?: string;
@@ -10,7 +10,7 @@ interface GetTeamByTeamInterfaceRequest {
   name?: string;
 }
 
-interface GetTeamByTeamInterfaceResponse {
+interface GetTeamBySupervisorInterfaceResponse {
   teams: Array<Team>;
 }
 
@@ -23,7 +23,7 @@ export class GetTeamBySupervisor {
     leaderId,
     contract,
     name,
-  }: GetTeamByTeamInterfaceRequest): Promise<GetTeamByTeamInterfaceResponse> {
+  }: GetTeamBySupervisorInterfaceRequest): Promise<GetTeamBySupervisorInterfaceResponse> {
     const teams = await this.teamRepository.findMany(
       { page },
       supervisorId,

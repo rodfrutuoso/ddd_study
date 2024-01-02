@@ -1,3 +1,4 @@
+import { PaginationParams } from "@/core/repositories/pagination-params";
 import { ServiceRepository } from "@/domain/shifts/application/repositories/service-repository";
 import { Service } from "@/domain/shifts/enterprise/entities/service";
 
@@ -7,26 +8,16 @@ export class InMemoryServiceRepository implements ServiceRepository {
     this.items.push(service);
   }
 
-  //   async findMany(
-  //     { page }: PaginationParams,
-  //     supervisorId?: string,
-  //     leaderId?: string,
-  //     contract?: string,
-  //     name?: string
-  //   ): Promise<Service[]> {
-  //     const services = this.items
-  //       // eslint-disable-next-line prettier/prettier
-  //       .filter(
-  //         (service) =>
-  //           !supervisorId || service.supervisorId?.toString() === supervisorId
-  //       )
-  //       .filter((service) => !leaderId || service.leaderId.toString() === leaderId)
-  //       .filter((service) => !contract || service.contract === contract)
-  //       .filter((service) => !name || service.name === name)
-  //       .slice((page - 1) * 50, page * 50);
+  async findMany(
+    { page }: PaginationParams,
+    serviceCode?: string
+  ): Promise<Service[]> {
+    const service = this.items
+      .filter((service) => !serviceCode || service.code.includes(serviceCode))
+      .slice((page - 1) * 50, page * 50);
 
-  //     return services;
-  //   }
+    return service;
+  }
 
   //   async findById(serviceId: string) {
   //     const service = this.items.find((item) => item.id.toString() === serviceId);
