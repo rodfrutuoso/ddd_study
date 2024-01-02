@@ -20,6 +20,9 @@ eu tenho que conseguir filtrar e programacao por data, contrato e por equipe
 - `Clean Architecture é baseada em desacoplamento`
 - > npm i @faker-js/faker -D
 - > npm i --save-dev prettier `utilizei para tirar o alerta pra colocar vírgula no final de cada frase`
+- > npm i -D @vitest/ui
+- > vitest --ui
+- > npx vite preview --outDir ./html
 
 ### Clean Architecture
 Há 4 acamadas Infraestrutura, Adaptadores de Interface, Casos de Uso e Entidades.
