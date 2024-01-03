@@ -20,7 +20,7 @@ export class EPIResponse extends Response<EPIResponseProps> {
       {
         ...props,
       },
-      id,
+      id
     );
 
     return epiResponse;

@@ -28,14 +28,14 @@ export class APRReport extends Question<APRReportProps> {
 
   static create(
     props: Optinal<APRReportProps, "startDate">,
-    id?: UniqueEntityId,
+    id?: UniqueEntityId
   ) {
     const aprReport = new APRReport(
       {
         ...props,
         startDate: new Date(),
       },
-      id,
+      id
     );
 
     return aprReport;

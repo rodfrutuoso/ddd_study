@@ -20,7 +20,7 @@ export class APRMeasure extends Entity<APRMeasureProps> {
       {
         ...props,
       },
-      id,
+      id
     );
 
     return aprMeasure;

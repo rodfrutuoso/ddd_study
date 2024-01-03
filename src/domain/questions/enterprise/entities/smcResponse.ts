@@ -25,7 +25,7 @@ export class SMCResponse extends Response<SMCResponseProps> {
       {
         ...props,
       },
-      id,
+      id
     );
 
     return smcResponse;

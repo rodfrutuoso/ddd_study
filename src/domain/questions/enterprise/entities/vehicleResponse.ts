@@ -20,7 +20,7 @@ export class VehicleResponse extends Response<VehicleResponseProps> {
       {
         ...props,
       },
-      id,
+      id
     );
 
     return vehicleResponse;

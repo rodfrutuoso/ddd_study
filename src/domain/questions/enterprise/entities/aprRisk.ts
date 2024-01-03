@@ -13,14 +13,14 @@ export class APRRisk extends Question<APRRiskProps> {
 
   static create(
     props: Optinal<APRRiskProps, "startDate">,
-    id?: UniqueEntityId,
+    id?: UniqueEntityId
   ) {
     const aprRisk = new APRRisk(
       {
         ...props,
         startDate: new Date(),
       },
-      id,
+      id
     );
 
     return aprRisk;

@@ -8,14 +8,14 @@ export type SMCQuestionProps = QuestionProps;
 export class SMCQuestion extends Question<SMCQuestionProps> {
   static create(
     props: Optinal<SMCQuestionProps, "startDate">,
-    id?: UniqueEntityId,
+    id?: UniqueEntityId
   ) {
     const smcQuestion = new SMCQuestion(
       {
         ...props,
         startDate: new Date(),
       },
-      id,
+      id
     );
 
     return smcQuestion;

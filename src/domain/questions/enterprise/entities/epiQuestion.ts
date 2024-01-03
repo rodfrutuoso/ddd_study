@@ -7,14 +7,14 @@ export type EPIQuestionProps = QuestionProps;
 export class EPIQuestion extends Question<EPIQuestionProps> {
   static create(
     props: Optinal<EPIQuestionProps, "startDate">,
-    id?: UniqueEntityId,
+    id?: UniqueEntityId
   ) {
     const epiQuestion = new EPIQuestion(
       {
         ...props,
         startDate: new Date(),
       },
-      id,
+      id
     );
 
     return epiQuestion;

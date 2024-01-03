@@ -7,14 +7,14 @@ export type VehicleQuestionProps = QuestionProps;
 export class VehicleQuestion extends Question<VehicleQuestionProps> {
   static create(
     props: Optinal<VehicleQuestionProps, "startDate">,
-    id?: UniqueEntityId,
+    id?: UniqueEntityId
   ) {
     const vehicleQuestion = new VehicleQuestion(
       {
         ...props,
         startDate: new Date(),
       },
-      id,
+      id
     );
 
     return vehicleQuestion;

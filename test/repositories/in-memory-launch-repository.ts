@@ -1,6 +1,6 @@
 import { PaginationParams } from "@/core/repositories/pagination-params";
-import { LaunchRepository } from "@/domain/shifts/application/repositories/launch-repository";
-import { Launch } from "@/domain/shifts/enterprise/entities/launch";
+import { LaunchRepository } from "@/domain/production/launch/application/repositories/launch-repository";
+import { Launch } from "@/domain/production/launch/enterprise/entities/launch";
 
 export class InMemoryLaunchRepository implements LaunchRepository {
   public items: Launch[] = [];
