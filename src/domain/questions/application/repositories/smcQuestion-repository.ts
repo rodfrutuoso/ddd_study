@@ -2,7 +2,7 @@ import { PaginationParams } from "@/core/repositories/pagination-params";
 import { SMCQuestion } from "@/domain/questions/enterprise/entities/smcQuestion";
 
 export interface SmcQuestionRepository {
-  create(smcquestion: SMCQuestion): Promise<void>;
+  create(smcQuestion: SMCQuestion): Promise<void>;
   findMany(
     params: PaginationParams,
     smcquestionCode?: string,
@@ -10,6 +10,6 @@ export interface SmcQuestionRepository {
     city?: string,
     utd?: string
   ): Promise<Array<SMCQuestion>>;
-  save(smcquestion: SMCQuestion): Promise<void>;
-  findById(smcquestionId: string): Promise<SMCQuestion | null>;
+  save(smcQuestion: SMCQuestion): Promise<void>;
+  findById(smcQuestionId: string): Promise<SMCQuestion | null>;
 }

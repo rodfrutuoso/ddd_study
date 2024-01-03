@@ -3,7 +3,8 @@ import { Optinal } from "@/core/entities/types/optional";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { Question, QuestionProps } from "./question";
 
-export type SMCQuestionProps = QuestionProps;
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface SMCQuestionProps extends QuestionProps {}
 
 export class SMCQuestion extends Question<SMCQuestionProps> {
   static create(

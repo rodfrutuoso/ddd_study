@@ -1,5 +1,4 @@
 /* eslint-disable no-useless-constructor */
-/* eslint-disable camelcase */
 import { SMCQuestion } from "../../enterprise/entities/smcQuestion";
 import { SmcQuestionRepository } from "../repositories/smcQuestion-repository";
 

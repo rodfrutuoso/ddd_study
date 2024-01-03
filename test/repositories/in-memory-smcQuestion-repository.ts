@@ -20,12 +20,12 @@ export class InMemorySmcQuestionRepository implements SmcQuestionRepository {
     return smcQuestions;
   }
 
-  async save(SMCQuestion: SMCQuestion): Promise<void> {
+  async save(smcQuestion: SMCQuestion): Promise<void> {
     const itemIndex = this.items.findIndex(
-      (item) => item.id === SMCQuestion.id
+      (item) => item.id === smcQuestion.id
     );
 
-    this.items[itemIndex] = SMCQuestion;
+    this.items[itemIndex] = smcQuestion;
   }
 
   async findById(SMCQuestionId: string): Promise<SMCQuestion | null> {
