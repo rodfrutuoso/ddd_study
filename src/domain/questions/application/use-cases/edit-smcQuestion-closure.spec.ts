@@ -24,8 +24,6 @@ describe("Edit SMC Question By Id", () => {
       programmerType: "PROGRAMAÇÃO",
     });
 
-    console.log(inMemorySmcQuestionRepository.items);
-
     expect(await inMemorySmcQuestionRepository.items[0]).toMatchObject({
       id: newSMCQuestion.id,
       question: "FAZENDA-NUM-SEI-DAS-CONTAS",

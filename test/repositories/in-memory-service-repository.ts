@@ -1,6 +1,6 @@
 import { PaginationParams } from "@/core/repositories/pagination-params";
-import { ServiceRepository } from "@/domain/shifts/application/repositories/service-repository";
-import { Service } from "@/domain/shifts/enterprise/entities/service";
+import { ServiceRepository } from "@/domain/production/service/application/repositories/service-repository";
+import { Service } from "@/domain/production/service/enterprise/entities/service";
 
 export class InMemoryServiceRepository implements ServiceRepository {
   public items: Service[] = [];

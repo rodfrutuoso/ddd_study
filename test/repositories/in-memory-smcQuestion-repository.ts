@@ -11,10 +11,19 @@ export class InMemorySmcQuestionRepository implements SmcQuestionRepository {
 
   async findMany(
     { page }: PaginationParams,
-    question: string
+    date?: Date,
+    question?: string
   ): Promise<SMCQuestion[]> {
     const smcQuestions = this.items
-      .filter((smcQuestion) => smcQuestion.question.includes(question))
+      .filter(
+        (smcQuestion) => !question || smcQuestion.question.includes(question)
+      )
+      .filter(
+        (smcQuestion) =>
+          !date ||
+          (smcQuestion.startDate <= date &&
+            (!smcQuestion.endDate || smcQuestion.endDate >= date))
+      )
       .slice((page - 1) * 50, page * 50);
 
     return smcQuestions;

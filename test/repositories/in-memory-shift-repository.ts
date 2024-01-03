@@ -1,6 +1,6 @@
 import { PaginationParams } from "@/core/repositories/pagination-params";
-import { ShiftRepository } from "@/domain/shifts/application/repositories/shift-repository";
-import { Shift } from "@/domain/shifts/enterprise/entities/shift";
+import { ShiftRepository } from "@/domain/production/shift/application/repositories/shift-repository";
+import { Shift } from "@/domain/production/shift/enterprise/entities/shift";
 
 export class InMemoryShiftRepository implements ShiftRepository {
   public items: Shift[] = [];

@@ -14,7 +14,7 @@ export class SMCQuestion extends Question<SMCQuestionProps> {
     const smcQuestion = new SMCQuestion(
       {
         ...props,
-        startDate: new Date(),
+        startDate: props.startDate ?? new Date(),
       },
       id
     );
