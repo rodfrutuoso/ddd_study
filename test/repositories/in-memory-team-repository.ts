@@ -1,6 +1,6 @@
 import { PaginationParams } from "@/core/repositories/pagination-params";
-import { TeamRepository } from "@/domain/shifts/application/repositories/team-repository";
-import { Team } from "@/domain/shifts/enterprise/entities/team";
+import { TeamRepository } from "@/domain/production/team/application/repositories/team-repository";
+import { Team } from "@/domain/production/team/enterprise/entities/team";
 
 export class InMemoryTeamRepository implements TeamRepository {
   public items: Team[] = [];

@@ -2,8 +2,8 @@ import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { Response, ResponseProps } from "./response";
 
 export interface SMCResponseProps extends ResponseProps {
-  cameraCode: string;
-  flaw: string;
+  cameraCode?: string;
+  flaw?: string;
   shiftId: UniqueEntityId;
 }
 
