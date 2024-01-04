@@ -2,7 +2,7 @@ import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { Response, ResponseProps } from "./response";
 
 export interface VehicleResponseProps extends ResponseProps {
-  vehicleId: UniqueEntityId;
+  vehicleId?: UniqueEntityId;
   shiftId: UniqueEntityId;
 }
 
