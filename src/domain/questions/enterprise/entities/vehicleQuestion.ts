@@ -12,7 +12,7 @@ export class VehicleQuestion extends Question<VehicleQuestionProps> {
     const vehicleQuestion = new VehicleQuestion(
       {
         ...props,
-        startDate: new Date(),
+        startDate: props.startDate ?? new Date(),
       },
       id
     );

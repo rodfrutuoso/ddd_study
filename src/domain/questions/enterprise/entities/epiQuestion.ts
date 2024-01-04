@@ -12,7 +12,7 @@ export class EPIQuestion extends Question<EPIQuestionProps> {
     const epiQuestion = new EPIQuestion(
       {
         ...props,
-        startDate: new Date(),
+        startDate: props.startDate ?? new Date(),
       },
       id
     );

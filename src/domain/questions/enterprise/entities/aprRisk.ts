@@ -18,7 +18,7 @@ export class APRRisk extends Question<APRRiskProps> {
     const aprRisk = new APRRisk(
       {
         ...props,
-        startDate: new Date(),
+        startDate: props.startDate ?? new Date(),
       },
       id
     );

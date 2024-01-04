@@ -33,7 +33,7 @@ export class APRReport extends Question<APRReportProps> {
     const aprReport = new APRReport(
       {
         ...props,
-        startDate: new Date(),
+        startDate: props.startDate ?? new Date(),
       },
       id
     );
