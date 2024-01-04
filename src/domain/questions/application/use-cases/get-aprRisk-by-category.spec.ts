@@ -1,25 +1,25 @@
-import { GetAprRiskByRisk } from "./get-aprRisk-by-risk";
+import { GetAprRiskByCategory } from "./get-aprRisk-by-category";
 import { InMemoryAprRiskRepository } from "test/repositories/in-memory-aprRisk-repository";
 import { makeAprRisk } from "test/factories/make-aprRisk";
 
 let inMemoryAprRiskRepository: InMemoryAprRiskRepository;
-let sut: GetAprRiskByRisk; // system under test
+let sut: GetAprRiskByCategory; // system under test
 
 describe("Get AprRisk By AprRisk", () => {
   beforeEach(() => {
     inMemoryAprRiskRepository = new InMemoryAprRiskRepository();
-    sut = new GetAprRiskByRisk(inMemoryAprRiskRepository);
+    sut = new GetAprRiskByCategory(inMemoryAprRiskRepository);
   });
 
-  it("should be able to get a list of aprRisks of a question", async () => {
+  it("should be able to get a list of aprRisks of a category", async () => {
     const newAprRisk1 = makeAprRisk({
-      question: "Houve problema com a camera?",
+      category: "Houve problema com a camera?",
     });
     const newAprRisk2 = makeAprRisk({
-      question: "Houve problema com a camera?",
+      category: "Houve problema com a camera?",
     });
     const newAprRisk3 = makeAprRisk({
-      question: "A gravação funcionu corretamente?",
+      category: "A gravação funcionu corretamente?",
     });
 
     await inMemoryAprRiskRepository.create(newAprRisk1);
@@ -28,22 +28,22 @@ describe("Get AprRisk By AprRisk", () => {
 
     const { aprrisk } = await sut.execute({
       page: 1,
-      question: "Houve problema com a camera",
+      category: "Houve problema com a camera",
     });
 
     expect(aprrisk).toHaveLength(2);
     expect(aprrisk).not.toContain(newAprRisk3);
   });
 
-  it("should be able to get a empty list of apr risks when there is no apr risks of the informed risk", async () => {
+  it("should be able to get a empty list of apr risks when there is no apr categorys of the informed category", async () => {
     const newAprRisk1 = makeAprRisk({
-      question: "Houve problema com a camera?",
+      category: "Houve problema com a camera?",
     });
     const newAprRisk2 = makeAprRisk({
-      question: "Houve problema com a camera?",
+      category: "Houve problema com a camera?",
     });
     const newAprRisk3 = makeAprRisk({
-      question: "A gravação funcionu corretamente?",
+      category: "A gravação funcionu corretamente?",
     });
 
     await inMemoryAprRiskRepository.create(newAprRisk1);
@@ -52,24 +52,24 @@ describe("Get AprRisk By AprRisk", () => {
 
     const { aprrisk } = await sut.execute({
       page: 1,
-      question: "Pergunta de teste",
+      category: "Pergunta de teste",
     });
 
     expect(aprrisk).toHaveLength(0);
   });
 
-  it("should be able paginate a list of aprrisks of a date", async () => {
+  it("should be able paginate a list of aprrisks of a category", async () => {
     for (let i = 1; i <= 57; i++) {
       await inMemoryAprRiskRepository.create(
         makeAprRisk({
-          question: "Houve problema com a camera?",
+          category: "Houve problema com a camera?",
         })
       );
     }
 
     const { aprrisk } = await sut.execute({
       page: 2,
-      question: "Houve problema com a camera?",
+      category: "Houve problema com a camera?",
     });
 
     expect(aprrisk).toHaveLength(7);
