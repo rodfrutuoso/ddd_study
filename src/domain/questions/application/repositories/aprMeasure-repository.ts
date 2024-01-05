@@ -6,7 +6,7 @@ export interface AprMeasureRepository {
   findMany(
     params: PaginationParams,
     date?: Date,
-    question?: string,
+    response?: string,
     category?: string
   ): Promise<Array<APRMeasure>>;
   save(aprMeasure: APRMeasure): Promise<void>;
