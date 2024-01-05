@@ -6,7 +6,7 @@ import { makeAprRisk } from "test/factories/make-aprRisk";
 let inMemoryAprRiskRepository: InMemoryAprRiskRepository;
 let sut: EditAprRisk; // system under test
 
-describe("Edit EPI Question By Id", () => {
+describe("Edit APR Risk By Id", () => {
   beforeEach(() => {
     inMemoryAprRiskRepository = new InMemoryAprRiskRepository();
     sut = new EditAprRisk(inMemoryAprRiskRepository);
@@ -33,7 +33,7 @@ describe("Edit EPI Question By Id", () => {
     );
   });
 
-  it("should not be albe to edit a epi question by its id from a user that type is not ADM or PROGRAMAÇÃO", async () => {
+  it("should not be albe to edit a APR Response by its id from a user that type is not ADM or PROGRAMAÇÃO", async () => {
     const newAprRisk = await makeAprRisk({
       question: "FAZENDA-NUM-SEI-DAS-CONTAS",
     });
