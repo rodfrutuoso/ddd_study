@@ -12,10 +12,7 @@ export function makeShift(
   const shift = Shift.create(
     {
       teamId: new UniqueEntityId(faker.string.uuid()),
-      date: faker.date.between({
-        from: new Date("1969-12-31"),
-        to: new Date("2100-12-31"),
-      }),
+      date: faker.date.soon(),
       odometer_end: faker.number.int({ min: 100, max: 1200 }),
       odometer_start: faker.number.int({ min: 1200, max: 1500 }),
       shift_start: faker.number.float({ min: 0, max: 0.5 }).toString(),

@@ -21,7 +21,7 @@ interface GetAprReportByProjectShiftInterfaceRequest {
 }
 
 interface GetAprReportByProjectShiftInterfaceResponse {
-  result: Array<AprReportByCategory>;
+  aprReport: AprReportByCategory[];
 }
 
 export class GetAprReportByProjectShift {
@@ -63,7 +63,7 @@ export class GetAprReportByProjectShift {
 
     categories = [...new Set(categories)];
 
-    const risksInRport = Promise.all(
+    const risksInRport = await Promise.all(
       aprReports[aprReports.length - 1].risksId.map(
         async (risk) => await this.aprRiskRepository.findById(risk.toString())
       )
@@ -73,17 +73,16 @@ export class GetAprReportByProjectShift {
       (riskMap) => riskMap?.question
     );
 
-    const measuresInRport = Promise.all(
+    const measuresInRport = await Promise.all(
       aprReports[aprReports.length - 1].measuresId.map(
         async (measure) =>
           await this.aprMeasureRepository.findById(measure.toString())
       )
     );
 
-    const result: GetAprReportByProjectShiftInterfaceResponse = Promise.all(
+    const aprReport = await Promise.all(
       categories.map(async (category) => {
-        const risksFiltered = aprRisks.filter
-        const risks: Array<RiskProp> = aprRisks.filter((riskMap) => {
+        const risksInformat = aprRisks.map((riskMap) => {
           if (category.includes(riskMap.category)) {
             const response: RiskProp = {
               title: riskMap.question,
@@ -94,43 +93,29 @@ export class GetAprReportByProjectShift {
             return response;
           }
 
-          return category.includes(riskMap.category);
+          return undefined;
         });
 
-        return { category, risks, measures };
+        const risks: Array<RiskProp> = risksInformat.filter(
+          (risMap): risMap is RiskProp => risMap !== undefined
+        );
+
+        const measures: Array<string> = (await measuresInRport)
+          .map((measureMap) => {
+            if (measureMap?.category.includes(category))
+              return measureMap?.response;
+
+            return undefined;
+          })
+          .filter(
+            (measureMap): measureMap is string => measureMap !== undefined
+          );
+
+        const resultMap: AprReportByCategory = { category, risks, measures };
+
+        return resultMap;
       })
     );
-
-    // const aprReportInconformes: APRReport[] = [];
-    // count = 1;
-
-    // while (true) {
-    //   const aprReportsSearch = await this.aprReportRepository.findMany(
-    //     { page: count },
-    //     projectShiftId
-    //   );
-
-    //   aprReportsSearch.map((resp) => aprReportInconformes.push(resp));
-    //   count++;
-
-    //   if (aprReportsSearch.length === 0) break;
-    // }
-
-    // const aprReport = epiQuestions
-    //   .map((epiQuestion) => {
-    //     const question = epiQuestion.question;
-    //     const response: "CONFORME" | "INCONFORME" = aprReportInconformes
-    //       .map((resp) => resp.questionId)
-    //       .includes(epiQuestion.id)
-    //       ? "INCONFORME"
-    //       : "CONFORME";
-    //     const userId = aprReportInconformes
-    //       .find((resp) => resp.questionId === epiQuestion.id)
-    //       ?.userId?.toString();
-
-    //     return { question, response, userId };
-    //   })
-    //   .slice((page - 1) * 50, page * 50);
 
     return { aprReport };
   }
