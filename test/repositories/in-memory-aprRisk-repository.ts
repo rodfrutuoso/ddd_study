@@ -1,6 +1,6 @@
 import { PaginationParams } from "@/core/repositories/pagination-params";
-import { AprRiskRepository } from "@/domain/questions/application/repositories/aprRisk-repository";
-import { APRRisk } from "@/domain/questions/enterprise/entities/aprRisk";
+import { AprRiskRepository } from "@/domain/questions/apr/application/repositories/aprRisk-repository";
+import { APRRisk } from "@/domain/questions/apr/enterprise/entities/aprRisk";
 
 export class InMemoryAprRiskRepository implements AprRiskRepository {
   public items: APRRisk[] = [];

@@ -2,7 +2,7 @@ import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import {
   APRReport,
   APRReportProps,
-} from "@/domain/questions/enterprise/entities/aprReport";
+} from "@/domain/questions/apr/enterprise/entities/aprReport";
 import { faker } from "@faker-js/faker";
 
 export function makeAprReport(

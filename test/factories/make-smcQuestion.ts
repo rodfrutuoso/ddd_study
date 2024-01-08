@@ -2,7 +2,7 @@ import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import {
   SMCQuestion,
   SMCQuestionProps,
-} from "@/domain/questions/enterprise/entities/smcQuestion";
+} from "@/domain/questions/smc/enterprise/entities/smcQuestion";
 import { faker } from "@faker-js/faker";
 
 export function makeSMCQuestion(

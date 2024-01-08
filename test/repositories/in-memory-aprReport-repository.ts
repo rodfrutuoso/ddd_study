@@ -1,6 +1,6 @@
 import { PaginationParams } from "@/core/repositories/pagination-params";
-import { AprReportRepository } from "@/domain/questions/application/repositories/aprReport-repository";
-import { APRReport } from "@/domain/questions/enterprise/entities/aprReport";
+import { AprReportRepository } from "@/domain/questions/apr/application/repositories/aprReport-repository";
+import { APRReport } from "@/domain/questions/apr/enterprise/entities/aprReport";
 
 export class InMemoryAprReportRepository implements AprReportRepository {
   public items: APRReport[] = [];

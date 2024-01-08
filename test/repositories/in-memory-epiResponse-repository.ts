@@ -1,6 +1,6 @@
 import { PaginationParams } from "@/core/repositories/pagination-params";
-import { EpiResponseRepository } from "@/domain/questions/application/repositories/epiResponse-repository";
-import { EPIResponse } from "@/domain/questions/enterprise/entities/epiResponse";
+import { EpiResponseRepository } from "@/domain/questions/epi/application/repositories/epiResponse-repository";
+import { EPIResponse } from "@/domain/questions/epi/enterprise/entities/epiResponse";
 
 export class InMemoryEpiResponseRepository implements EpiResponseRepository {
   public items: EPIResponse[] = [];

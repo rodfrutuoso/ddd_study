@@ -1,7 +1,7 @@
 // TODO
 import { Optinal } from "@/core/entities/types/optional";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
-import { Question, QuestionProps } from "./question";
+import { Question, QuestionProps } from "../../../enterprise/entities/question";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface SMCQuestionProps extends QuestionProps {}

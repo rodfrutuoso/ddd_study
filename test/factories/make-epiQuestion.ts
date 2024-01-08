@@ -2,7 +2,7 @@ import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import {
   EPIQuestion,
   EPIQuestionProps,
-} from "@/domain/questions/enterprise/entities/epiQuestion";
+} from "@/domain/questions/epi/enterprise/entities/epiQuestion";
 import { faker } from "@faker-js/faker";
 
 export function makeEPIQuestion(

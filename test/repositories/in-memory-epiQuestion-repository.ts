@@ -1,6 +1,6 @@
 import { PaginationParams } from "@/core/repositories/pagination-params";
-import { EpiQuestionRepository } from "@/domain/questions/application/repositories/epiQuestion-repository";
-import { EPIQuestion } from "@/domain/questions/enterprise/entities/epiQuestion";
+import { EpiQuestionRepository } from "@/domain/questions/epi/application/repositories/epiQuestion-repository";
+import { EPIQuestion } from "@/domain/questions/epi/enterprise/entities/epiQuestion";
 
 export class InMemoryEpiQuestionRepository implements EpiQuestionRepository {
   public items: EPIQuestion[] = [];

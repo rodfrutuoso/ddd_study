@@ -2,7 +2,7 @@ import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import {
   EPIResponse,
   EPIResponseProps,
-} from "@/domain/questions/enterprise/entities/epiResponse";
+} from "@/domain/questions/epi/enterprise/entities/epiResponse";
 import { faker } from "@faker-js/faker";
 
 export function makeEPIResponse(

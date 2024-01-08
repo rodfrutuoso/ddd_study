@@ -1,6 +1,6 @@
 import { PaginationParams } from "@/core/repositories/pagination-params";
-import { SmcResponseRepository } from "@/domain/questions/application/repositories/smcResponse-repository";
-import { SMCResponse } from "@/domain/questions/enterprise/entities/smcResponse";
+import { SmcResponseRepository } from "@/domain/questions/smc/application/repositories/smcResponse-repository";
+import { SMCResponse } from "@/domain/questions/smc/enterprise/entities/smcResponse";
 
 export class InMemorySmcResponseRepository implements SmcResponseRepository {
   public items: SMCResponse[] = [];

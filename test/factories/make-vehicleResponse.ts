@@ -2,7 +2,7 @@ import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import {
   VehicleResponse,
   VehicleResponseProps,
-} from "@/domain/questions/enterprise/entities/vehicleResponse";
+} from "@/domain/questions/vehicle/enterprise/entities/vehicleResponse";
 import { faker } from "@faker-js/faker";
 
 export function makeVEHICLEResponse(

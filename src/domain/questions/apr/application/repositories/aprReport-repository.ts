@@ -1,5 +1,5 @@
 import { PaginationParams } from "@/core/repositories/pagination-params";
-import { APRReport } from "@/domain/questions/enterprise/entities/aprReport";
+import { APRReport } from "@/domain/questions/apr/enterprise/entities/aprReport";
 
 export interface AprReportRepository {
   create(aprReport: APRReport): Promise<void>;

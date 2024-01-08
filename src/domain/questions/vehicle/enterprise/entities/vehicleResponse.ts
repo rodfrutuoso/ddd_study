@@ -1,5 +1,5 @@
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
-import { Response, ResponseProps } from "./response";
+import { Response, ResponseProps } from "../../../enterprise/entities/response";
 
 export interface VehicleResponseProps extends ResponseProps {
   vehicleId?: UniqueEntityId;

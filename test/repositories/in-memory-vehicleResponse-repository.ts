@@ -1,6 +1,6 @@
 import { PaginationParams } from "@/core/repositories/pagination-params";
-import { VehicleResponseRepository } from "@/domain/questions/application/repositories/vehicleResponse-repository";
-import { VehicleResponse } from "@/domain/questions/enterprise/entities/vehicleResponse";
+import { VehicleResponseRepository } from "@/domain/questions/vehicle/application/repositories/vehicleResponse-repository";
+import { VehicleResponse } from "@/domain/questions/vehicle/enterprise/entities/vehicleResponse";
 
 export class InMemoryVehicleResponseRepository
   implements VehicleResponseRepository

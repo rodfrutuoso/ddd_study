@@ -1,5 +1,5 @@
 import { PaginationParams } from "@/core/repositories/pagination-params";
-import { EPIResponse } from "@/domain/questions/enterprise/entities/epiResponse";
+import { EPIResponse } from "@/domain/questions/epi/enterprise/entities/epiResponse";
 
 export interface EpiResponseRepository {
   create(epiResponse: EPIResponse): Promise<void>;

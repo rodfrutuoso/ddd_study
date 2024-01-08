@@ -1,5 +1,5 @@
 import { PaginationParams } from "@/core/repositories/pagination-params";
-import { APRMeasure } from "@/domain/questions/enterprise/entities/aprMeasure";
+import { APRMeasure } from "@/domain/questions/apr/enterprise/entities/aprMeasure";
 
 export interface AprMeasureRepository {
   create(aprMeasure: APRMeasure): Promise<void>;

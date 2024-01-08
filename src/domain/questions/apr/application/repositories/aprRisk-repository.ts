@@ -1,5 +1,5 @@
 import { PaginationParams } from "@/core/repositories/pagination-params";
-import { APRRisk } from "@/domain/questions/enterprise/entities/aprRisk";
+import { APRRisk } from "@/domain/questions/apr/enterprise/entities/aprRisk";
 
 export interface AprRiskRepository {
   create(aprRisk: APRRisk): Promise<void>;

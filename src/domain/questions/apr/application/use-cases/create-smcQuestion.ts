@@ -1,6 +1,6 @@
 /* eslint-disable no-useless-constructor */
-import { SMCQuestion } from "../../enterprise/entities/smcQuestion";
-import { SmcQuestionRepository } from "../repositories/smcQuestion-repository";
+import { SMCQuestion } from "../../../smc/enterprise/entities/smcQuestion";
+import { SmcQuestionRepository } from "../../../smc/application/repositories/smcQuestion-repository";
 
 interface CreateSmcQuestionInterfaceRequest {
   question: string;

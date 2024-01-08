@@ -1,6 +1,6 @@
 import { PaginationParams } from "@/core/repositories/pagination-params";
-import { AprMeasureRepository } from "@/domain/questions/application/repositories/aprMeasure-repository";
-import { APRMeasure } from "@/domain/questions/enterprise/entities/aprMeasure";
+import { AprMeasureRepository } from "@/domain/questions/apr/application/repositories/aprMeasure-repository";
+import { APRMeasure } from "@/domain/questions/apr/enterprise/entities/aprMeasure";
 
 export class InMemoryAprMeasureRepository implements AprMeasureRepository {
   public items: APRMeasure[] = [];

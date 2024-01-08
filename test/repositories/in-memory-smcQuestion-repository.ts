@@ -1,6 +1,6 @@
 import { PaginationParams } from "@/core/repositories/pagination-params";
-import { SmcQuestionRepository } from "@/domain/questions/application/repositories/smcQuestion-repository";
-import { SMCQuestion } from "@/domain/questions/enterprise/entities/smcQuestion";
+import { SmcQuestionRepository } from "@/domain/questions/smc/application/repositories/smcQuestion-repository";
+import { SMCQuestion } from "@/domain/questions/smc/enterprise/entities/smcQuestion";
 
 export class InMemorySmcQuestionRepository implements SmcQuestionRepository {
   public items: SMCQuestion[] = [];

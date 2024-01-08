@@ -1,5 +1,5 @@
 import { PaginationParams } from "@/core/repositories/pagination-params";
-import { VehicleResponse } from "@/domain/questions/enterprise/entities/vehicleResponse";
+import { VehicleResponse } from "@/domain/questions/vehicle/enterprise/entities/vehicleResponse";
 
 export interface VehicleResponseRepository {
   create(vehicleResponse: VehicleResponse): Promise<void>;

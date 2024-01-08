@@ -1,6 +1,6 @@
 import { PaginationParams } from "@/core/repositories/pagination-params";
-import { VehicleQuestionRepository } from "@/domain/questions/application/repositories/vehicleQuestion-repository";
-import { VehicleQuestion } from "@/domain/questions/enterprise/entities/vehicleQuestion";
+import { VehicleQuestionRepository } from "@/domain/questions/vehicle/application/repositories/vehicleQuestion-repository";
+import { VehicleQuestion } from "@/domain/questions/vehicle/enterprise/entities/vehicleQuestion";
 
 export class InMemoryVehicleQuestionRepository
   implements VehicleQuestionRepository

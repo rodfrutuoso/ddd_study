@@ -1,5 +1,5 @@
 import { PaginationParams } from "@/core/repositories/pagination-params";
-import { SMCQuestion } from "@/domain/questions/enterprise/entities/smcQuestion";
+import { SMCQuestion } from "@/domain/questions/smc/enterprise/entities/smcQuestion";
 
 export interface SmcQuestionRepository {
   create(smcQuestion: SMCQuestion): Promise<void>;
