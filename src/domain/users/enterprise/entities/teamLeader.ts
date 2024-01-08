@@ -83,14 +83,14 @@ export class TeamLeader extends Entity<TeamLeaderProps> {
 
   static create(
     props: Optinal<TeamLeaderProps, "created_at">,
-    id?: UniqueEntityId,
+    id?: UniqueEntityId
   ) {
     const teamLeader = new TeamLeader(
       {
         ...props,
         created_at: new Date(),
       },
-      id,
+      id
     );
 
     return teamLeader;

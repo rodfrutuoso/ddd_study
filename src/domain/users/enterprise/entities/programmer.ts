@@ -73,14 +73,14 @@ export class Programmer extends Entity<ProgrammerProps> {
 
   static create(
     props: Optinal<ProgrammerProps, "created_at">,
-    id?: UniqueEntityId,
+    id?: UniqueEntityId
   ) {
     const programmer = new Programmer(
       {
         ...props,
         created_at: new Date(),
       },
-      id,
+      id
     );
 
     return programmer;
