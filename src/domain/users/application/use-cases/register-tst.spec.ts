@@ -60,4 +60,17 @@ describe("Register a Tst-Shift", () => {
       });
     }).rejects.toBeInstanceOf(Error);
   });
+
+  it("should not be able to create a tst with an email that is not from ecoeletrica.com.br", async () => {
+    expect(async () => {
+      return await sut.execute({
+        name: "João da Pamonha",
+        cpf: 12345678910,
+        email: "joaopamonha@gmail.com.br",
+        password: "minhaSenha",
+        type: "tst",
+        created_by: "uuid-da-pessoa-que-criou",
+      });
+    }).rejects.toBeInstanceOf(Error);
+  });
 });

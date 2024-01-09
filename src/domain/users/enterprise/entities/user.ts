@@ -19,6 +19,11 @@ export abstract class User<Props extends UserProps> extends Entity<Props> {
     return this.props.name;
   }
 
+  set name(name: string) {
+    this.props.name = name;
+    this.touch();
+  }
+
   get cpf() {
     return this.props.cpf;
   }
@@ -49,7 +54,7 @@ export abstract class User<Props extends UserProps> extends Entity<Props> {
     return this.props.deactivation_date;
   }
 
-  set deactivation_date(_deactivation_date: Date) {
+  set deactivation_date(_deactivation_date: Date | undefined) {
     this.props.deactivation_date = new Date();
     this.touch();
   }
