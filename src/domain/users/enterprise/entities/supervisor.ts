@@ -2,14 +2,14 @@ import { Optinal } from "@/core/entities/types/optional";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { User, UserProps } from "./user";
 
-export type ProgrammerProps = UserProps;
+export type SupervisorProps = UserProps;
 
-export class Programmer extends User<ProgrammerProps> {
+export class Supervisor extends User<SupervisorProps> {
   static create(
-    props: Optinal<ProgrammerProps, "created_at">,
+    props: Optinal<SupervisorProps, "created_at">,
     id?: UniqueEntityId
   ) {
-    const programmer = new Programmer(
+    const supervisor = new Supervisor(
       {
         ...props,
         created_at: new Date(),
@@ -17,6 +17,6 @@ export class Programmer extends User<ProgrammerProps> {
       id
     );
 
-    return programmer;
+    return supervisor;
   }
 }
