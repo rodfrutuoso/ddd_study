@@ -40,3 +40,4 @@ Há 4 acamadas Infraestrutura, Adaptadores de Interface, Casos de Uso e Entidade
 [ ] Falta criar as entidades de casos do supervisor
 [ ] Falta criar as entidades de casos do tecnico de segurança
 [ ] Falta criar as entidades de casos das solicitações de cadastro
+[ ] Refatorar os casos de uso que precisam de programmerType e enviar o authorId no lugar
