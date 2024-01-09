@@ -12,7 +12,7 @@ describe("Edit VEHICLE Name By Id", () => {
     sut = new EditTst(inMemoryTstRepository);
   });
 
-  it("should be albe to edit a vehicle name by its id", async () => {
+  it("should be albe to edit a tst name by its id", async () => {
     const newTst = await makeTst({
       name: "João da Pamonha",
     });
@@ -34,7 +34,7 @@ describe("Edit VEHICLE Name By Id", () => {
     );
   });
 
-  it("should not be albe to edit a vehicle name by its id from a user that type is not ADM or PROGRAMAÇÃO", async () => {
+  it("should not be albe to edit a tst name by its id from a user that type is not ADM or PROGRAMAÇÃO", async () => {
     const newTst = await makeTst({
       name: "João da Pamonha",
     });
