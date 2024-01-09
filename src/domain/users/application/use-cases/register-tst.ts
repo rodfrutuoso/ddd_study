@@ -28,6 +28,19 @@ export class RegisterTst {
     type,
     created_by,
   }: RegisterTstInterfaceRequest): Promise<RegisterTstInterfaceResponse> {
+    if (!email?.includes("@ecoeletrica.com.br"))
+      throw new Error("O email precisa ser do domínio da Ecoelétrica");
+
+    const verifyEmail = await this.tstRepository.findMany({ page: 1 }, email);
+    const verifyCpf = await this.tstRepository.findMany(
+      { page: 1 },
+      undefined,
+      cpf
+    );
+
+    if (verifyEmail.length !== 0) throw new Error("E-mail já cadastrado");
+    if (verifyCpf.length !== 0) throw new Error("CPF já cadastrado");
+
     const tst = Tst.create({
       name,
       cpf,

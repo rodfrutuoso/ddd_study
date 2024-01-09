@@ -1,6 +1,6 @@
 import { PaginationParams } from "@/core/repositories/pagination-params";
-import { VehicleRepository } from "@/domain/shifts/application/repositories/vehicle-repository";
-import { Vehicle } from "@/domain/shifts/enterprise/entities/vehicle";
+import { VehicleRepository } from "@/domain/production/vehicle/application/repositories/vehicle-repository";
+import { Vehicle } from "@/domain/production/vehicle/enterprise/entities/vehicle";
 
 export class InMemoryVehicleRepository implements VehicleRepository {
   public items: Vehicle[] = [];

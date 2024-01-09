@@ -9,9 +9,16 @@ export class InMemoryTstRepository implements TstRepository {
     this.items.push(tst);
   }
 
-  async findMany({ page }: PaginationParams, shiftId: string): Promise<Tst[]> {
+  async findMany(
+    { page }: PaginationParams,
+    email?: string,
+    cpf?: number,
+    name?: string
+  ): Promise<Tst[]> {
     const tsts = this.items
-      // .filter((tst) => !shiftId || tst.shiftId.toString() === shiftId)
+      .filter((tst) => !email || tst.email?.includes(email))
+      .filter((tst) => !name || tst.name.includes(name))
+      .filter((tst) => !cpf || tst.cpf === cpf)
       .slice((page - 1) * 50, page * 50);
 
     return tsts;
