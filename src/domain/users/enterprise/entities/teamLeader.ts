@@ -2,7 +2,7 @@ import { Optinal } from "@/core/entities/types/optional";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { User, UserProps } from "./user";
 
-interface TeamLeaderProps extends UserProps {
+export interface TeamLeaderProps extends UserProps {
   teamId: UniqueEntityId;
 }
 
