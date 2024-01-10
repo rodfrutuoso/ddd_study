@@ -13,7 +13,7 @@ describe("Register a Programmer-Shift", () => {
     sut = new RegisterProgrammer(inMemoryProgrammerRepository);
   });
 
-  it("should create a PROGRAMMER user", async () => {
+  it("should create a programmer user", async () => {
     const { programmer } = await sut.execute({
       name: "João da Pamonha",
       cpf: 12345678,
