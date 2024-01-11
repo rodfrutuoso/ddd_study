@@ -37,7 +37,7 @@ Há 4 acamadas Infraestrutura, Adaptadores de Interface, Casos de Uso e Entidade
 [ ] Falta criar as entidades de casos de uso dos colaborador por turno
 [ ] Falta criar as entidades de casos de uso das fotos
 [ ] Falta criar as entidades de casos de uso da programação
-[ ] Falta criar as entidades de casos do supervisor
-[ ] Falta criar as entidades de casos do tecnico de segurança
+[X] Falta criar as entidades de casos do supervisor
+[X] Falta criar as entidades de casos do tecnico de segurança
 [ ] Falta criar as entidades de casos das solicitações de cadastro
 [ ] Refatorar os casos de uso que precisam de programmerType e enviar o authorId no lugar

@@ -1,5 +1,5 @@
 import { PaginationParams } from "@/core/repositories/pagination-params";
-import { TeamLeaderRepository } from "@/domain/users/application/repositories/teamleader-repository";
+import { TeamLeaderRepository } from "@/domain/users/application/repositories/teamLeader-repository";
 import { TeamLeader } from "@/domain/users/enterprise/entities/teamLeader";
 
 export class InMemoryTeamLeaderRepository implements TeamLeaderRepository {
