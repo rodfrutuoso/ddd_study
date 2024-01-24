@@ -8,4 +8,5 @@ export interface UserShiftRepository {
     shiftId: string
   ): Promise<Array<UserShift>>;
   delete(projectShifit: UserShift): Promise<void>;
+  findById(projectShifitId: string): Promise<UserShift | null>;
 }

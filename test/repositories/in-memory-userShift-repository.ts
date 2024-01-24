@@ -28,4 +28,14 @@ export class InMemoryUserShiftRepository implements UserShiftRepository {
 
     this.items.splice(itemIndex, 1);
   }
+
+  async findById(projectShifitId: string): Promise<UserShift | null> {
+    const userShift = this.items.find(
+      (item) => item.id.toString() === projectShifitId
+    );
+
+    if (!userShift) return null;
+
+    return userShift;
+  }
 }
