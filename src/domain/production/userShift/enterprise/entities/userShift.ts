@@ -12,7 +12,7 @@ export class UserShift extends Entity<UserShiftProps> {
   }
 
   get userId() {
-    return this.props.shiftId;
+    return this.props.userId;
   }
 
   static create(props: UserShiftProps, id?: UniqueEntityId) {
