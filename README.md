@@ -34,7 +34,7 @@ Há 4 acamadas Infraestrutura, Adaptadores de Interface, Casos de Uso e Entidade
 # TODO
 [X] Criar caso de uso para encontrar shift por supervisor e contrato utilizando repositórios de equipes
 [ ] No index da equipe enviar objeto para coor, sup e enc com nome e id
-[ ] Falta criar as entidades de casos de uso dos colaborador por turno
+[X] Falta criar as entidades de casos de uso dos colaborador por turno
 [ ] Falta criar as entidades de casos de uso das fotos
 [ ] Falta criar as entidades de casos de uso da programação
 [X] Falta criar as entidades de casos do supervisor
