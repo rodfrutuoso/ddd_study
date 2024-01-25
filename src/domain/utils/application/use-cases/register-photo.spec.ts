@@ -17,8 +17,6 @@ describe("Register a Photo-Shift", () => {
       linkDrive: "https://drive.google.com/drive/file/1nuh321kh4u2g4ku21g",
     });
 
-    console.log(inMemoryPhotoRepository.items[0]);
-
     expect(photo.id).toBeTruthy();
     expect(photo.linkDrive).toEqual(
       "https://drive.google.com/drive/file/1nuh321kh4u2g4ku21g"
