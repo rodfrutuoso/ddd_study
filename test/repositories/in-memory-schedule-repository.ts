@@ -27,12 +27,14 @@ export class InMemoryScheduleRepository implements ScheduleRepository {
     this.items.push(schedule);
   }
 
-  async delete(projectShifit: Schedule) {
-    const itemIndex = this.items.findIndex(
-      (item) => item.id === projectShifit.id
-    );
+  async delete(schedule: Schedule | undefined) {
+    if (schedule === undefined) {
+      this.items = [];
+    } else {
+      const itemIndex = this.items.findIndex((item) => item.id === schedule.id);
 
-    this.items.splice(itemIndex, 1);
+      this.items.splice(itemIndex, 1);
+    }
   }
 
   async findById(scheduleId: string): Promise<Schedule | null> {

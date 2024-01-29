@@ -10,6 +10,6 @@ export interface ScheduleRepository {
     teamId?: string,
     projectId?: string
   ): Promise<Array<Schedule>>;
-  delete(projectShifit: Schedule): Promise<void>;
+  delete(projectShifit: Schedule | undefined): Promise<void>;
   findById(projectShifitId: string): Promise<Schedule | null>;
 }
