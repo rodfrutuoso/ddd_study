@@ -2,13 +2,13 @@
 import { Entity } from "@/core/entities/entity";
 import { Optinal } from "@/core/entities/types/optional";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
-import { userNameId } from "@/core/entities/userNameId";
+import { UserNameId } from "@/core/entities/userNameId";
 
 export interface TeamProps {
   name: string;
-  leaderId: userNameId;
-  supervisorId?: userNameId;
-  coordinatorId?: userNameId;
+  leaderId: UserNameId;
+  supervisorId?: UserNameId;
+  coordinatorId?: UserNameId;
   type: string;
   contract: string;
   deactivation_date?: Date;
@@ -28,23 +28,23 @@ export class Team extends Entity<TeamProps> {
     return this.props.leaderId;
   }
 
-  set leaderId(leaderId: userNameId) {
+  set leaderId(leaderId: UserNameId) {
     this.props.leaderId = leaderId;
   }
 
-  get supervisorId(): userNameId | undefined {
+  get supervisorId(): UserNameId | undefined {
     return this.props.supervisorId;
   }
 
-  set supervisorId(supervisorId: userNameId) {
+  set supervisorId(supervisorId: UserNameId) {
     this.props.supervisorId = supervisorId;
   }
 
-  get coordinatorId(): userNameId | undefined {
+  get coordinatorId(): UserNameId | undefined {
     return this.props.coordinatorId;
   }
 
-  set coordinatorId(coordinatorId: userNameId) {
+  set coordinatorId(coordinatorId: UserNameId) {
     this.props.coordinatorId = coordinatorId;
   }
 
