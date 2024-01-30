@@ -19,9 +19,12 @@ export class InMemoryTeamRepository implements TeamRepository {
       // eslint-disable-next-line prettier/prettier
       .filter(
         (team) =>
-          !supervisorId || team.supervisorId?.toString() === supervisorId
+          !supervisorId ||
+          team.supervisorId.getId()?.toString() === supervisorId
       )
-      .filter((team) => !leaderId || team.leaderId.toString() === leaderId)
+      .filter(
+        (team) => !leaderId || team.leaderId.getId()?.toString() === leaderId
+      )
       .filter((team) => !contract || team.contract === contract)
       .filter((team) => !name || team.name === name)
       .slice((page - 1) * 50, page * 50);

@@ -1,19 +1,19 @@
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 
 export class UserNameId {
-  private name: string | undefined;
-  private id: UniqueEntityId | undefined;
+  private name?: string;
+  private id?: UniqueEntityId;
 
-  constructor(name: string, id: UniqueEntityId) {
+  constructor(name: string | undefined, id: UniqueEntityId | undefined) {
     this.name = name ?? undefined;
     this.id = id ?? undefined;
   }
 
-  getName() {
+  getName(): string | undefined {
     return this.name;
   }
 
-  getId() {
+  getId(): UniqueEntityId | undefined {
     return this.id;
   }
 }

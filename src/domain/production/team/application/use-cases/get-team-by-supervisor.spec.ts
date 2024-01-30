@@ -2,6 +2,7 @@ import { GetTeamBySupervisor } from "./get-team-by-supervisor";
 import { InMemoryTeamRepository } from "test/repositories/in-memory-team-repository";
 import { makeTeam } from "test/factories/make-team";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
+import { UserNameId } from "@/core/entities/userNameId";
 
 let inMemoryTeamRepository: InMemoryTeamRepository;
 let sut: GetTeamBySupervisor; // system under test
@@ -14,10 +15,16 @@ describe("Get Team By supervisor", () => {
 
   it("should be able filter a list of teams by supervisor", async () => {
     const newTeam1 = makeTeam({
-      supervisorId: new UniqueEntityId("ECOLM001"),
+      supervisorId: new UserNameId(
+        "Nome Supervisor",
+        new UniqueEntityId("ECOLM001")
+      ),
     });
     const newTeam2 = makeTeam({
-      supervisorId: new UniqueEntityId("ECOLM001"),
+      supervisorId: new UserNameId(
+        "Nome Supervisor",
+        new UniqueEntityId("ECOLM001")
+      ),
     });
     const newTeam3 = makeTeam();
 
@@ -54,7 +61,10 @@ describe("Get Team By supervisor", () => {
     for (let i = 1; i <= 55; i++) {
       await inMemoryTeamRepository.create(
         makeTeam({
-          supervisorId: new UniqueEntityId("ECOLM001"),
+          supervisorId: new UserNameId(
+            "JOAO NUM SEI DAS QUANTAS",
+            new UniqueEntityId("ECOLM001")
+          ),
         })
       );
     }

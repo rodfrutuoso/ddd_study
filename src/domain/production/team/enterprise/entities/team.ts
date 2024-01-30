@@ -7,8 +7,8 @@ import { UserNameId } from "@/core/entities/userNameId";
 export interface TeamProps {
   name: string;
   leaderId: UserNameId;
-  supervisorId?: UserNameId;
-  coordinatorId?: UserNameId;
+  supervisorId: UserNameId;
+  coordinatorId: UserNameId;
   type: string;
   contract: string;
   deactivation_date?: Date;
@@ -32,7 +32,7 @@ export class Team extends Entity<TeamProps> {
     this.props.leaderId = leaderId;
   }
 
-  get supervisorId(): UserNameId | undefined {
+  get supervisorId(): UserNameId {
     return this.props.supervisorId;
   }
 
@@ -40,7 +40,7 @@ export class Team extends Entity<TeamProps> {
     this.props.supervisorId = supervisorId;
   }
 
-  get coordinatorId(): UserNameId | undefined {
+  get coordinatorId(): UserNameId {
     return this.props.coordinatorId;
   }
 

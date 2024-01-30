@@ -55,14 +55,18 @@ export class RegisterTeam {
     const team = Team.create({
       name,
       leaderId: new UserNameId(leader.name, new UniqueEntityId(leaderId)),
-      supervisorId:
-        supervisor === undefined
+      supervisorId: new UserNameId(
+        supervisor?.name,
+        supervisorId === undefined
           ? undefined
-          : new UserNameId(supervisor.name, new UniqueEntityId(supervisorId)),
-      coordinatorId:
-        coordinator === undefined
+          : new UniqueEntityId(supervisorId)
+      ),
+      coordinatorId: new UserNameId(
+        coordinator?.name,
+        coordinatorId === undefined
           ? undefined
-          : new UserNameId(coordinator.name, new UniqueEntityId(coordinatorId)),
+          : new UniqueEntityId(coordinatorId)
+      ),
       type,
       contract,
     });

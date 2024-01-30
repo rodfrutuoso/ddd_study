@@ -49,14 +49,9 @@ describe("Register a Team", () => {
       contract: "CENTRO-OESTE",
     });
 
-    console.log(inMemoryTeamRepository.items[0]);
-    console.log(inMemoryTeamLeaderRepository.items[0]);
-    console.log(inMemorySupervisorRepository.items[0]);
-    console.log(inMemoryCoordinatorRepository.items[0]);
-
     expect(team.id).toBeTruthy();
     expect(team.name).toEqual("ECOLM0001 - JOAO NUM SEI DAS QUANTAS");
     expect(team.leaderId.getName()).toEqual("Leader Name");
-    expect(team.coordinatorId).toBeUndefined();
+    expect(team.coordinatorId?.getId()).toBeUndefined();
   });
 });
