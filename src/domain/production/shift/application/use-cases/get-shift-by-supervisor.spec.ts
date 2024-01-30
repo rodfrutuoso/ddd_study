@@ -4,6 +4,7 @@ import { makeShift } from "test/factories/make-shift";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { makeTeam } from "test/factories/make-team";
 import { InMemoryTeamRepository } from "test/repositories/in-memory-team-repository";
+import { UserNameId } from "@/core/entities/userNameId";
 
 let inMemoryShitRepository: InMemoryShiftRepository;
 let inMemoryTeamRepository: InMemoryTeamRepository;
@@ -21,10 +22,16 @@ describe("Get Shift By supervisor", () => {
 
   it("should be able filter a list of shifts of a supervisor", async () => {
     const team1 = makeTeam({
-      supervisorId: new UniqueEntityId("supervisor 1"),
+      supervisorId: new UserNameId(
+        "supervisor name",
+        new UniqueEntityId("supervisor 1")
+      ),
     });
     const team2 = makeTeam({
-      supervisorId: new UniqueEntityId("supervisor 1"),
+      supervisorId: new UserNameId(
+        "supervisor name",
+        new UniqueEntityId("supervisor 1")
+      ),
     });
     const team3 = makeTeam();
 
@@ -54,13 +61,22 @@ describe("Get Shift By supervisor", () => {
 
   it("should be able to get a empty list of shifts when there is no shift of the informed supervisor", async () => {
     const team1 = makeTeam({
-      supervisorId: new UniqueEntityId("supervisor 1"),
+      supervisorId: new UserNameId(
+        "supervisor name",
+        new UniqueEntityId("supervisor 1")
+      ),
     });
     const team2 = makeTeam({
-      supervisorId: new UniqueEntityId("supervisor 1"),
+      supervisorId: new UserNameId(
+        "supervisor name",
+        new UniqueEntityId("supervisor 1")
+      ),
     });
     const team3 = makeTeam({
-      supervisorId: new UniqueEntityId("supervisor 1"),
+      supervisorId: new UserNameId(
+        "supervisor name",
+        new UniqueEntityId("supervisor 1")
+      ),
     });
 
     await inMemoryTeamRepository.create(team1);
@@ -92,7 +108,10 @@ describe("Get Shift By supervisor", () => {
   it("should be able paginate a list of shifts of a supervisor", async () => {
     for (let i = 1; i <= 55; i++) {
       const teamFor = makeTeam({
-        supervisorId: new UniqueEntityId("supervisor 1"),
+        supervisorId: new UserNameId(
+          "supervisor name",
+          new UniqueEntityId("supervisor 1")
+        ),
       });
       await inMemoryTeamRepository.create(teamFor);
 
