@@ -2,6 +2,7 @@ import { GetTeamByLeader } from "./get-team-by-leader";
 import { InMemoryTeamRepository } from "test/repositories/in-memory-team-repository";
 import { makeTeam } from "test/factories/make-team";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
+import { UserNameId } from "@/core/entities/userNameId";
 
 let inMemoryTeamRepository: InMemoryTeamRepository;
 let sut: GetTeamByLeader; // system under test
@@ -14,10 +15,10 @@ describe("Get Team By leader", () => {
 
   it("should be able filter a list of teams by leader", async () => {
     const newTeam1 = makeTeam({
-      leaderId: new UniqueEntityId("João da Pilotinha"),
+      leaderId: new UserNameId("João da Pilotinha", new UniqueEntityId("JOAO")),
     });
     const newTeam2 = makeTeam({
-      leaderId: new UniqueEntityId("João da Pilotinha"),
+      leaderId: new UserNameId("João da Pilotinha", new UniqueEntityId("JOAO")),
     });
     const newTeam3 = makeTeam();
 
@@ -27,7 +28,7 @@ describe("Get Team By leader", () => {
 
     const { teams } = await sut.execute({
       page: 1,
-      leaderId: "João da Pilotinha",
+      leaderId: "JOAO",
     });
 
     expect(teams).toHaveLength(2);
@@ -54,7 +55,10 @@ describe("Get Team By leader", () => {
     for (let i = 1; i <= 55; i++) {
       await inMemoryTeamRepository.create(
         makeTeam({
-          leaderId: new UniqueEntityId("João da Pilotinha"),
+          leaderId: new UserNameId(
+            "João da Pilotinha",
+            new UniqueEntityId("JOAO")
+          ),
         })
       );
     }
@@ -62,7 +66,7 @@ describe("Get Team By leader", () => {
 
     const { teams } = await sut.execute({
       page: 2,
-      leaderId: "João da Pilotinha",
+      leaderId: "JOAO",
     });
 
     expect(teams).toHaveLength(5);
