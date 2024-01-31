@@ -24,10 +24,10 @@ export class InMemoryRequestRepository implements RequestRepository {
     return requests;
   }
 
-  async save(request: Request): Promise<void> {
+  async delete(request: Request) {
     const itemIndex = this.items.findIndex((item) => item.id === request.id);
 
-    this.items[itemIndex] = request;
+    this.items.splice(itemIndex, 1);
   }
 
   async findById(RequestId: string): Promise<Request | null> {

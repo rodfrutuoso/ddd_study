@@ -9,6 +9,6 @@ export interface RequestRepository {
     cpf?: number,
     name?: string
   ): Promise<Array<Request>>;
-  save(request: Request): Promise<void>;
+  delete(request: Request): Promise<void>;
   findById(requestId: string): Promise<Request | null>;
 }
