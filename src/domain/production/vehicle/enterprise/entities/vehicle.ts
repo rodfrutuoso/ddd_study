@@ -1,5 +1,5 @@
 import { Entity } from "@/core/entities/entity";
-import { Optinal } from "@/core/entities/types/optional";
+import { Optinal } from "@/core/types/optional";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 
 export interface VehicleProps {

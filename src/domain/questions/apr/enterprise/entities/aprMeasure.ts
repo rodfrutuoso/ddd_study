@@ -1,6 +1,6 @@
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { Entity } from "@/core/entities/entity";
-import { Optinal } from "@/core/entities/types/optional";
+import { Optinal } from "@/core/types/optional";
 
 export interface APRMeasureProps {
   response: string;

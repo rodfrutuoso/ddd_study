@@ -1,5 +1,5 @@
 // TODO
-import { Optinal } from "@/core/entities/types/optional";
+import { Optinal } from "@/core/types/optional";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { Question, QuestionProps } from "../../../enterprise/entities/question";
 
