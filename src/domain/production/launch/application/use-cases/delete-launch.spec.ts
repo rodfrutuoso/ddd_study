@@ -3,6 +3,7 @@ import { DeleteLaunch } from "./delete-launch";
 import { InMemoryLaunchRepository } from "test/repositories/in-memory-launch-repository";
 import { makeLaunch } from "test/factories/make-launch";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
+import { NotAuthorizedError } from "@/domain/errors/not-authorized-error";
 
 let inMemoryLaunchRepository: InMemoryLaunchRepository;
 let sut: DeleteLaunch; // system under test
@@ -32,13 +33,19 @@ describe("Delete Launch By Id", () => {
 
     await inMemoryLaunchRepository.create(newLaunch);
 
-    expect(async () => {
-      return await sut.execute({
-        launchId: "abc-123-xyz",
-        programmerType: "CAMPO",
-      });
-    }).rejects.toBeInstanceOf(Error);
+    const result = await sut.execute({
+      launchId: "abc-123-xyz",
+      programmerType: "CAMPO",
+    });
 
+    // expect(async () => {
+    //   return await sut.execute({
+    //     launchId: "abc-123-xyz",
+    //     programmerType: "CAMPO",
+    //   });
+    // }).rejects.toBeInstanceOf(Error);
+    expect(result.isLeft()).toBe(true);
+    expect(result.value).toBeInstanceOf(NotAuthorizedError);
     expect(await inMemoryLaunchRepository.findById("abc-123-xyz")).toBeTruthy();
     expect(await inMemoryLaunchRepository.items).toHaveLength(1);
   });
