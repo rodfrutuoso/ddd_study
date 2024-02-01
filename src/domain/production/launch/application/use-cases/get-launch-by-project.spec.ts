@@ -54,12 +54,13 @@ describe("Get Launch By Project", () => {
     await inMemoryLaunchRepository.create(newLaunch2);
     await inMemoryLaunchRepository.create(newLaunch3);
 
-    const { launchs } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       projectCode: "B-12345678",
     });
 
-    expect(launchs).toHaveLength(2);
+    expect(result.isRight()).toBe(true);
+    expect(result.value?.launchs).toHaveLength(2);
   });
 
   it("should be able to get a empty list of launchs when there is no launch of the informed projectCode", async () => {
@@ -93,12 +94,13 @@ describe("Get Launch By Project", () => {
     await inMemoryLaunchRepository.create(newLaunch2);
     await inMemoryLaunchRepository.create(newLaunch3);
 
-    const { launchs } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       projectCode: "B-12345678",
     });
 
-    expect(launchs).toHaveLength(0);
+    expect(result.isRight()).toBe(true);
+    expect(result.value?.launchs).toHaveLength(0);
   });
 
   it("should be able paginate a list of launchs of a projectCode", async () => {
@@ -119,11 +121,12 @@ describe("Get Launch By Project", () => {
       );
     }
 
-    const { launchs } = await sut.execute({
+    const result = await sut.execute({
       page: 2,
       projectCode: "B-12345678",
     });
 
-    expect(launchs).toHaveLength(5);
+    expect(result.isRight()).toBe(true);
+    expect(result.value?.launchs).toHaveLength(5);
   });
 });

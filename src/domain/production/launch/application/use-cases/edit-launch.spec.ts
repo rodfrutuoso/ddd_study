@@ -4,6 +4,7 @@ import { InMemoryLaunchRepository } from "test/repositories/in-memory-launch-rep
 import { makeLaunch } from "test/factories/make-launch";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { Value } from "../../enterprise/entities/value-objects/value";
+import { NotAuthorizedError } from "@/domain/errors/not-authorized-error";
 
 let inMemoryLaunchRepository: InMemoryLaunchRepository;
 let sut: EditLaunch; // system under test
@@ -41,12 +42,13 @@ describe("Edit Launch By Id", () => {
 
     await inMemoryLaunchRepository.create(newLaunch);
 
-    expect(async () => {
-      return await sut.execute({
-        launchId: newLaunch.id.toString(),
-        programmerType: "CAMPO",
-        value: 456.789,
-      });
-    }).rejects.toBeInstanceOf(Error);
+    const result = await sut.execute({
+      launchId: newLaunch.id.toString(),
+      programmerType: "CAMPO",
+      value: 456.789,
+    });
+
+    expect(result.isLeft()).toBe(true);
+    expect(result.value).toBeInstanceOf(NotAuthorizedError);
   });
 });

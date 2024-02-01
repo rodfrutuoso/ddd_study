@@ -3,15 +3,17 @@ import { Launch } from "../../enterprise/entities/launch";
 import { Service } from "../../../service/enterprise/entities/service";
 import { LaunchRepository } from "../repositories/launch-repository";
 import { ServiceRepository } from "../../../service/application/repositories/service-repository";
+import { Either, right } from "@/core/either";
 
 interface GetLaunchByContractInterfaceRequest {
   page: number;
   code: string;
 }
 
-interface GetLaunchByContractInterfaceResponse {
-  launchs: Array<Launch>;
-}
+type GetLaunchByContractInterfaceResponse = Either<
+  null,
+  { launchs: Array<Launch> }
+>;
 
 export class GetLaunchByService {
   constructor(
@@ -42,6 +44,6 @@ export class GetLaunchByService {
 
     const launchs = await this.launchRepository.findMany({ page }, servicesId);
 
-    return { launchs };
+    return right({ launchs });
   }
 }

@@ -5,6 +5,7 @@ import { ShiftRepository } from "../../../shift/application/repositories/shift-r
 import { Shift } from "../../../shift/enterprise/entities/shift";
 import { ProjectShiftRepository } from "@/domain/production/projectShift/application/repositories/projectShift-repository";
 import { ProjectShift } from "@/domain/production/projectShift/enterprise/entities/projectShift";
+import { Either, right } from "@/core/either";
 
 interface GetLaunchByDateInterfaceRequest {
   startDate: Date;
@@ -12,9 +13,10 @@ interface GetLaunchByDateInterfaceRequest {
   page: number;
 }
 
-interface GetLaunchByDateInterfaceResponse {
-  launchs: Array<Launch>;
-}
+type GetLaunchByDateInterfaceResponse = Either<
+  null,
+  { launchs: Array<Launch> }
+>;
 
 export class GetLaunchByDate {
   constructor(
@@ -78,6 +80,6 @@ export class GetLaunchByDate {
       projectShiftsId
     );
 
-    return { launchs };
+    return right({ launchs });
   }
 }

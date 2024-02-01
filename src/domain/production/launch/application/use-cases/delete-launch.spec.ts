@@ -38,12 +38,6 @@ describe("Delete Launch By Id", () => {
       programmerType: "CAMPO",
     });
 
-    // expect(async () => {
-    //   return await sut.execute({
-    //     launchId: "abc-123-xyz",
-    //     programmerType: "CAMPO",
-    //   });
-    // }).rejects.toBeInstanceOf(Error);
     expect(result.isLeft()).toBe(true);
     expect(result.value).toBeInstanceOf(NotAuthorizedError);
     expect(await inMemoryLaunchRepository.findById("abc-123-xyz")).toBeTruthy();

@@ -5,15 +5,17 @@ import { ProjectShift } from "../../../projectShift/enterprise/entities/projectS
 import { LaunchRepository } from "../repositories/launch-repository";
 import { ProjectRepository } from "../../../project/application/repositories/project-repository";
 import { ProjectShiftRepository } from "../../../projectShift/application/repositories/projectShift-repository";
+import { Either, right } from "@/core/either";
 
 interface GetLaunchByContractInterfaceRequest {
   page: number;
   projectCode: string;
 }
 
-interface GetLaunchByContractInterfaceResponse {
-  launchs: Array<Launch>;
-}
+type GetLaunchByContractInterfaceResponse = Either<
+  null,
+  { launchs: Array<Launch> }
+>;
 
 export class GetLaunchByProject {
   constructor(
@@ -75,6 +77,6 @@ export class GetLaunchByProject {
       projectShiftsId
     );
 
-    return { launchs };
+    return right({ launchs });
   }
 }

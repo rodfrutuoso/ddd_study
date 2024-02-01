@@ -17,8 +17,8 @@ describe("Launch Service", () => {
       serviceId: "2",
     });
 
-    expect(result.launch.projectShiftId.toValue()).toEqual("1");
-    expect(result.launch.value.number).toEqual(35.5);
-    expect(result.launch.id).toBeTruthy();
+    expect(result.value?.launch.projectShiftId.toValue()).toEqual("1");
+    expect(result.value?.launch.value.number).toEqual(35.5);
+    expect(result.value?.launch.id).toBeTruthy();
   });
 });

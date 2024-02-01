@@ -1,5 +1,6 @@
 /* eslint-disable no-useless-constructor */
 /* eslint-disable camelcase */
+import { Either, right } from "@/core/either";
 import { UniqueEntityId } from "../../../../../core/entities/unique-entity-id";
 import { Launch } from "../../enterprise/entities/launch";
 import { Value } from "../../enterprise/entities/value-objects/value";
@@ -11,9 +12,7 @@ interface LaunchServiceInterfaceRequest {
   serviceId: string;
 }
 
-interface LaunchServiceInterfaceResponse {
-  launch: Launch;
-}
+type LaunchServiceInterfaceResponse = Either<null, { launch: Launch }>;
 
 export class LaunchService {
   constructor(private launchRepository: LaunchRepository) {}
@@ -31,6 +30,6 @@ export class LaunchService {
 
     await this.launchRepository.create(launch);
 
-    return { launch };
+    return right({ launch });
   }
 }

@@ -45,12 +45,13 @@ describe("Get Launch By Service", () => {
     await inMemoryLaunchRepository.create(newLaunch2);
     await inMemoryLaunchRepository.create(newLaunch3);
 
-    const { launchs } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       code: "SDMU0125",
     });
 
-    expect(launchs).toHaveLength(2);
+    expect(result.isRight()).toBe(true);
+    expect(result.value?.launchs).toHaveLength(2);
   });
 
   it("should be able to get a empty list of launchs when there is no launch of the informed code", async () => {
@@ -76,12 +77,13 @@ describe("Get Launch By Service", () => {
     await inMemoryLaunchRepository.create(newLaunch2);
     await inMemoryLaunchRepository.create(newLaunch3);
 
-    const { launchs } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       code: "SDMU0125",
     });
 
-    expect(launchs).toHaveLength(0);
+    expect(result.isRight()).toBe(true);
+    expect(result.value?.launchs).toHaveLength(0);
   });
 
   it("should be able paginate a list of launchs of a code", async () => {
@@ -98,11 +100,12 @@ describe("Get Launch By Service", () => {
       );
     }
 
-    const { launchs } = await sut.execute({
+    const result = await sut.execute({
       page: 2,
       code: "SDMU0125",
     });
 
-    expect(launchs).toHaveLength(5);
+    expect(result.isRight()).toBe(true);
+    expect(result.value?.launchs).toHaveLength(5);
   });
 });
