@@ -19,12 +19,13 @@ describe("Edit Project By Id", () => {
 
     await inMemoryProjectRepository.create(newProject);
 
-    await sut.execute({
+    const result = await sut.execute({
       projectId: newProject.id.toString(),
       programmerType: "ADM",
       description: "FAZENDA-CONHECIDA",
     });
 
+    expect(result.isRight()).toBe(true);
     expect(await inMemoryProjectRepository.items[0]).toMatchObject({
       id: newProject.id,
       description: "FAZENDA-CONHECIDA",
@@ -38,12 +39,12 @@ describe("Edit Project By Id", () => {
 
     await inMemoryProjectRepository.create(newProject);
 
-    expect(async () => {
-      return await sut.execute({
-        projectId: newProject.id.toString(),
-        programmerType: "CAMPO",
-        description: "FAZENDA-CONHECIDA",
-      });
-    }).rejects.toBeInstanceOf(Error);
+    const result = await sut.execute({
+      projectId: newProject.id.toString(),
+      programmerType: "CAMPO",
+      description: "FAZENDA-CONHECIDA",
+    });
+
+    expect(result.isLeft()).toBe(true);
   });
 });

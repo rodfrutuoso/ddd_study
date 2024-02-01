@@ -1,5 +1,6 @@
 /* eslint-disable no-useless-constructor */
 /* eslint-disable camelcase */
+import { Either, right } from "@/core/either";
 import { Project } from "../../enterprise/entities/project";
 import { ProjectRepository } from "../repositories/project-repository";
 
@@ -11,9 +12,7 @@ interface RegisterProjectInterfaceRequest {
   group?: string;
 }
 
-interface RegisterProjectInterfaceResponse {
-  project: Project;
-}
+type RegisterProjectInterfaceResponse = Either<null, { project: Project }>;
 
 export class RegisterProject {
   constructor(private projectRepository: ProjectRepository) {}
@@ -35,6 +34,6 @@ export class RegisterProject {
 
     await this.projectRepository.create(project);
 
-    return { project };
+    return right({ project });
   }
 }

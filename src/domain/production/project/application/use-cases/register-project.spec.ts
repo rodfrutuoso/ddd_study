@@ -12,15 +12,16 @@ describe("Register a Project-Shift", () => {
   });
 
   it("should register a project in a specifc shift", async () => {
-    const { project } = await sut.execute({
+    const result = await sut.execute({
       projectCode: "B-12345678",
       description: "MP-FAZENDA-DO-SEU-LONGUINHO",
       utd: "ITABERABA",
       city: "ITABERABA",
     });
 
-    expect(project.id).toBeTruthy();
-    expect(project.utd).toEqual("ITABERABA");
-    expect(project.projectCode).toEqual("B-12345678");
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.project.id).toBeTruthy();
+    expect(result.value?.project.utd).toEqual("ITABERABA");
+    expect(result.value?.project.projectCode).toEqual("B-12345678");
   });
 });

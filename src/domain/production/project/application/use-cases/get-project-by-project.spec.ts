@@ -24,13 +24,14 @@ describe("Get Project By Project", () => {
     await inMemoryProjectRepository.create(newProject2);
     await inMemoryProjectRepository.create(newProject3);
 
-    const { project } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       projectCode: "B-1012505",
     });
 
-    expect(project).toHaveLength(2);
-    expect(project).not.toContain(newProject3);
+    expect(result.isRight()).toBe(true);
+    expect(result.value?.project).toHaveLength(2);
+    expect(result.value?.project).not.toContain(newProject3);
   });
 
   it("should be able to get a empty list of projects when there is no projects with the informed shiftId ", async () => {
@@ -42,12 +43,13 @@ describe("Get Project By Project", () => {
     await inMemoryProjectRepository.create(newProject2);
     await inMemoryProjectRepository.create(newProject3);
 
-    const { project } = await sut.execute({
+    const result = await sut.execute({
       projectCode: "B-1012505",
       page: 1,
     });
 
-    expect(project).toHaveLength(0);
+    expect(result.isRight()).toBe(true);
+    expect(result.value?.project).toHaveLength(0);
   });
 
   it("should be able paginate a list of projects of a projectCode", async () => {
@@ -59,12 +61,12 @@ describe("Get Project By Project", () => {
       );
     }
 
-    const { project } = await sut.execute({
+    const result = await sut.execute({
       projectCode: "B-1012505",
       page: 2,
     });
 
-    expect(project).toHaveLength(7);
+    expect(result.value?.project).toHaveLength(7);
   });
 
   it("should be able to get a list of projects of a parcial projectCode informed", async () => {
@@ -80,12 +82,13 @@ describe("Get Project By Project", () => {
     await inMemoryProjectRepository.create(newProject2);
     await inMemoryProjectRepository.create(newProject3);
 
-    const { project } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       projectCode: "1012505",
     });
 
-    expect(project).toHaveLength(2);
-    expect(project).not.toContain(newProject3);
+    expect(result.isRight()).toBe(true);
+    expect(result.value?.project).toHaveLength(2);
+    expect(result.value?.project).not.toContain(newProject3);
   });
 });

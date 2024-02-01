@@ -2,6 +2,9 @@
 /* eslint-disable camelcase */
 import { ProjectRepository } from "../repositories/project-repository";
 import { Project } from "../../enterprise/entities/project";
+import { Either, left, right } from "@/core/either";
+import { ResourceNotFoundError } from "@/domain/errors/resource-not-found-error";
+import { NotAuthorizedError } from "@/domain/errors/not-authorized-error";
 
 interface EditProjectInterfaceRequest {
   projectId: string;
@@ -12,9 +15,10 @@ interface EditProjectInterfaceRequest {
   group?: string;
 }
 
-interface EditProjectInterfaceResponse {
-  project: Project;
-}
+type EditProjectInterfaceResponse = Either<
+  ResourceNotFoundError | NotAuthorizedError,
+  { project: Project }
+>;
 
 export class EditProject {
   constructor(private projectRepository: ProjectRepository) {}
@@ -29,10 +33,10 @@ export class EditProject {
   }: EditProjectInterfaceRequest): Promise<EditProjectInterfaceResponse> {
     const project = await this.projectRepository.findById(projectId);
 
-    if (!project) throw new Error("Project not found");
+    if (!project) return left(new ResourceNotFoundError());
 
     if (programmerType !== "ADM" && programmerType !== "PROGRAMAÇÃO")
-      throw new Error("Not authorized");
+      return left(new NotAuthorizedError());
 
     project.description = description ?? project.description;
     project.utd = utd ?? project.utd;
@@ -41,6 +45,6 @@ export class EditProject {
 
     await this.projectRepository.save(project);
 
-    return { project };
+    return right({ project });
   }
 }

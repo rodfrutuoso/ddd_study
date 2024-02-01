@@ -1,15 +1,17 @@
 /* eslint-disable no-useless-constructor */
 import { ProjectRepository } from "../repositories/project-repository";
 import { Project } from "../../enterprise/entities/project";
+import { Either, right } from "@/core/either";
 
 interface GetProjectByProjectInterfaceRequest {
   projectCode: string;
   page: number;
 }
 
-interface GetProjectByProjectInterfaceResponse {
-  project: Array<Project>;
-}
+type GetProjectByProjectInterfaceResponse = Either<
+  null,
+  { project: Array<Project> }
+>;
 
 export class GetProjectByProject {
   constructor(private projectRepository: ProjectRepository) {}
@@ -23,6 +25,6 @@ export class GetProjectByProject {
       projectCode
     );
 
-    return { project };
+    return right({ project });
   }
 }
