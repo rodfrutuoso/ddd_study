@@ -21,15 +21,16 @@ describe("Get Schedule By Date", () => {
     await inMemoryShitRepository.create(newSchedule2);
     await inMemoryShitRepository.create(newSchedule3);
 
-    const { schedules } = await sut.execute({
+    const result = await sut.execute({
       startDate: new Date("2023-11-12"),
       endDate: new Date("2023-11-15"),
       page: 1,
     });
 
-    expect(schedules).toHaveLength(2);
-    expect(schedules).not.toContain(newSchedule1);
-    expect(schedules[0].date).toEqual(new Date("2023-11-15"));
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.schedules).toHaveLength(2);
+    expect(result.value?.schedules).not.toContain(newSchedule1);
+    expect(result.value?.schedules[0].date).toEqual(new Date("2023-11-15"));
   });
 
   it("should be able to get a empty list of schedules when there is no schedule between the infomed dates ", async () => {
@@ -41,13 +42,14 @@ describe("Get Schedule By Date", () => {
     await inMemoryShitRepository.create(newSchedule2);
     await inMemoryShitRepository.create(newSchedule3);
 
-    const { schedules } = await sut.execute({
+    const result = await sut.execute({
       startDate: new Date("2023-11-16"),
       endDate: new Date("2023-11-20"),
       page: 1,
     });
 
-    expect(schedules).toHaveLength(0);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.schedules).toHaveLength(0);
   });
 
   it("should be able paginate a list of schedules between two dates", async () => {
@@ -59,12 +61,13 @@ describe("Get Schedule By Date", () => {
       );
     }
 
-    const { schedules } = await sut.execute({
+    const result = await sut.execute({
       startDate: new Date("2023-11-12"),
       endDate: new Date("2023-11-15"),
       page: 2,
     });
 
-    expect(schedules).toHaveLength(5);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.schedules).toHaveLength(5);
   });
 });

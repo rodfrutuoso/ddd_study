@@ -1,5 +1,6 @@
 /* eslint-disable no-useless-constructor */
 /* eslint-disable camelcase */
+import { Either, right } from "@/core/either";
 import { UniqueEntityId } from "../../../../../core/entities/unique-entity-id";
 import { Schedule } from "../../enterprise/entities/schedule";
 import { ScheduleRepository } from "../repositories/schedule-repository";
@@ -13,9 +14,8 @@ interface RegisterScheduleInterface {
 interface RegisterScheduleInterfaceRequest {
   schedules: RegisterScheduleInterface[];
 }
-interface RegisterScheduleInterfaceResponse {
-  schedule: Schedule[];
-}
+
+type RegisterScheduleInterfaceResponse = Either<null, { schedule: Schedule[] }>;
 
 export class RegisterSchedule {
   constructor(private scheduleRepository: ScheduleRepository) {}
@@ -36,6 +36,6 @@ export class RegisterSchedule {
       await this.scheduleRepository.create(scheduleInMemory);
     });
 
-    return { schedule };
+    return right({ schedule });
   }
 }

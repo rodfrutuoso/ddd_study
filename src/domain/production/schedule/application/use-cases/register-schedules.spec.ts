@@ -35,10 +35,11 @@ describe("Register a list of schedules", () => {
       },
     ];
 
-    const { schedule } = await sut.execute({ schedules });
+    const result = await sut.execute({ schedules });
 
-    expect(schedule.length).toEqual(4);
-    expect(schedule[0].teamId.toString()).toEqual("team 1");
-    expect(schedule[3].projectId.toString()).toEqual("project 3");
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.schedule.length).toEqual(4);
+    expect(result.value?.schedule[0].teamId.toString()).toEqual("team 1");
+    expect(result.value?.schedule[3].projectId.toString()).toEqual("project 3");
   });
 });

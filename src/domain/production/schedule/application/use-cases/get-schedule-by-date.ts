@@ -1,4 +1,5 @@
 /* eslint-disable no-useless-constructor */
+import { Either, right } from "@/core/either";
 import { Schedule } from "../../enterprise/entities/schedule";
 import { ScheduleRepository } from "../repositories/schedule-repository";
 
@@ -8,9 +9,10 @@ interface GetScheduleByDateInterfaceRequest {
   page: number;
 }
 
-interface GetScheduleByDateInterfaceResponse {
-  schedules: Array<Schedule>;
-}
+type GetScheduleByDateInterfaceResponse = Either<
+  null,
+  { schedules: Array<Schedule> }
+>;
 
 export class GetScheduleByDate {
   constructor(private scheduleRepository: ScheduleRepository) {}
@@ -26,6 +28,6 @@ export class GetScheduleByDate {
       endDate
     );
 
-    return { schedules };
+    return right({ schedules });
   }
 }

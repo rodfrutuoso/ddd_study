@@ -1,14 +1,19 @@
 /* eslint-disable no-useless-constructor */
 /* eslint-disable camelcase */
+import { Either, left, right } from "@/core/either";
 import { ScheduleRepository } from "../repositories/schedule-repository";
+import { ResourceNotFoundError } from "@/domain/errors/resource-not-found-error";
+import { NotAuthorizedError } from "@/domain/errors/not-authorized-error";
 
 interface DeleteScheduleInterfaceRequest {
   scheduleId?: string;
   programmerType: string;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface DeleteScheduleInterfaceResponse {}
+type DeleteScheduleInterfaceResponse = Either<
+  ResourceNotFoundError | NotAuthorizedError,
+  Record<string, never>
+>;
 
 export class DeleteSchedule {
   constructor(private scheduleRepository: ScheduleRepository) {}
@@ -23,16 +28,16 @@ export class DeleteSchedule {
         : await this.scheduleRepository.findById(scheduleId);
 
     if (!schedule && schedule !== undefined)
-      throw new Error("Schedule not found");
+      return left(new ResourceNotFoundError());
 
     if (programmerType !== "ADM" && programmerType !== "PROGRAMAÇÂO")
-      throw new Error("Not authorized");
+      return left(new NotAuthorizedError());
 
     if (schedule === undefined) {
       await this.scheduleRepository.delete(undefined);
     }
     await this.scheduleRepository.delete(schedule);
 
-    return {};
+    return right({});
   }
 }

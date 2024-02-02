@@ -27,14 +27,17 @@ describe("Get Schedule By Team", () => {
     await inMemoryShitRepository.create(newSchedule2);
     await inMemoryShitRepository.create(newSchedule3);
 
-    const { schedules } = await sut.execute({
+    const result = await sut.execute({
       teamId: "team id test",
       page: 1,
     });
 
-    expect(schedules).toHaveLength(2);
-    expect(schedules).not.toContain(newSchedule3);
-    expect(schedules[0].teamId.toString()).toEqual("team id test");
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.schedules).toHaveLength(2);
+    expect(result.value?.schedules).not.toContain(newSchedule3);
+    expect(result.value?.schedules[0].teamId.toString()).toEqual(
+      "team id test"
+    );
   });
 
   it("should be able to get a empty list of schedules when there is no schedule of the infomed team ", async () => {
@@ -52,12 +55,13 @@ describe("Get Schedule By Team", () => {
     await inMemoryShitRepository.create(newSchedule2);
     await inMemoryShitRepository.create(newSchedule3);
 
-    const { schedules } = await sut.execute({
+    const result = await sut.execute({
       teamId: "team id test 3",
       page: 1,
     });
 
-    expect(schedules).toHaveLength(0);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.schedules).toHaveLength(0);
   });
 
   it("should be able paginate a list of schedules of a team", async () => {
@@ -69,11 +73,12 @@ describe("Get Schedule By Team", () => {
       );
     }
 
-    const { schedules } = await sut.execute({
+    const result = await sut.execute({
       teamId: "team id test",
       page: 2,
     });
 
-    expect(schedules).toHaveLength(5);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.schedules).toHaveLength(5);
   });
 });
