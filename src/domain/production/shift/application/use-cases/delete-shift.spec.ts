@@ -32,12 +32,12 @@ describe("Delete Shift By Id", () => {
 
     await inMemoryShitRepository.create(newShift);
 
-    expect(async () => {
-      return await sut.execute({
-        shiftId: "abc-123-xyz",
-        programmerType: "CAMPO",
-      });
-    }).rejects.toBeInstanceOf(Error);
+    const result = await sut.execute({
+      shiftId: "abc-123-xyz",
+      programmerType: "CAMPO",
+    });
+
+    expect(result.isLeft()).toBeTruthy();
 
     expect(await inMemoryShitRepository.findById("abc-123-xyz")).toBeTruthy();
     expect(await inMemoryShitRepository.items).toHaveLength(1);

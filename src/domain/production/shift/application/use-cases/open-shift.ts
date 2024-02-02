@@ -1,5 +1,6 @@
 /* eslint-disable no-useless-constructor */
 /* eslint-disable camelcase */
+import { Either, right } from "@/core/either";
 import { UniqueEntityId } from "../../../../../core/entities/unique-entity-id";
 import { Shift } from "../../enterprise/entities/shift";
 import { ShiftRepository } from "../repositories/shift-repository";
@@ -16,9 +17,7 @@ interface OpenShiftInterfaceRequest {
   vehicle_id: string;
 }
 
-interface OpenShiftInterfaceResponse {
-  shift: Shift;
-}
+type OpenShiftInterfaceResponse = Either<null, { shift: Shift }>;
 
 export class OpenShift {
   constructor(private shiftRepository: ShiftRepository) {}
@@ -45,6 +44,6 @@ export class OpenShift {
 
     await this.shiftRepository.create(shift);
 
-    return { shift };
+    return right({ shift });
   }
 }

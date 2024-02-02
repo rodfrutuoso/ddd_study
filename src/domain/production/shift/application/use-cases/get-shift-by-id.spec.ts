@@ -22,6 +22,7 @@ describe("Get Shift By Team", () => {
       shiftId: "abc-123-xyz",
     });
 
-    expect(result.shift.id.toString()).toEqual("abc-123-xyz");
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.shift.id.toString()).toEqual("abc-123-xyz");
   });
 });

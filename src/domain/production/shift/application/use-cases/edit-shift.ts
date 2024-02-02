@@ -3,6 +3,9 @@
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { ShiftRepository } from "../repositories/shift-repository";
 import { Shift } from "../../enterprise/entities/shift";
+import { Either, left, right } from "@/core/either";
+import { ResourceNotFoundError } from "@/domain/errors/resource-not-found-error";
+import { NotAuthorizedError } from "@/domain/errors/not-authorized-error";
 
 interface EditShiftInterfaceRequest {
   shiftId: string;
@@ -12,9 +15,10 @@ interface EditShiftInterfaceRequest {
   vehicle_id?: string;
 }
 
-interface EditShiftInterfaceResponse {
-  shift: Shift;
-}
+type EditShiftInterfaceResponse = Either<
+  ResourceNotFoundError | NotAuthorizedError,
+  { shift: Shift }
+>;
 
 export class EditShift {
   constructor(private shiftRepository: ShiftRepository) {}
@@ -28,10 +32,10 @@ export class EditShift {
   }: EditShiftInterfaceRequest): Promise<EditShiftInterfaceResponse> {
     const shift = await this.shiftRepository.findById(shiftId);
 
-    if (!shift) throw new Error("Shift not found");
+    if (!shift) return left(new ResourceNotFoundError());
 
     if (programmerType !== "ADM" && programmerType !== "PROGRAMAÇÃO")
-      throw new Error("Not authorized");
+      return left(new NotAuthorizedError());
 
     shift.odometer_end = odometer_end ?? shift.odometer_end;
     shift.odometer_start = odometer_start ?? shift.odometer_start;
@@ -39,6 +43,6 @@ export class EditShift {
 
     await this.shiftRepository.save(shift);
 
-    return { shift };
+    return right({ shift });
   }
 }

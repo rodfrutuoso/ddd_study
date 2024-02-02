@@ -1,4 +1,5 @@
 /* eslint-disable no-useless-constructor */
+import { Either, right } from "@/core/either";
 import { Shift } from "../../enterprise/entities/shift";
 import { ShiftRepository } from "../repositories/shift-repository";
 
@@ -7,9 +8,7 @@ interface GetShiftByTeamInterfaceRequest {
   teamId?: string;
 }
 
-interface GetShiftByTeamInterfaceResponse {
-  shifts: Array<Shift>;
-}
+type GetShiftByTeamInterfaceResponse = Either<null, { shifts: Array<Shift> }>;
 
 export class GetShiftByTeam {
   constructor(private shiftRepository: ShiftRepository) {}
@@ -25,6 +24,6 @@ export class GetShiftByTeam {
       teamId
     );
 
-    return { shifts };
+    return right({ shifts });
   }
 }

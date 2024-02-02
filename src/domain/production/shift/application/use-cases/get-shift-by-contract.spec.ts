@@ -35,15 +35,13 @@ describe("Get Shift By contract", () => {
     await inMemoryShitRepository.create(newShift2);
     await inMemoryShitRepository.create(newShift3);
 
-    const { shifts } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       contract: "Coelba",
     });
 
-    // console.log(inMemoryShitRepository.items);
-    // console.log(inMemoryTeamRepository.items);
-
-    expect(shifts).toHaveLength(2);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.shifts).toHaveLength(2);
   });
 
   it("should be able to get a empty list of shifts when there is no shift of the informed contract", async () => {
@@ -75,12 +73,13 @@ describe("Get Shift By contract", () => {
     await inMemoryShitRepository.create(newShift2);
     await inMemoryShitRepository.create(newShift3);
 
-    const { shifts } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       contract: "Celpe",
     });
 
-    expect(shifts).toHaveLength(0);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.shifts).toHaveLength(0);
   });
 
   it("should be able paginate a list of shifts of a contract", async () => {
@@ -97,11 +96,12 @@ describe("Get Shift By contract", () => {
       );
     }
 
-    const { shifts } = await sut.execute({
+    const result = await sut.execute({
       page: 2,
       contract: "Coelba",
     });
 
-    expect(shifts).toHaveLength(5);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.shifts).toHaveLength(5);
   });
 });

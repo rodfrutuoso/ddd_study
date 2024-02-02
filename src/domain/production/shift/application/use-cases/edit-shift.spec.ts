@@ -20,7 +20,7 @@ describe("Edit Shift By Id", () => {
 
     await inMemoryShiftRepository.create(newShift);
 
-    await sut.execute({
+    const result = await sut.execute({
       shiftId: newShift.id.toString(),
       programmerType: "ADM",
       vehicle_id: "vehicle-id-editado",
@@ -28,6 +28,7 @@ describe("Edit Shift By Id", () => {
       odometer_end: 1400,
     });
 
+    expect(result.isRight()).toBeTruthy();
     expect(await inMemoryShiftRepository.items[0]).toMatchObject({
       vehicle_id: new UniqueEntityId("vehicle-id-editado"),
       odometer_start: 1200,
@@ -42,14 +43,14 @@ describe("Edit Shift By Id", () => {
 
     await inMemoryShiftRepository.create(newShift);
 
-    expect(async () => {
-      return await sut.execute({
-        shiftId: newShift.id.toString(),
-        programmerType: "CAMPO",
-        vehicle_id: "vehicle-id-editado",
-        odometer_start: 1200,
-        odometer_end: 1400,
-      });
-    }).rejects.toBeInstanceOf(Error);
+    const result = await sut.execute({
+      shiftId: newShift.id.toString(),
+      programmerType: "CAMPO",
+      vehicle_id: "vehicle-id-editado",
+      odometer_start: 1200,
+      odometer_end: 1400,
+    });
+
+    expect(result.isLeft()).toBeTruthy();
   });
 });

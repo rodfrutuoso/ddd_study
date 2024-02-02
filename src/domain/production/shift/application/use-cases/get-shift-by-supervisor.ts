@@ -3,15 +3,17 @@ import { Shift } from "../../enterprise/entities/shift";
 import { Team } from "../../../team/enterprise/entities/team";
 import { ShiftRepository } from "../repositories/shift-repository";
 import { TeamRepository } from "../../../team/application/repositories/team-repository";
+import { Either, right } from "@/core/either";
 
 interface GetShiftBySupervisorInterfaceRequest {
   page: number;
   supervisorId: string;
 }
 
-interface GetShiftBySupervisorInterfaceResponse {
-  shifts: Array<Shift>;
-}
+type GetShiftBySupervisorInterfaceResponse = Either<
+  null,
+  { shifts: Array<Shift> }
+>;
 
 export class GetShiftBySupervisor {
   constructor(
@@ -48,6 +50,6 @@ export class GetShiftBySupervisor {
       teamsId
     );
 
-    return { shifts };
+    return right({ shifts });
   }
 }

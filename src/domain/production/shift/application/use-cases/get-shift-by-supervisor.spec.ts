@@ -51,12 +51,13 @@ describe("Get Shift By supervisor", () => {
     await inMemoryShitRepository.create(newShift2);
     await inMemoryShitRepository.create(newShift3);
 
-    const { shifts } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       supervisorId: "supervisor 1",
     });
 
-    expect(shifts).toHaveLength(2);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.shifts).toHaveLength(2);
   });
 
   it("should be able to get a empty list of shifts when there is no shift of the informed supervisor", async () => {
@@ -97,12 +98,13 @@ describe("Get Shift By supervisor", () => {
     await inMemoryShitRepository.create(newShift2);
     await inMemoryShitRepository.create(newShift3);
 
-    const { shifts } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       supervisorId: "supervisor2",
     });
 
-    expect(shifts).toHaveLength(0);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.shifts).toHaveLength(0);
   });
 
   it("should be able paginate a list of shifts of a supervisor", async () => {
@@ -122,11 +124,12 @@ describe("Get Shift By supervisor", () => {
       );
     }
 
-    const { shifts } = await sut.execute({
+    const result = await sut.execute({
       page: 2,
       supervisorId: "supervisor 1",
     });
 
-    expect(shifts).toHaveLength(5);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.shifts).toHaveLength(5);
   });
 });

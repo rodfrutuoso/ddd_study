@@ -1,4 +1,5 @@
 /* eslint-disable no-useless-constructor */
+import { Either, right } from "@/core/either";
 import { Shift } from "../../enterprise/entities/shift";
 import { ShiftRepository } from "../repositories/shift-repository";
 
@@ -9,9 +10,7 @@ interface GetShiftByDateInterfaceRequest {
   teamId?: string;
 }
 
-interface GetShiftByDateInterfaceResponse {
-  shifts: Array<Shift>;
-}
+type GetShiftByDateInterfaceResponse = Either<null, { shifts: Array<Shift> }>;
 
 export class GetShiftByDate {
   constructor(private shiftRepository: ShiftRepository) {}
@@ -29,6 +28,6 @@ export class GetShiftByDate {
       teamId
     );
 
-    return { shifts };
+    return right({ shifts });
   }
 }

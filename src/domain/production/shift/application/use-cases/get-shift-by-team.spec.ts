@@ -25,12 +25,13 @@ describe("Get Shift By team", () => {
     await inMemoryShitRepository.create(newShift2);
     await inMemoryShitRepository.create(newShift3);
 
-    const { shifts } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       teamId: "1-546",
     });
 
-    expect(shifts).toHaveLength(2);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.shifts).toHaveLength(2);
   });
 
   it("should be able to get a empty list of shifts when there is no shift of the informed team", async () => {
@@ -42,12 +43,13 @@ describe("Get Shift By team", () => {
     await inMemoryShitRepository.create(newShift2);
     await inMemoryShitRepository.create(newShift3);
 
-    const { shifts } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       teamId: "123-456-xyz-diferente",
     });
 
-    expect(shifts).toHaveLength(0);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.shifts).toHaveLength(0);
   });
 
   it("should be able paginate a list of shifts of a team", async () => {
@@ -59,11 +61,12 @@ describe("Get Shift By team", () => {
       );
     }
 
-    const { shifts } = await sut.execute({
+    const result = await sut.execute({
       page: 2,
       teamId: "123-456-xyz",
     });
 
-    expect(shifts).toHaveLength(5);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.shifts).toHaveLength(5);
   });
 });

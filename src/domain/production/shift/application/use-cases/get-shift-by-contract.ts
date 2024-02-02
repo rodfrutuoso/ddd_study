@@ -3,15 +3,17 @@ import { Shift } from "../../enterprise/entities/shift";
 import { Team } from "../../../team/enterprise/entities/team";
 import { ShiftRepository } from "../repositories/shift-repository";
 import { TeamRepository } from "../../../team/application/repositories/team-repository";
+import { Either, right } from "@/core/either";
 
 interface GetShiftByContractInterfaceRequest {
   page: number;
   contract: string;
 }
 
-interface GetShiftByContractInterfaceResponse {
-  shifts: Array<Shift>;
-}
+type GetShiftByContractInterfaceResponse = Either<
+  null,
+  { shifts: Array<Shift> }
+>;
 
 export class GetShiftByContract {
   constructor(
@@ -50,6 +52,6 @@ export class GetShiftByContract {
       teamsId
     );
 
-    return { shifts };
+    return right({ shifts });
   }
 }

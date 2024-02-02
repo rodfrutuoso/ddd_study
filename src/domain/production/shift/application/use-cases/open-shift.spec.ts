@@ -22,8 +22,9 @@ describe("Open a Shift", () => {
       vehicle_id: "2",
     });
 
-    expect(result.shift.teamId.toValue()).toEqual("1");
-    expect(result.shift.shift_start).toEqual("18:10:01");
-    expect(result.shift.date).toEqual(new Date("2023-12-15 00:00:00"));
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.shift.teamId.toValue()).toEqual("1");
+    expect(result.value?.shift.shift_start).toEqual("18:10:01");
+    expect(result.value?.shift.date).toEqual(new Date("2023-12-15 00:00:00"));
   });
 });

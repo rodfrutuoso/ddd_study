@@ -21,15 +21,16 @@ describe("Get Shift By Date", () => {
     await inMemoryShitRepository.create(newShift2);
     await inMemoryShitRepository.create(newShift3);
 
-    const { shifts } = await sut.execute({
+    const result = await sut.execute({
       startDate: new Date("2023-11-12"),
       endDate: new Date("2023-11-15"),
       page: 1,
     });
 
-    expect(shifts).toHaveLength(2);
-    expect(shifts).not.toContain(newShift1);
-    expect(shifts[0].date).toEqual(new Date("2023-11-15"));
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.shifts).toHaveLength(2);
+    expect(result.value?.shifts).not.toContain(newShift1);
+    expect(result.value?.shifts[0].date).toEqual(new Date("2023-11-15"));
   });
 
   it("should be able to get a empty list of shifts when there is no shift between the infomed dates ", async () => {
@@ -41,13 +42,14 @@ describe("Get Shift By Date", () => {
     await inMemoryShitRepository.create(newShift2);
     await inMemoryShitRepository.create(newShift3);
 
-    const { shifts } = await sut.execute({
+    const result = await sut.execute({
       startDate: new Date("2023-11-16"),
       endDate: new Date("2023-11-20"),
       page: 1,
     });
 
-    expect(shifts).toHaveLength(0);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.shifts).toHaveLength(0);
   });
 
   it("should be able paginate a list of shifts between two dates", async () => {
@@ -59,12 +61,13 @@ describe("Get Shift By Date", () => {
       );
     }
 
-    const { shifts } = await sut.execute({
+    const result = await sut.execute({
       startDate: new Date("2023-11-12"),
       endDate: new Date("2023-11-15"),
       page: 2,
     });
 
-    expect(shifts).toHaveLength(5);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.shifts).toHaveLength(5);
   });
 });
