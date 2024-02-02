@@ -24,12 +24,13 @@ describe("Get Service By code", () => {
     await inMemoryServiceRepository.create(newService2);
     await inMemoryServiceRepository.create(newService3);
 
-    const { services } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       code: "SDMU0024",
     });
 
-    expect(services).toHaveLength(2);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.services).toHaveLength(2);
   });
 
   it("should be able to get a empty list of services when there is no service of the informed code", async () => {
@@ -41,12 +42,13 @@ describe("Get Service By code", () => {
     await inMemoryServiceRepository.create(newService2);
     await inMemoryServiceRepository.create(newService3);
 
-    const { services } = await sut.execute({
+    const result = await sut.execute({
       code: "SDMU0024",
       page: 1,
     });
 
-    expect(services).toHaveLength(0);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.services).toHaveLength(0);
   });
 
   it("should be able paginate a list of services of a service", async () => {
@@ -59,12 +61,13 @@ describe("Get Service By code", () => {
     }
     // console.log(inMemoryServiceRepository.items);
 
-    const { services } = await sut.execute({
+    const result = await sut.execute({
       page: 2,
       code: "SDMU0024",
     });
 
-    expect(services).toHaveLength(5);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.services).toHaveLength(5);
   });
 
   it("should be able to get a list of services of a parcial code informed", async () => {
@@ -80,11 +83,12 @@ describe("Get Service By code", () => {
     await inMemoryServiceRepository.create(newService2);
     await inMemoryServiceRepository.create(newService3);
 
-    const { services } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       code: "SDMU",
     });
 
-    expect(services).toHaveLength(2);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.services).toHaveLength(2);
   });
 });

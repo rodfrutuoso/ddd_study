@@ -12,12 +12,13 @@ describe("Register a Service", () => {
   });
 
   it("should register a service", async () => {
-    const { service } = await sut.execute({
+    const result = await sut.execute({
       code: "ESDMU0047",
       description: "IMPLANTAR POSTE DE 9 A 14 METROS",
     });
 
-    expect(service.id).toBeTruthy();
-    expect(service.code).toEqual("ESDMU0047");
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.service.id).toBeTruthy();
+    expect(result.value?.service.code).toEqual("ESDMU0047");
   });
 });

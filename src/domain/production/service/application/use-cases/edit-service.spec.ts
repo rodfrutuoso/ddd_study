@@ -19,12 +19,13 @@ describe("Edit Service By Id", () => {
 
     await inMemoryServiceRepository.create(newService);
 
-    await sut.execute({
+    const result = await sut.execute({
       serviceId: newService.id.toString(),
       programmerType: "PROGRAMAÇÃO",
       description: "INSTALAR POSTE DE 9 METROS",
     });
 
+    expect(result.isRight()).toBeTruthy();
     expect(await inMemoryServiceRepository.items[0]).toMatchObject({
       description: "INSTALAR POSTE DE 9 METROS",
     });
@@ -37,12 +38,12 @@ describe("Edit Service By Id", () => {
 
     await inMemoryServiceRepository.create(newService);
 
-    expect(async () => {
-      return await sut.execute({
-        serviceId: newService.id.toString(),
-        programmerType: "campo",
-        description: "INSTALAR POSTE DE 9 METROS",
-      });
-    }).rejects.toBeInstanceOf(Error);
+    const result = await sut.execute({
+      serviceId: newService.id.toString(),
+      programmerType: "campo",
+      description: "INSTALAR POSTE DE 9 METROS",
+    });
+
+    expect(result.isLeft()).toBeTruthy();
   });
 });

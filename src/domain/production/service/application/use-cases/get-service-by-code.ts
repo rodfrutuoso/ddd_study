@@ -1,4 +1,5 @@
 /* eslint-disable no-useless-constructor */
+import { Either, right } from "@/core/either";
 import { Service } from "../../enterprise/entities/service";
 import { ServiceRepository } from "../repositories/service-repository";
 
@@ -7,9 +8,10 @@ interface GetServiceByCodeInterfaceRequest {
   code: string;
 }
 
-interface GetServiceByServiceInterfaceResponse {
-  services: Array<Service>;
-}
+type GetServiceByServiceInterfaceResponse = Either<
+  null,
+  { services: Array<Service> }
+>;
 
 export class GetServiceByCode {
   constructor(private serviceRepository: ServiceRepository) {}
@@ -20,6 +22,6 @@ export class GetServiceByCode {
   }: GetServiceByCodeInterfaceRequest): Promise<GetServiceByServiceInterfaceResponse> {
     const services = await this.serviceRepository.findMany({ page }, code);
 
-    return { services };
+    return right({ services });
   }
 }
