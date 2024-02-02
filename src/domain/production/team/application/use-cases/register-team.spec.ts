@@ -41,7 +41,7 @@ describe("Register a Team", () => {
     await inMemoryTeamLeaderRepository.create(teamLeader);
     await inMemorySupervisorRepository.create(supervisor);
 
-    const { team } = await sut.execute({
+    const result = await sut.execute({
       name: "ECOLM0001 - JOAO NUM SEI DAS QUANTAS",
       leaderId: "leader Id",
       supervisorId: "Supervisor Id",
@@ -49,9 +49,12 @@ describe("Register a Team", () => {
       contract: "CENTRO-OESTE",
     });
 
-    expect(team.id).toBeTruthy();
-    expect(team.name).toEqual("ECOLM0001 - JOAO NUM SEI DAS QUANTAS");
-    expect(team.leaderId.getName()).toEqual("Leader Name");
-    expect(team.coordinatorId?.getId()).toBeUndefined();
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.team.id).toBeTruthy();
+    expect(result.value?.team.name).toEqual(
+      "ECOLM0001 - JOAO NUM SEI DAS QUANTAS"
+    );
+    expect(result.value?.team.leaderId.getName()).toEqual("Leader Name");
+    expect(result.value?.team.coordinatorId?.getId()).toBeUndefined();
   });
 });

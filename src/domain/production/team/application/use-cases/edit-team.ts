@@ -6,6 +6,9 @@ import { UserNameId } from "@/core/entities/userNameId";
 import { SupervisorRepository } from "@/domain/users/application/repositories/supervisor-repository";
 import { TeamLeaderRepository } from "@/domain/users/application/repositories/teamLeader-repository";
 import { CoordinatorRepository } from "@/domain/users/application/repositories/coordinator-repository";
+import { Either, left, right } from "@/core/either";
+import { ResourceNotFoundError } from "@/domain/errors/resource-not-found-error";
+import { NotAuthorizedError } from "@/domain/errors/not-authorized-error";
 
 interface EditTeamInterfaceRequest {
   teamId: string;
@@ -17,10 +20,10 @@ interface EditTeamInterfaceRequest {
   deactivation_date?: Date;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface EditTeamInterfaceResponse {
-  team: Team;
-}
+type EditTeamInterfaceResponse = Either<
+  ResourceNotFoundError | NotAuthorizedError,
+  { team: Team }
+>;
 
 export class EditTeam {
   constructor(
@@ -41,28 +44,31 @@ export class EditTeam {
   }: EditTeamInterfaceRequest): Promise<EditTeamInterfaceResponse> {
     const team = await this.teamRepository.findById(teamId);
 
-    if (!team) throw new Error("Team not found");
+    if (!team) return left(new ResourceNotFoundError("Equipe não encontrada"));
 
     if (programmerType !== "ADM" && programmerType !== "PROGRAMAÇÃO")
-      throw new Error("Not authorized");
+      return left(new NotAuthorizedError());
 
     // verifying if teamLeader, Supervisor and coordinator Id's are valid and geting their names
     let supervisor;
     if (supervisorId) {
       supervisor = await this.supervisorRepository.findById(supervisorId);
-      if (!supervisor) throw new Error("Supervisor not found");
+      if (!supervisor)
+        return left(new ResourceNotFoundError("Supervisor não encontrado"));
     }
 
     let coordinator;
     if (coordinatorId) {
       coordinator = await this.coordinatorRepository.findById(coordinatorId);
-      if (!coordinator) throw new Error("Coordinator not found");
+      if (!coordinator)
+        return left(new ResourceNotFoundError("Coordenador não encontrado"));
     }
 
     let teamLeader;
     if (leaderId) {
       teamLeader = await this.teamleaderRepository.findById(leaderId);
-      if (!teamLeader) throw new Error("Team Leader not found");
+      if (!teamLeader)
+        return left(new ResourceNotFoundError("Encarregado não econtrado"));
     }
 
     team.name = name ?? team.name;
@@ -83,6 +89,6 @@ export class EditTeam {
 
     await this.teamRepository.save(team);
 
-    return { team };
+    return right({ team });
   }
 }

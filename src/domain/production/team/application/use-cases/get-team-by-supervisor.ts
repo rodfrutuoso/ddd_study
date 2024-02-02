@@ -1,4 +1,5 @@
 /* eslint-disable no-useless-constructor */
+import { Either, right } from "@/core/either";
 import { Team } from "../../enterprise/entities/team";
 import { TeamRepository } from "../repositories/team-repository";
 
@@ -10,9 +11,10 @@ interface GetTeamBySupervisorInterfaceRequest {
   name?: string;
 }
 
-interface GetTeamBySupervisorInterfaceResponse {
-  teams: Array<Team>;
-}
+type GetTeamBySupervisorInterfaceResponse = Either<
+  null,
+  { teams: Array<Team> }
+>;
 
 export class GetTeamBySupervisor {
   constructor(private teamRepository: TeamRepository) {}
@@ -32,6 +34,6 @@ export class GetTeamBySupervisor {
       name
     );
 
-    return { teams };
+    return right({ teams });
   }
 }

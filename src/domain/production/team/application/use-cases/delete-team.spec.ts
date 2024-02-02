@@ -18,11 +18,12 @@ describe("Delete Team By Id", () => {
 
     await inMemoryTeamRepository.create(newTeam);
 
-    await sut.execute({
+    const result = await sut.execute({
       teamId: "abc-123-xyz",
       programmerType: "ADM",
     });
 
+    expect(result.isRight()).toBeTruthy();
     expect(await inMemoryTeamRepository.findById("abc-123-xyz")).toBeNull();
     expect(await inMemoryTeamRepository.items).toHaveLength(0);
   });
@@ -32,13 +33,12 @@ describe("Delete Team By Id", () => {
 
     await inMemoryTeamRepository.create(newTeam);
 
-    expect(async () => {
-      return await sut.execute({
-        teamId: "abc-123-xyz",
-        programmerType: "CAMPO",
-      });
-    }).rejects.toBeInstanceOf(Error);
+    const result = await sut.execute({
+      teamId: "abc-123-xyz",
+      programmerType: "CAMPO",
+    });
 
+    expect(result.isLeft()).toBeTruthy();
     expect(await inMemoryTeamRepository.findById("abc-123-xyz")).toBeTruthy();
     expect(await inMemoryTeamRepository.items).toHaveLength(1);
   });

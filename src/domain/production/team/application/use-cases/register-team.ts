@@ -7,6 +7,8 @@ import { TeamRepository } from "../repositories/team-repository";
 import { SupervisorRepository } from "@/domain/users/application/repositories/supervisor-repository";
 import { TeamLeaderRepository } from "@/domain/users/application/repositories/teamLeader-repository";
 import { CoordinatorRepository } from "@/domain/users/application/repositories/coordinator-repository";
+import { Either, left, right } from "@/core/either";
+import { ResourceNotFoundError } from "@/domain/errors/resource-not-found-error";
 
 interface RegisterTeamInterfaceRequest {
   name: string;
@@ -17,9 +19,10 @@ interface RegisterTeamInterfaceRequest {
   contract: string;
 }
 
-interface RegisterTeamInterfaceResponse {
-  team: Team;
-}
+type RegisterTeamInterfaceResponse = Either<
+  ResourceNotFoundError,
+  { team: Team }
+>;
 
 export class RegisterTeam {
   constructor(
@@ -38,18 +41,21 @@ export class RegisterTeam {
     contract,
   }: RegisterTeamInterfaceRequest): Promise<RegisterTeamInterfaceResponse> {
     const leader = await this.teamleaderRepository.findById(leaderId);
-    if (!leader) throw new Error("Leader not found");
+    if (!leader)
+      return left(new ResourceNotFoundError("Encarregado não encontrado"));
 
     let supervisor;
     if (supervisorId) {
       supervisor = await this.supervisorRepository.findById(supervisorId);
-      if (!supervisor) throw new Error("Supervisor not found");
+      if (!supervisor)
+        return left(new ResourceNotFoundError("Supervisor não encontrado"));
     }
 
     let coordinator;
     if (coordinatorId) {
       coordinator = await this.coordinatorRepository.findById(coordinatorId);
-      if (!coordinator) throw new Error("Coordinator not found");
+      if (!coordinator)
+        return left(new ResourceNotFoundError("Coordenador não encontrado"));
     }
 
     const team = Team.create({
@@ -73,6 +79,6 @@ export class RegisterTeam {
 
     await this.teamRepository.create(team);
 
-    return { team };
+    return right({ team });
   }
 }

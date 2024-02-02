@@ -32,12 +32,13 @@ describe("Get Team By supervisor", () => {
     await inMemoryTeamRepository.create(newTeam2);
     await inMemoryTeamRepository.create(newTeam3);
 
-    const { teams } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       supervisorId: "ECOLM001",
     });
 
-    expect(teams).toHaveLength(2);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.teams).toHaveLength(2);
   });
 
   it("should be able to get a empty list of teams when there is no team of the informed supervisor", async () => {
@@ -49,12 +50,13 @@ describe("Get Team By supervisor", () => {
     await inMemoryTeamRepository.create(newTeam2);
     await inMemoryTeamRepository.create(newTeam3);
 
-    const { teams } = await sut.execute({
+    const result = await sut.execute({
       supervisorId: "ECOLM001",
       page: 1,
     });
 
-    expect(teams).toHaveLength(0);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.teams).toHaveLength(0);
   });
 
   it("should be able paginate a list of teams of a team", async () => {
@@ -70,11 +72,12 @@ describe("Get Team By supervisor", () => {
     }
     // console.log(inMemoryTeamRepository.items);
 
-    const { teams } = await sut.execute({
+    const result = await sut.execute({
       page: 2,
       supervisorId: "ECOLM001",
     });
 
-    expect(teams).toHaveLength(5);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.teams).toHaveLength(5);
   });
 });

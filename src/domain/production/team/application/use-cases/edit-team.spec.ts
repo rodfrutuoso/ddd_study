@@ -39,13 +39,14 @@ describe("Edit Team By Id", () => {
 
     await inMemoryTeamRepository.create(newTeam);
 
-    await sut.execute({
+    const result = await sut.execute({
       teamId: newTeam.id.toString(),
       programmerType: "ADM",
       name: "ECOLM001",
       deactivation_date: new Date(),
     });
 
+    expect(result.isRight()).toBeTruthy();
     expect(await inMemoryTeamRepository.items[0]).toMatchObject({
       name: "ECOLM001",
     });
@@ -62,14 +63,14 @@ describe("Edit Team By Id", () => {
 
     await inMemoryTeamRepository.create(newTeam);
 
-    expect(async () => {
-      return await sut.execute({
-        teamId: newTeam.id.toString(),
-        programmerType: "CAMPO",
-        name: "ECOLM001",
-        deactivation_date: new Date(),
-      });
-    }).rejects.toBeInstanceOf(Error);
+    const result = await sut.execute({
+      teamId: newTeam.id.toString(),
+      programmerType: "CAMPO",
+      name: "ECOLM001",
+      deactivation_date: new Date(),
+    });
+
+    expect(result.isLeft()).toBeTruthy();
   });
 
   it("should be albe to edit the supervisor, leader and coordinator team by its id", async () => {
@@ -89,7 +90,7 @@ describe("Edit Team By Id", () => {
 
     await inMemoryTeamRepository.create(newTeam);
 
-    await sut.execute({
+    const result = await sut.execute({
       teamId: newTeam.id.toString(),
       programmerType: "PROGRAMAÇÃO",
       supervisorId: supervisor.id.toString(),
@@ -97,6 +98,7 @@ describe("Edit Team By Id", () => {
       coordinatorId: coordinator.id.toString(),
     });
 
+    expect(result.isRight()).toBeTruthy();
     expect(await inMemoryTeamRepository.items[0]).toMatchObject({
       supervisorId: new UserNameId(supervisor.name, supervisor.id),
       leaderId: new UserNameId(leader.name, leader.id),

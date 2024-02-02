@@ -26,12 +26,13 @@ describe("Get Team By leader", () => {
     await inMemoryTeamRepository.create(newTeam2);
     await inMemoryTeamRepository.create(newTeam3);
 
-    const { teams } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       leaderId: "JOAO",
     });
 
-    expect(teams).toHaveLength(2);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.teams).toHaveLength(2);
   });
 
   it("should be able to get a empty list of teams when there is no team of the informed leader", async () => {
@@ -43,12 +44,13 @@ describe("Get Team By leader", () => {
     await inMemoryTeamRepository.create(newTeam2);
     await inMemoryTeamRepository.create(newTeam3);
 
-    const { teams } = await sut.execute({
+    const result = await sut.execute({
       leaderId: "João da Pilotinha",
       page: 1,
     });
 
-    expect(teams).toHaveLength(0);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.teams).toHaveLength(0);
   });
 
   it("should be able paginate a list of teams of a leader", async () => {
@@ -64,11 +66,12 @@ describe("Get Team By leader", () => {
     }
     // console.log(inMemoryTeamRepository.items);
 
-    const { teams } = await sut.execute({
+    const result = await sut.execute({
       page: 2,
       leaderId: "JOAO",
     });
 
-    expect(teams).toHaveLength(5);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.teams).toHaveLength(5);
   });
 });
