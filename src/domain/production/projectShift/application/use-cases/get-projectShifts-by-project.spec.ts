@@ -27,13 +27,14 @@ describe("Get ProjectShift By Project", () => {
     await inMemoryShitRepository.create(newProjectShift2);
     await inMemoryShitRepository.create(newProjectShift3);
 
-    const { projectShifts } = await sut.execute({
+    const result = await sut.execute({
       projectId: "project1",
       page: 1,
     });
 
-    expect(projectShifts).toHaveLength(2);
-    expect(projectShifts).not.toContain(newProjectShift2);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.projectShifts).toHaveLength(2);
+    expect(result.value?.projectShifts).not.toContain(newProjectShift2);
   });
 
   it("should be able to get a empty list of projectShifts when there is no shifts with the informed projectId ", async () => {
@@ -45,12 +46,13 @@ describe("Get ProjectShift By Project", () => {
     await inMemoryShitRepository.create(newProjectShift2);
     await inMemoryShitRepository.create(newProjectShift3);
 
-    const { projectShifts } = await sut.execute({
+    const result = await sut.execute({
       projectId: "project1",
       page: 1,
     });
 
-    expect(projectShifts).toHaveLength(0);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.projectShifts).toHaveLength(0);
   });
 
   it("should be able paginate a list of projectShifts fo a project", async () => {
@@ -62,11 +64,12 @@ describe("Get ProjectShift By Project", () => {
       );
     }
 
-    const { projectShifts } = await sut.execute({
+    const result = await sut.execute({
       projectId: "project1",
       page: 2,
     });
 
-    expect(projectShifts).toHaveLength(7);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.projectShifts).toHaveLength(7);
   });
 });

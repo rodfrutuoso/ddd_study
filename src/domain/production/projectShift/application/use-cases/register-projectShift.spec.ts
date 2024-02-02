@@ -20,8 +20,11 @@ describe("Register a Project-Shift", () => {
       outOfSchedule: false,
     });
 
-    expect(result.projectShift.id).toBeTruthy();
-    expect(result.projectShift.projectStage).toEqual("LANÇAMENTO DE CABO");
-    expect(result.projectShift.outOfSchedule).toEqual(false);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.projectShift.id).toBeTruthy();
+    expect(result.value?.projectShift.projectStage).toEqual(
+      "LANÇAMENTO DE CABO"
+    );
+    expect(result.value?.projectShift.outOfSchedule).toEqual(false);
   });
 });

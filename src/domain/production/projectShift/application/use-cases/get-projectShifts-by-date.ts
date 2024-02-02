@@ -3,6 +3,7 @@ import { ProjectShiftRepository } from "../repositories/projectShift-repository"
 import { ProjectShift } from "../../enterprise/entities/projectShift";
 import { ShiftRepository } from "../../../shift/application/repositories/shift-repository";
 import { Shift } from "../../../shift/enterprise/entities/shift";
+import { Either, right } from "@/core/either";
 
 interface GetProjectShiftByDateInterfaceRequest {
   startDate: Date;
@@ -10,9 +11,10 @@ interface GetProjectShiftByDateInterfaceRequest {
   page: number;
 }
 
-interface GetProjectShiftByDateInterfaceResponse {
-  projectShifts: Array<ProjectShift>;
-}
+type GetProjectShiftByDateInterfaceResponse = Either<
+  null,
+  { projectShifts: Array<ProjectShift> }
+>;
 
 export class GetProjectShiftByDate {
   constructor(
@@ -50,6 +52,6 @@ export class GetProjectShiftByDate {
       shiftsId
     );
 
-    return { projectShifts };
+    return right({ projectShifts });
   }
 }

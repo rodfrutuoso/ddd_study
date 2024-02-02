@@ -1,5 +1,6 @@
 /* eslint-disable no-useless-constructor */
 /* eslint-disable camelcase */
+import { Either, right } from "@/core/either";
 import { UniqueEntityId } from "../../../../../core/entities/unique-entity-id";
 import { ProjectShift } from "../../enterprise/entities/projectShift";
 import { ProjectShiftRepository } from "../repositories/projectShift-repository";
@@ -12,9 +13,10 @@ interface RegisterProjectShiftInterfaceRequest {
   outOfSchedule: boolean;
 }
 
-interface RegisterProjectShiftInterfaceResponse {
-  projectShift: ProjectShift;
-}
+type RegisterProjectShiftInterfaceResponse = Either<
+  null,
+  { projectShift: ProjectShift }
+>;
 
 export class RegisterProjectShift {
   constructor(private projectShiftRepository: ProjectShiftRepository) {}
@@ -36,6 +38,6 @@ export class RegisterProjectShift {
 
     await this.projectShiftRepository.create(projectShift);
 
-    return { projectShift };
+    return right({ projectShift });
   }
 }

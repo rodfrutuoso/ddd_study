@@ -41,14 +41,15 @@ describe("Get ProjectShift By date", () => {
     await inMemoryProjectShiftRepository.create(newProjectShift2);
     await inMemoryProjectShiftRepository.create(newProjectShift3);
 
-    const { projectShifts } = await sut.execute({
+    const result = await sut.execute({
       startDate: new Date("2023-11-12"),
       endDate: new Date("2023-11-15"),
       page: 1,
     });
 
-    expect(projectShifts).toHaveLength(2);
-    expect(projectShifts).not.toContain(newProjectShift1);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.projectShifts).toHaveLength(2);
+    expect(result.value?.projectShifts).not.toContain(newProjectShift1);
   });
 
   it("should be able to get a empty list of projectShifts when there is no shifts between informed dates ", async () => {
@@ -74,13 +75,14 @@ describe("Get ProjectShift By date", () => {
     await inMemoryProjectShiftRepository.create(newProjectShift2);
     await inMemoryProjectShiftRepository.create(newProjectShift3);
 
-    const { projectShifts } = await sut.execute({
+    const result = await sut.execute({
       startDate: new Date("2023-11-16"),
       endDate: new Date("2023-11-25"),
       page: 1,
     });
 
-    expect(projectShifts).toHaveLength(0);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.projectShifts).toHaveLength(0);
   });
 
   it("should be able paginate a list of projectShifts fo a project", async () => {
@@ -97,12 +99,13 @@ describe("Get ProjectShift By date", () => {
       );
     }
 
-    const { projectShifts } = await sut.execute({
+    const result = await sut.execute({
       startDate: new Date("2023-11-09"),
       endDate: new Date("2023-11-11"),
       page: 2,
     });
 
-    expect(projectShifts).toHaveLength(7);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.projectShifts).toHaveLength(7);
   });
 });

@@ -1,13 +1,18 @@
 /* eslint-disable no-useless-constructor */
+import { Either, left, right } from "@/core/either";
 import { ProjectShiftRepository } from "../repositories/projectShift-repository";
+import { ResourceNotFoundError } from "@/domain/errors/resource-not-found-error";
+import { NotAuthorizedError } from "@/domain/errors/not-authorized-error";
 
 interface DeleteProjectShiftInterfaceRequest {
   projectShiftId: string;
   programmerType: string;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface DeleteProjectShiftInterfaceResponse {}
+type DeleteProjectShiftInterfaceResponse = Either<
+  ResourceNotFoundError | NotAuthorizedError,
+  Record<string, never>
+>;
 
 export class DeleteProjectShift {
   constructor(private projectShiftRepository: ProjectShiftRepository) {}
@@ -19,13 +24,13 @@ export class DeleteProjectShift {
     const projectShift =
       await this.projectShiftRepository.findById(projectShiftId);
 
-    if (!projectShift) throw new Error("ProjectShift not found");
+    if (!projectShift) return left(new ResourceNotFoundError());
 
     if (programmerType !== "ADM" && programmerType !== "PROGRAMAÇÂO")
-      throw new Error("Not authorized");
+      return left(new NotAuthorizedError());
 
     await this.projectShiftRepository.delete(projectShift);
 
-    return {};
+    return right({});
   }
 }

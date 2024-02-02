@@ -41,14 +41,14 @@ describe("Edit ProjectShift By Id", () => {
 
     await inMemoryProjectShiftRepository.create(newProjectShift);
 
-    expect(async () => {
-      return await sut.execute({
-        projectShiftId: newProjectShift.id.toString(),
-        projectStage: "IMPLANTAÇÃO",
-        fieldReturn: "EXECUTADO",
-        outOfSchedule: false,
-        programmerType: "CAMPO",
-      });
-    }).rejects.toBeInstanceOf(Error);
+    const result = await sut.execute({
+      projectShiftId: newProjectShift.id.toString(),
+      projectStage: "IMPLANTAÇÃO",
+      fieldReturn: "EXECUTADO",
+      outOfSchedule: false,
+      programmerType: "CAMPO",
+    });
+
+    expect(result.isLeft()).toBeTruthy();
   });
 });

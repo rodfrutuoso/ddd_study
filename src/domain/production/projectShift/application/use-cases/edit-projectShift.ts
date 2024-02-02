@@ -2,6 +2,9 @@
 /* eslint-disable camelcase */
 import { ProjectShiftRepository } from "../repositories/projectShift-repository";
 import { ProjectShift } from "../../enterprise/entities/projectShift";
+import { Either, left, right } from "@/core/either";
+import { ResourceNotFoundError } from "@/domain/errors/resource-not-found-error";
+import { NotAuthorizedError } from "@/domain/errors/not-authorized-error";
 
 interface EditProjectShiftInterfaceRequest {
   projectShiftId: string;
@@ -11,9 +14,10 @@ interface EditProjectShiftInterfaceRequest {
   programmerType: string;
 }
 
-interface EditProjectShiftInterfaceResponse {
-  projectshift: ProjectShift;
-}
+type EditProjectShiftInterfaceResponse = Either<
+  ResourceNotFoundError | NotAuthorizedError,
+  { projectshift: ProjectShift }
+>;
 
 export class EditProjectShift {
   constructor(private projectshiftRepository: ProjectShiftRepository) {}
@@ -28,10 +32,10 @@ export class EditProjectShift {
     const projectshift =
       await this.projectshiftRepository.findById(projectShiftId);
 
-    if (!projectshift) throw new Error("ProjectShift not found");
+    if (!projectshift) return left(new ResourceNotFoundError());
 
     if (programmerType !== "ADM" && programmerType !== "PROGRAMAÇÃO")
-      throw new Error("Not authorized");
+      return left(new NotAuthorizedError());
 
     projectshift.projectStage = projectStage ?? projectshift.projectStage;
     projectshift.fieldReturn = fieldReturn ?? projectshift.fieldReturn;
@@ -39,6 +43,6 @@ export class EditProjectShift {
 
     await this.projectshiftRepository.save(projectshift);
 
-    return { projectshift };
+    return right({ projectshift });
   }
 }
