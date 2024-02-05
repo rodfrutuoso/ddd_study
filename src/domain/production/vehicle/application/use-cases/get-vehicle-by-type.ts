@@ -1,4 +1,5 @@
 /* eslint-disable no-useless-constructor */
+import { Either, right } from "@/core/either";
 import { Vehicle } from "../../enterprise/entities/vehicle";
 import { VehicleRepository } from "../repositories/vehicle-repository";
 
@@ -7,9 +8,10 @@ interface GetVehicleByTypeInterfaceRequest {
   type: string;
 }
 
-interface GetVehicleByTypeInterfaceResponse {
-  vehicles: Array<Vehicle>;
-}
+type GetVehicleByTypeInterfaceResponse = Either<
+  null,
+  { vehicles: Array<Vehicle> }
+>;
 
 export class GetVehicleByType {
   constructor(private vehicleRepository: VehicleRepository) {}
@@ -24,6 +26,6 @@ export class GetVehicleByType {
       type
     );
 
-    return { vehicles };
+    return right({ vehicles });
   }
 }

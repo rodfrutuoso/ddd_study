@@ -24,12 +24,13 @@ describe("Get Vehicle By plate", () => {
     await inMemoryVehicleRepository.create(newVehicle2);
     await inMemoryVehicleRepository.create(newVehicle3);
 
-    const { vehicles } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       plate: "RPA2J17",
     });
 
-    expect(vehicles).toHaveLength(2);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.vehicles).toHaveLength(2);
   });
 
   it("should be able to get a empty list of vehicles when there is no vehicle of the informed plate", async () => {
@@ -41,12 +42,13 @@ describe("Get Vehicle By plate", () => {
     await inMemoryVehicleRepository.create(newVehicle2);
     await inMemoryVehicleRepository.create(newVehicle3);
 
-    const { vehicles } = await sut.execute({
+    const result = await sut.execute({
       plate: "RPA2J17",
       page: 1,
     });
 
-    expect(vehicles).toHaveLength(0);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.vehicles).toHaveLength(0);
   });
 
   it("should be able paginate a list of vehicles of a vehicle", async () => {
@@ -58,11 +60,12 @@ describe("Get Vehicle By plate", () => {
       );
     }
 
-    const { vehicles } = await sut.execute({
+    const result = await sut.execute({
       page: 2,
       plate: "RPA2J17",
     });
 
-    expect(vehicles).toHaveLength(5);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.vehicles).toHaveLength(5);
   });
 });

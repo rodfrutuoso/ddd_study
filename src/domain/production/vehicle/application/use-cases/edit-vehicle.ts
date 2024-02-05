@@ -3,6 +3,9 @@
 import { VehicleRepository } from "../repositories/vehicle-repository";
 import { Vehicle } from "../../enterprise/entities/vehicle";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
+import { Either, left, right } from "@/core/either";
+import { ResourceNotFoundError } from "@/domain/errors/resource-not-found-error";
+import { NotAuthorizedError } from "@/domain/errors/not-authorized-error";
 
 interface EditVehicleInterfaceRequest {
   vehicleId: string;
@@ -11,9 +14,10 @@ interface EditVehicleInterfaceRequest {
   type: string;
 }
 
-interface EditVehicleInterfaceResponse {
-  vehicle: Vehicle;
-}
+type EditVehicleInterfaceResponse = Either<
+  ResourceNotFoundError | NotAuthorizedError,
+  { vehicle: Vehicle }
+>;
 
 export class EditVehicle {
   constructor(private vehicleRepository: VehicleRepository) {}
@@ -26,10 +30,10 @@ export class EditVehicle {
   }: EditVehicleInterfaceRequest): Promise<EditVehicleInterfaceResponse> {
     const vehicle = await this.vehicleRepository.findById(vehicleId);
 
-    if (!vehicle) throw new Error("Vehicle not found");
+    if (!vehicle) return left(new ResourceNotFoundError());
 
     if (programmerType !== "ADM" && programmerType !== "PROGRAMAÇÃO")
-      throw new Error("Not authorized");
+      return left(new NotAuthorizedError());
 
     vehicle.teamId =
       teamId !== undefined ? new UniqueEntityId(teamId) : vehicle.teamId;
@@ -37,6 +41,6 @@ export class EditVehicle {
 
     await this.vehicleRepository.save(vehicle);
 
-    return { vehicle };
+    return right({ vehicle });
   }
 }

@@ -19,12 +19,13 @@ describe("Edit Vehicle By Id", () => {
 
     await inMemoryVehicleRepository.create(newVehicle);
 
-    await sut.execute({
+    const result = await sut.execute({
       vehicleId: newVehicle.id.toString(),
       programmerType: "ADM",
       type: "CAMINHÃO",
     });
 
+    expect(result.isRight()).toBeTruthy();
     expect(await inMemoryVehicleRepository.items[0]).toMatchObject({
       id: newVehicle.id,
       type: "CAMINHÃO",
@@ -38,12 +39,12 @@ describe("Edit Vehicle By Id", () => {
 
     await inMemoryVehicleRepository.create(newVehicle);
 
-    expect(async () => {
-      return await sut.execute({
-        vehicleId: newVehicle.id.toString(),
-        programmerType: "CAMPO",
-        type: "CAMINHÃO",
-      });
-    }).rejects.toBeInstanceOf(Error);
+    const result = await sut.execute({
+      vehicleId: newVehicle.id.toString(),
+      programmerType: "CAMPO",
+      type: "CAMINHÃO",
+    });
+
+    expect(result.isLeft()).toBeTruthy();
   });
 });

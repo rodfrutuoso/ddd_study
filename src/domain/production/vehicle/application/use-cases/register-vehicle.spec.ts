@@ -11,14 +11,14 @@ describe("Register a Vehicle-Shift", () => {
   });
 
   it("should register a vehicle in a specifc shift", async () => {
-    const { vehicle } = await sut.execute({
+    const result = await sut.execute({
       plate: "RPA2J17",
       teamId: "team-id-test",
       type: "LEVE",
     });
 
-    expect(vehicle.id).toBeTruthy();
-    expect(vehicle.plate).toEqual("RPA2J17");
-    expect(vehicle.type).toEqual("LEVE");
+    expect(result.value?.vehicle.id).toBeTruthy();
+    expect(result.value?.vehicle.plate).toEqual("RPA2J17");
+    expect(result.value?.vehicle.type).toEqual("LEVE");
   });
 });

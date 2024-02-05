@@ -1,4 +1,5 @@
 /* eslint-disable no-useless-constructor */
+import { Either, right } from "@/core/either";
 import { Vehicle } from "../../enterprise/entities/vehicle";
 import { VehicleRepository } from "../repositories/vehicle-repository";
 
@@ -7,9 +8,10 @@ interface GetVehicleByPlateInterfaceRequest {
   plate: string;
 }
 
-interface GetVehicleByPlateInterfaceResponse {
-  vehicles: Array<Vehicle>;
-}
+type GetVehicleByPlateInterfaceResponse = Either<
+  null,
+  { vehicles: Array<Vehicle> }
+>;
 
 export class GetVehicleByPlate {
   constructor(private vehicleRepository: VehicleRepository) {}
@@ -20,6 +22,6 @@ export class GetVehicleByPlate {
   }: GetVehicleByPlateInterfaceRequest): Promise<GetVehicleByPlateInterfaceResponse> {
     const vehicles = await this.vehicleRepository.findMany({ page }, plate);
 
-    return { vehicles };
+    return right({ vehicles });
   }
 }
