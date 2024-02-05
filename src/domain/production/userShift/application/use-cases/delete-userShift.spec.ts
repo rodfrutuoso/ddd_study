@@ -21,11 +21,12 @@ describe("Delete UserShift By Id", () => {
 
     await inMemoryUserShiftRepository.create(newUserShift);
 
-    await sut.execute({
+    const result = await sut.execute({
       userShiftId: "abc-123-xyz",
       programmerType: "ADM",
     });
 
+    expect(result.isRight()).toBeTruthy();
     expect(
       await inMemoryUserShiftRepository.findById("abc-123-xyz")
     ).toBeNull();
@@ -40,13 +41,12 @@ describe("Delete UserShift By Id", () => {
 
     await inMemoryUserShiftRepository.create(newUserShift);
 
-    expect(async () => {
-      return await sut.execute({
-        userShiftId: "abc-123-xyz",
-        programmerType: "CAMPO",
-      });
-    }).rejects.toBeInstanceOf(Error);
+    const result = await sut.execute({
+      userShiftId: "abc-123-xyz",
+      programmerType: "CAMPO",
+    });
 
+    expect(result.isLeft()).toBeTruthy();
     expect(
       await inMemoryUserShiftRepository.findById("abc-123-xyz")
     ).toBeTruthy();

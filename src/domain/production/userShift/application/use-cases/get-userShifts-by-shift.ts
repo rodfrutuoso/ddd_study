@@ -1,15 +1,17 @@
 /* eslint-disable no-useless-constructor */
 import { UserShiftRepository } from "../repositories/userShift-repository";
 import { UserShift } from "../../enterprise/entities/userShift";
+import { Either, right } from "@/core/either";
 
 interface GetUserShiftByShiftInterfaceRequest {
   shiftId: string;
   page: number;
 }
 
-interface GetUserShiftByShiftInterfaceResponse {
-  userShifts: Array<UserShift>;
-}
+type GetUserShiftByShiftInterfaceResponse = Either<
+  null,
+  { userShifts: Array<UserShift> }
+>;
 
 export class GetUserShiftByShift {
   constructor(private userShiftRepository: UserShiftRepository) {}
@@ -23,6 +25,6 @@ export class GetUserShiftByShift {
       shiftId
     );
 
-    return { userShifts };
+    return right({ userShifts });
   }
 }

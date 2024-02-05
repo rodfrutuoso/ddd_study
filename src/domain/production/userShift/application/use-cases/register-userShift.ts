@@ -1,5 +1,6 @@
 /* eslint-disable no-useless-constructor */
 /* eslint-disable camelcase */
+import { Either, right } from "@/core/either";
 import { UniqueEntityId } from "../../../../../core/entities/unique-entity-id";
 import { UserShift } from "../../enterprise/entities/userShift";
 import { UserShiftRepository } from "../repositories/userShift-repository";
@@ -9,9 +10,10 @@ interface RegisterUserShiftInterfaceRequest {
   shiftId: string;
 }
 
-interface RegisterUserShiftInterfaceResponse {
-  userShift: UserShift;
-}
+type RegisterUserShiftInterfaceResponse = Either<
+  null,
+  { userShift: UserShift }
+>;
 
 export class RegisterUserShift {
   constructor(private userShiftRepository: UserShiftRepository) {}
@@ -27,6 +29,6 @@ export class RegisterUserShift {
 
     await this.userShiftRepository.create(userShift);
 
-    return { userShift };
+    return right({ userShift });
   }
 }

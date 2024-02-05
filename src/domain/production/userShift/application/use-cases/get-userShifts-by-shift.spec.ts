@@ -27,13 +27,14 @@ describe("Get UserShift By shift", () => {
     await inMemoryShitRepository.create(newUserShift2);
     await inMemoryShitRepository.create(newUserShift3);
 
-    const { userShifts } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       shiftId: "shift1",
     });
 
-    expect(userShifts).toHaveLength(2);
-    expect(userShifts).not.toContain(newUserShift2);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.userShifts).toHaveLength(2);
+    expect(result.value?.userShifts).not.toContain(newUserShift2);
   });
 
   it("should be able to get a empty list of userShifts when there is no shifts with the informed shiftId ", async () => {
@@ -45,12 +46,13 @@ describe("Get UserShift By shift", () => {
     await inMemoryShitRepository.create(newUserShift2);
     await inMemoryShitRepository.create(newUserShift3);
 
-    const { userShifts } = await sut.execute({
+    const result = await sut.execute({
       shiftId: "shift1",
       page: 1,
     });
 
-    expect(userShifts).toHaveLength(0);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.userShifts).toHaveLength(0);
   });
 
   it("should be able paginate a list of userShifts of a shift", async () => {
@@ -62,11 +64,12 @@ describe("Get UserShift By shift", () => {
       );
     }
 
-    const { userShifts } = await sut.execute({
+    const result = await sut.execute({
       shiftId: "shift1",
       page: 2,
     });
 
-    expect(userShifts).toHaveLength(7);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.userShifts).toHaveLength(7);
   });
 });

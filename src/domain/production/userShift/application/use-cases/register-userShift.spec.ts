@@ -17,8 +17,8 @@ describe("Register a User-Shift", () => {
       shiftId: "2",
     });
 
-    expect(result.userShift.id).toBeTruthy();
-    expect(result.userShift.userId.toString()).toEqual("texto unico");
-    expect(result.userShift.shiftId.toString()).toEqual("2");
+    expect(result.value?.userShift.id).toBeTruthy();
+    expect(result.value?.userShift.userId.toString()).toEqual("texto unico");
+    expect(result.value?.userShift.shiftId.toString()).toEqual("2");
   });
 });
