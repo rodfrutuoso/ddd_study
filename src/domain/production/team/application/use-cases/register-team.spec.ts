@@ -50,11 +50,13 @@ describe("Register a Team", () => {
     });
 
     expect(result.isRight()).toBeTruthy();
-    expect(result.value?.team.id).toBeTruthy();
-    expect(result.value?.team.name).toEqual(
-      "ECOLM0001 - JOAO NUM SEI DAS QUANTAS"
-    );
-    expect(result.value?.team.leaderId.getName()).toEqual("Leader Name");
-    expect(result.value?.team.coordinatorId?.getId()).toBeUndefined();
+    if (result.isRight()) {
+      expect(result.value?.team.id).toBeTruthy();
+      expect(result.value?.team.name).toEqual(
+        "ECOLM0001 - JOAO NUM SEI DAS QUANTAS"
+      );
+      expect(result.value?.team.leaderId.getName()).toEqual("Leader Name");
+      expect(result.value?.team.coordinatorId?.getId()).toBeUndefined();
+    }
   });
 });
