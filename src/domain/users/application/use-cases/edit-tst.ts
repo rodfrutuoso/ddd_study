@@ -1,7 +1,10 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-useless-constructor */
+import { Either, left, right } from "@/core/either";
 import { Tst } from "../../enterprise/entities/tst";
 import { TstRepository } from "../repositories/tst-repository";
+import { ResourceNotFoundError } from "@/domain/errors/resource-not-found-error";
+import { NotAuthorizedError } from "@/domain/errors/not-authorized-error";
 
 interface EditTstInterfaceRequest {
   tstId: string;
@@ -11,9 +14,10 @@ interface EditTstInterfaceRequest {
   deactivation_date?: Date;
 }
 
-interface EditTstInterfaceResponse {
-  tst: Tst;
-}
+type EditTstInterfaceResponse = Either<
+  ResourceNotFoundError | NotAuthorizedError,
+  { tst: Tst }
+>;
 
 export class EditTst {
   constructor(private tstRepository: TstRepository) {}
@@ -27,10 +31,10 @@ export class EditTst {
   }: EditTstInterfaceRequest): Promise<EditTstInterfaceResponse> {
     const tst = await this.tstRepository.findById(tstId);
 
-    if (!tst) throw new Error("tst not found");
+    if (!tst) return left(new ResourceNotFoundError());
 
     if (programmerType !== "ADM" && programmerType !== "PROGRAMAÇÃO")
-      throw new Error("Not authorized");
+      return left(new NotAuthorizedError());
 
     tst.name = name ?? tst.name;
     tst.password = password ?? tst.password;
@@ -38,6 +42,6 @@ export class EditTst {
 
     await this.tstRepository.save(tst);
 
-    return { tst };
+    return right({ tst });
   }
 }

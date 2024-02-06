@@ -1,15 +1,17 @@
 /* eslint-disable no-useless-constructor */
 import { OperationalRepository } from "../repositories/operational-repository";
 import { Operational } from "../../enterprise/entities/operational";
+import { Either, right } from "@/core/either";
 
 interface GetOperationalByNameInterfaceRequest {
   name: string;
   page: number;
 }
 
-interface GetOperationalByNameInterfaceResponse {
-  operational: Array<Operational>;
-}
+type GetOperationalByNameInterfaceResponse = Either<
+  null,
+  { operational: Array<Operational> }
+>;
 
 export class GetOperationalByName {
   constructor(private operationalRepository: OperationalRepository) {}
@@ -25,6 +27,6 @@ export class GetOperationalByName {
       name
     );
 
-    return { operational };
+    return right({ operational });
   }
 }

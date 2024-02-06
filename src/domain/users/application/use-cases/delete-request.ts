@@ -1,14 +1,19 @@
 /* eslint-disable no-useless-constructor */
 /* eslint-disable camelcase */
+import { Either, left, right } from "@/core/either";
 import { RequestRepository } from "../repositories/request-repository";
+import { ResourceNotFoundError } from "@/domain/errors/resource-not-found-error";
+import { NotAuthorizedError } from "@/domain/errors/not-authorized-error";
 
 interface DeleteRequestInterfaceRequest {
   requestId: string;
   programmerType: string;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface DeleteRequestInterfaceResponse {}
+type DeleteRequestInterfaceResponse = Either<
+  ResourceNotFoundError | NotAuthorizedError,
+  Record<string, never>
+>;
 
 export class DeleteRequest {
   constructor(private requestRepository: RequestRepository) {}
@@ -19,13 +24,13 @@ export class DeleteRequest {
   }: DeleteRequestInterfaceRequest): Promise<DeleteRequestInterfaceResponse> {
     const request = await this.requestRepository.findById(requestId);
 
-    if (!request) throw new Error("Request not found");
+    if (!request) return left(new ResourceNotFoundError());
 
     if (programmerType !== "ADM" && programmerType !== "PROGRAMAÇÂO")
-      throw new Error("Not authorized");
+      return left(new NotAuthorizedError());
 
     await this.requestRepository.delete(request);
 
-    return {};
+    return right({});
   }
 }

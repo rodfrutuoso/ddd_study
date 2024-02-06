@@ -1,7 +1,10 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-useless-constructor */
+import { NotAuthorizedError } from "@/domain/errors/not-authorized-error";
 import { Programmer } from "../../enterprise/entities/programmer";
 import { ProgrammerRepository } from "../repositories/programmer-repository";
+import { ResourceNotFoundError } from "@/domain/errors/resource-not-found-error";
+import { Either, left, right } from "@/core/either";
 
 interface EditProgrammerInterfaceRequest {
   programmerId: string;
@@ -11,9 +14,10 @@ interface EditProgrammerInterfaceRequest {
   deactivation_date?: Date;
 }
 
-interface EditProgrammerInterfaceResponse {
-  programmer: Programmer;
-}
+type EditProgrammerInterfaceResponse = Either<
+  ResourceNotFoundError | NotAuthorizedError,
+  { programmer: Programmer }
+>;
 
 export class EditProgrammer {
   constructor(private programmerRepository: ProgrammerRepository) {}
@@ -27,10 +31,10 @@ export class EditProgrammer {
   }: EditProgrammerInterfaceRequest): Promise<EditProgrammerInterfaceResponse> {
     const programmer = await this.programmerRepository.findById(programmerId);
 
-    if (!programmer) throw new Error("programmer not found");
+    if (!programmer) return left(new ResourceNotFoundError());
 
     if (programmerType !== "ADM" && programmerType !== "PROGRAMAÇÃO")
-      throw new Error("Not authorized");
+      return left(new NotAuthorizedError());
 
     programmer.name = name ?? programmer.name;
     programmer.password = password ?? programmer.password;
@@ -39,6 +43,6 @@ export class EditProgrammer {
 
     await this.programmerRepository.save(programmer);
 
-    return { programmer };
+    return right({ programmer });
   }
 }

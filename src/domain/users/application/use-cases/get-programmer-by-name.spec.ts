@@ -26,13 +26,14 @@ describe("Get Programmer By Programmer", () => {
     await inMemoryProgrammerRepository.create(newProgrammer2);
     await inMemoryProgrammerRepository.create(newProgrammer3);
 
-    const { programmer } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       name: "João",
     });
 
-    expect(programmer).toHaveLength(2);
-    expect(programmer).not.toContain(newProgrammer3);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.programmer).toHaveLength(2);
+    expect(result.value?.programmer).not.toContain(newProgrammer3);
   });
 
   it("should be able to get a empty list of vehicle names when there is no vehicle names actives of the informed date", async () => {
@@ -50,12 +51,13 @@ describe("Get Programmer By Programmer", () => {
     await inMemoryProgrammerRepository.create(newProgrammer2);
     await inMemoryProgrammerRepository.create(newProgrammer3);
 
-    const { programmer } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       name: "Max",
     });
 
-    expect(programmer).toHaveLength(0);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.programmer).toHaveLength(0);
   });
 
   it("should be able paginate a list of programmers of a date", async () => {
@@ -67,11 +69,12 @@ describe("Get Programmer By Programmer", () => {
       );
     }
 
-    const { programmer } = await sut.execute({
+    const result = await sut.execute({
       page: 2,
       name: "João da Pamonha?",
     });
 
-    expect(programmer).toHaveLength(7);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.programmer).toHaveLength(7);
   });
 });

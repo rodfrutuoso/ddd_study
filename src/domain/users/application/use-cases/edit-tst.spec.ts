@@ -19,12 +19,13 @@ describe("Edit VEHICLE Name By Id", () => {
 
     await inMemoryTstRepository.create(newTst);
 
-    await sut.execute({
+    const result = await sut.execute({
       tstId: newTst.id.toString(),
       programmerType: "PROGRAMAÇÃO",
       name: "João da Pimbada",
     });
 
+    expect(result.isRight()).toBeTruthy();
     expect(await inMemoryTstRepository.items[0]).toMatchObject({
       id: newTst.id,
       name: "João da Pimbada",
@@ -41,12 +42,12 @@ describe("Edit VEHICLE Name By Id", () => {
 
     await inMemoryTstRepository.create(newTst);
 
-    expect(async () => {
-      return await sut.execute({
-        tstId: newTst.id.toString(),
-        programmerType: "CAMPO",
-        name: "João da Pimbada",
-      });
-    }).rejects.toBeInstanceOf(Error);
+    const result = await sut.execute({
+      tstId: newTst.id.toString(),
+      programmerType: "CAMPO",
+      name: "João da Pimbada",
+    });
+
+    expect(result.isLeft()).toBeTruthy();
   });
 });

@@ -26,13 +26,14 @@ describe("Get Supervisor By Supervisor", () => {
     await inMemorySupervisorRepository.create(newSupervisor2);
     await inMemorySupervisorRepository.create(newSupervisor3);
 
-    const { supervisor } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       name: "João",
     });
 
-    expect(supervisor).toHaveLength(2);
-    expect(supervisor).not.toContain(newSupervisor3);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.supervisor).toHaveLength(2);
+    expect(result.value?.supervisor).not.toContain(newSupervisor3);
   });
 
   it("should be able to get a empty list of vehicle names when there is no vehicle names actives of the informed date", async () => {
@@ -50,12 +51,13 @@ describe("Get Supervisor By Supervisor", () => {
     await inMemorySupervisorRepository.create(newSupervisor2);
     await inMemorySupervisorRepository.create(newSupervisor3);
 
-    const { supervisor } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       name: "Max",
     });
 
-    expect(supervisor).toHaveLength(0);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.supervisor).toHaveLength(0);
   });
 
   it("should be able paginate a list of supervisors of a date", async () => {
@@ -67,11 +69,12 @@ describe("Get Supervisor By Supervisor", () => {
       );
     }
 
-    const { supervisor } = await sut.execute({
+    const result = await sut.execute({
       page: 2,
       name: "João da Pamonha?",
     });
 
-    expect(supervisor).toHaveLength(7);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.supervisor).toHaveLength(7);
   });
 });

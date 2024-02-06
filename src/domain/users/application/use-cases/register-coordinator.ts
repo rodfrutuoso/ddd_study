@@ -3,6 +3,10 @@
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { Coordinator } from "../../enterprise/entities/coordinator";
 import { CoordinatorRepository } from "../repositories/coordinator-repository";
+import { Either, left, right } from "@/core/either";
+import { EmailAlreadyRegistered } from "@/domain/errors/email-already-registered";
+import { EmailNotEcoeletrica } from "@/domain/errors/email-not-ecoeletrica";
+import { CpfAlreadyRegistered } from "@/domain/errors/cpf-already-registered";
 
 interface RegisterCoordinatorInterfaceRequest {
   name: string;
@@ -13,9 +17,10 @@ interface RegisterCoordinatorInterfaceRequest {
   created_by: string;
 }
 
-interface RegisterCoordinatorInterfaceResponse {
-  coordinator: Coordinator;
-}
+type RegisterCoordinatorInterfaceResponse = Either<
+  EmailAlreadyRegistered | EmailNotEcoeletrica | CpfAlreadyRegistered,
+  { coordinator: Coordinator }
+>;
 
 export class RegisterCoordinator {
   constructor(private coordinatorRepository: CoordinatorRepository) {}
@@ -29,7 +34,7 @@ export class RegisterCoordinator {
     created_by,
   }: RegisterCoordinatorInterfaceRequest): Promise<RegisterCoordinatorInterfaceResponse> {
     if (!email?.includes("@ecoeletrica.com.br"))
-      throw new Error("O email precisa ser do domínio da Ecoelétrica");
+      return left(new EmailNotEcoeletrica());
 
     const verifyEmail = await this.coordinatorRepository.findMany(
       { page: 1 },
@@ -41,8 +46,8 @@ export class RegisterCoordinator {
       cpf
     );
 
-    if (verifyEmail.length !== 0) throw new Error("E-mail já cadastrado");
-    if (verifyCpf.length !== 0) throw new Error("CPF já cadastrado");
+    if (verifyEmail.length !== 0) return left(new EmailAlreadyRegistered());
+    if (verifyCpf.length !== 0) return left(new CpfAlreadyRegistered());
 
     const coordinator = Coordinator.create({
       name,
@@ -55,6 +60,6 @@ export class RegisterCoordinator {
 
     await this.coordinatorRepository.create(coordinator);
 
-    return { coordinator };
+    return right({ coordinator });
   }
 }

@@ -3,6 +3,10 @@
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { Operational } from "../../enterprise/entities/operational";
 import { OperationalRepository } from "../repositories/operational-repository";
+import { Either, left, right } from "@/core/either";
+import { EmailAlreadyRegistered } from "@/domain/errors/email-already-registered";
+import { EmailNotEcoeletrica } from "@/domain/errors/email-not-ecoeletrica";
+import { CpfAlreadyRegistered } from "@/domain/errors/cpf-already-registered";
 
 interface RegisterOperationalInterfaceRequest {
   name: string;
@@ -14,9 +18,10 @@ interface RegisterOperationalInterfaceRequest {
   teamId: string;
 }
 
-interface RegisterOperationalInterfaceResponse {
-  operational: Operational;
-}
+type RegisterOperationalInterfaceResponse = Either<
+  EmailAlreadyRegistered | EmailNotEcoeletrica | CpfAlreadyRegistered,
+  { operational: Operational }
+>;
 
 export class RegisterOperational {
   constructor(private operationalRepository: OperationalRepository) {}
@@ -31,7 +36,7 @@ export class RegisterOperational {
     teamId,
   }: RegisterOperationalInterfaceRequest): Promise<RegisterOperationalInterfaceResponse> {
     if (!email?.includes("@ecoeletrica.com.br"))
-      throw new Error("O email precisa ser do domínio da Ecoelétrica");
+      return left(new EmailNotEcoeletrica());
 
     const verifyEmail = await this.operationalRepository.findMany(
       { page: 1 },
@@ -43,8 +48,8 @@ export class RegisterOperational {
       cpf
     );
 
-    if (verifyEmail.length !== 0) throw new Error("E-mail já cadastrado");
-    if (verifyCpf.length !== 0) throw new Error("CPF já cadastrado");
+    if (verifyEmail.length !== 0) return left(new EmailAlreadyRegistered());
+    if (verifyCpf.length !== 0) return left(new CpfAlreadyRegistered());
 
     const operational = Operational.create({
       name,
@@ -58,6 +63,6 @@ export class RegisterOperational {
 
     await this.operationalRepository.create(operational);
 
-    return { operational };
+    return right({ operational });
   }
 }

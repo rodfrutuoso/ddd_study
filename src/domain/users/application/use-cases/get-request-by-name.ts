@@ -1,15 +1,17 @@
 /* eslint-disable no-useless-constructor */
 import { RequestRepository } from "../repositories/request-repository";
 import { Request } from "../../enterprise/entities/request";
+import { Either, right } from "@/core/either";
 
 interface GetRequestByNameInterfaceRequest {
   name: string;
   page: number;
 }
 
-interface GetRequestByNameInterfaceResponse {
-  request: Array<Request>;
-}
+type GetRequestByNameInterfaceResponse = Either<
+  null,
+  { request: Array<Request> }
+>;
 
 export class GetRequestByName {
   constructor(private requestRepository: RequestRepository) {}
@@ -25,6 +27,6 @@ export class GetRequestByName {
       name
     );
 
-    return { request };
+    return right({ request });
   }
 }

@@ -1,15 +1,17 @@
 /* eslint-disable no-useless-constructor */
 import { SupervisorRepository } from "../repositories/supervisor-repository";
 import { Supervisor } from "../../enterprise/entities/supervisor";
+import { Either, right } from "@/core/either";
 
 interface GetSupervisorByNameInterfaceRequest {
   name: string;
   page: number;
 }
 
-interface GetSupervisorByNameInterfaceResponse {
-  supervisor: Array<Supervisor>;
-}
+type GetSupervisorByNameInterfaceResponse = Either<
+  null,
+  { supervisor: Array<Supervisor> }
+>;
 
 export class GetSupervisorByName {
   constructor(private supervisorRepository: SupervisorRepository) {}
@@ -25,6 +27,6 @@ export class GetSupervisorByName {
       name
     );
 
-    return { supervisor };
+    return right({ supervisor });
   }
 }

@@ -1,7 +1,10 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-useless-constructor */
+import { ResourceNotFoundError } from "@/domain/errors/resource-not-found-error";
 import { Operational } from "../../enterprise/entities/operational";
 import { OperationalRepository } from "../repositories/operational-repository";
+import { Either, left, right } from "@/core/either";
+import { NotAuthorizedError } from "@/domain/errors/not-authorized-error";
 
 interface EditOperationalInterfaceRequest {
   operationalId: string;
@@ -11,9 +14,10 @@ interface EditOperationalInterfaceRequest {
   deactivation_date?: Date;
 }
 
-interface EditOperationalInterfaceResponse {
-  operational: Operational;
-}
+type EditOperationalInterfaceResponse = Either<
+  ResourceNotFoundError | NotAuthorizedError,
+  { operational: Operational }
+>;
 
 export class EditOperational {
   constructor(private operationalRepository: OperationalRepository) {}
@@ -28,10 +32,10 @@ export class EditOperational {
     const operational =
       await this.operationalRepository.findById(operationalId);
 
-    if (!operational) throw new Error("operational not found");
+    if (!operational) return left(new ResourceNotFoundError());
 
     if (programmerType !== "ADM" && programmerType !== "PROGRAMAÇÃO")
-      throw new Error("Not authorized");
+      return left(new NotAuthorizedError());
 
     operational.name = name ?? operational.name;
     operational.password = password ?? operational.password;
@@ -40,6 +44,6 @@ export class EditOperational {
 
     await this.operationalRepository.save(operational);
 
-    return { operational };
+    return right({ operational });
   }
 }

@@ -1,15 +1,17 @@
 /* eslint-disable no-useless-constructor */
 import { CoordinatorRepository } from "../repositories/coordinator-repository";
 import { Coordinator } from "../../enterprise/entities/coordinator";
+import { Either, right } from "@/core/either";
 
 interface GetCoordinatorByNameInterfaceRequest {
   name: string;
   page: number;
 }
 
-interface GetCoordinatorByNameInterfaceResponse {
-  coordinator: Array<Coordinator>;
-}
+type GetCoordinatorByNameInterfaceResponse = Either<
+  null,
+  { coordinator: Array<Coordinator> }
+>;
 
 export class GetCoordinatorByName {
   constructor(private coordinatorRepository: CoordinatorRepository) {}
@@ -25,6 +27,6 @@ export class GetCoordinatorByName {
       name
     );
 
-    return { coordinator };
+    return right({ coordinator });
   }
 }

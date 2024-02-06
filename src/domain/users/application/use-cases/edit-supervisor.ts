@@ -1,7 +1,10 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-useless-constructor */
+import { Either, left, right } from "@/core/either";
 import { Supervisor } from "../../enterprise/entities/supervisor";
 import { SupervisorRepository } from "../repositories/supervisor-repository";
+import { ResourceNotFoundError } from "@/domain/errors/resource-not-found-error";
+import { NotAuthorizedError } from "@/domain/errors/not-authorized-error";
 
 interface EditSupervisorInterfaceRequest {
   supervisorId: string;
@@ -11,9 +14,10 @@ interface EditSupervisorInterfaceRequest {
   deactivation_date?: Date;
 }
 
-interface EditSupervisorInterfaceResponse {
-  supervisor: Supervisor;
-}
+type EditSupervisorInterfaceResponse = Either<
+  ResourceNotFoundError | NotAuthorizedError,
+  { supervisor: Supervisor }
+>;
 
 export class EditSupervisor {
   constructor(private supervisorRepository: SupervisorRepository) {}
@@ -27,10 +31,10 @@ export class EditSupervisor {
   }: EditSupervisorInterfaceRequest): Promise<EditSupervisorInterfaceResponse> {
     const supervisor = await this.supervisorRepository.findById(supervisorId);
 
-    if (!supervisor) throw new Error("supervisor not found");
+    if (!supervisor) return left(new ResourceNotFoundError());
 
     if (programmerType !== "ADM" && programmerType !== "PROGRAMAÇÃO")
-      throw new Error("Not authorized");
+      return left(new NotAuthorizedError());
 
     supervisor.name = name ?? supervisor.name;
     supervisor.password = password ?? supervisor.password;
@@ -39,6 +43,6 @@ export class EditSupervisor {
 
     await this.supervisorRepository.save(supervisor);
 
-    return { supervisor };
+    return right({ supervisor });
   }
 }

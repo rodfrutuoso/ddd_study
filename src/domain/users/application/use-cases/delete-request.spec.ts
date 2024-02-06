@@ -18,11 +18,12 @@ describe("Delete Request By Id", () => {
 
     await inMemoryRequestRepository.create(newRequest);
 
-    await sut.execute({
+    const result = await sut.execute({
       requestId: "abc-123-xyz",
       programmerType: "ADM",
     });
 
+    expect(result.isRight()).toBeTruthy();
     expect(await inMemoryRequestRepository.findById("abc-123-xyz")).toBeNull();
     expect(await inMemoryRequestRepository.items).toHaveLength(0);
   });
@@ -32,13 +33,12 @@ describe("Delete Request By Id", () => {
 
     await inMemoryRequestRepository.create(newRequest);
 
-    expect(async () => {
-      return await sut.execute({
-        requestId: "abc-123-xyz",
-        programmerType: "CAMPO",
-      });
-    }).rejects.toBeInstanceOf(Error);
+    const result = await sut.execute({
+      requestId: "abc-123-xyz",
+      programmerType: "CAMPO",
+    });
 
+    expect(result.isLeft()).toBeTruthy();
     expect(
       await inMemoryRequestRepository.findById("abc-123-xyz")
     ).toBeTruthy();

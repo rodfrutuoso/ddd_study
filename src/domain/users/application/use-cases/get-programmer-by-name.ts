@@ -1,15 +1,17 @@
 /* eslint-disable no-useless-constructor */
 import { ProgrammerRepository } from "../repositories/programmer-repository";
 import { Programmer } from "../../enterprise/entities/programmer";
+import { Either, right } from "@/core/either";
 
 interface GetProgrammerByNameInterfaceRequest {
   name: string;
   page: number;
 }
 
-interface GetProgrammerByNameInterfaceResponse {
-  programmer: Array<Programmer>;
-}
+type GetProgrammerByNameInterfaceResponse = Either<
+  null,
+  { programmer: Array<Programmer> }
+>;
 
 export class GetProgrammerByName {
   constructor(private programmerRepository: ProgrammerRepository) {}
@@ -25,6 +27,6 @@ export class GetProgrammerByName {
       name
     );
 
-    return { programmer };
+    return right({ programmer });
   }
 }

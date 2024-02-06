@@ -26,13 +26,14 @@ describe("Get Request By Request", () => {
     await inMemoryRequestRepository.create(newRequest2);
     await inMemoryRequestRepository.create(newRequest3);
 
-    const { request } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       name: "João",
     });
 
-    expect(request).toHaveLength(2);
-    expect(request).not.toContain(newRequest3);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.request).toHaveLength(2);
+    expect(result.value?.request).not.toContain(newRequest3);
   });
 
   it("should be able to get a empty list of vehicle names when there is no vehicle names actives of the informed date", async () => {
@@ -50,12 +51,13 @@ describe("Get Request By Request", () => {
     await inMemoryRequestRepository.create(newRequest2);
     await inMemoryRequestRepository.create(newRequest3);
 
-    const { request } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       name: "Max",
     });
 
-    expect(request).toHaveLength(0);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.request).toHaveLength(0);
   });
 
   it("should be able paginate a list of requests of a date", async () => {
@@ -67,11 +69,12 @@ describe("Get Request By Request", () => {
       );
     }
 
-    const { request } = await sut.execute({
+    const result = await sut.execute({
       page: 2,
       name: "João da Pamonha?",
     });
 
-    expect(request).toHaveLength(7);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.request).toHaveLength(7);
   });
 });

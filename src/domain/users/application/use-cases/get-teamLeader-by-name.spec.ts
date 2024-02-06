@@ -26,13 +26,14 @@ describe("Get TeamLeader By TeamLeader", () => {
     await inMemoryTeamLeaderRepository.create(newTeamLeader2);
     await inMemoryTeamLeaderRepository.create(newTeamLeader3);
 
-    const { teamleader } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       name: "João",
     });
 
-    expect(teamleader).toHaveLength(2);
-    expect(teamleader).not.toContain(newTeamLeader3);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.teamleader).toHaveLength(2);
+    expect(result.value?.teamleader).not.toContain(newTeamLeader3);
   });
 
   it("should be able to get a empty list of vehicle names when there is no vehicle names actives of the informed date", async () => {
@@ -50,12 +51,13 @@ describe("Get TeamLeader By TeamLeader", () => {
     await inMemoryTeamLeaderRepository.create(newTeamLeader2);
     await inMemoryTeamLeaderRepository.create(newTeamLeader3);
 
-    const { teamleader } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       name: "Max",
     });
 
-    expect(teamleader).toHaveLength(0);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.teamleader).toHaveLength(0);
   });
 
   it("should be able paginate a list of teamleaders of a date", async () => {
@@ -67,11 +69,12 @@ describe("Get TeamLeader By TeamLeader", () => {
       );
     }
 
-    const { teamleader } = await sut.execute({
+    const result = await sut.execute({
       page: 2,
       name: "João da Pamonha?",
     });
 
-    expect(teamleader).toHaveLength(7);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.teamleader).toHaveLength(7);
   });
 });

@@ -26,13 +26,14 @@ describe("Get Operational By Operational", () => {
     await inMemoryOperationalRepository.create(newOperational2);
     await inMemoryOperationalRepository.create(newOperational3);
 
-    const { operational } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       name: "João",
     });
 
-    expect(operational).toHaveLength(2);
-    expect(operational).not.toContain(newOperational3);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.operational).toHaveLength(2);
+    expect(result.value?.operational).not.toContain(newOperational3);
   });
 
   it("should be able to get a empty list of vehicle names when there is no vehicle names actives of the informed date", async () => {
@@ -50,12 +51,13 @@ describe("Get Operational By Operational", () => {
     await inMemoryOperationalRepository.create(newOperational2);
     await inMemoryOperationalRepository.create(newOperational3);
 
-    const { operational } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       name: "Max",
     });
 
-    expect(operational).toHaveLength(0);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.operational).toHaveLength(0);
   });
 
   it("should be able paginate a list of operationals of a date", async () => {
@@ -67,11 +69,12 @@ describe("Get Operational By Operational", () => {
       );
     }
 
-    const { operational } = await sut.execute({
+    const result = await sut.execute({
       page: 2,
       name: "João da Pamonha?",
     });
 
-    expect(operational).toHaveLength(7);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.operational).toHaveLength(7);
   });
 });

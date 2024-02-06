@@ -1,7 +1,10 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-useless-constructor */
+import { Either, left, right } from "@/core/either";
 import { Coordinator } from "../../enterprise/entities/coordinator";
 import { CoordinatorRepository } from "../repositories/coordinator-repository";
+import { NotAuthorizedError } from "@/domain/errors/not-authorized-error";
+import { ResourceNotFoundError } from "@/domain/errors/resource-not-found-error";
 
 interface EditCoordinatorInterfaceRequest {
   coordinatorId: string;
@@ -11,9 +14,10 @@ interface EditCoordinatorInterfaceRequest {
   deactivation_date?: Date;
 }
 
-interface EditCoordinatorInterfaceResponse {
-  coordinator: Coordinator;
-}
+type EditCoordinatorInterfaceResponse = Either<
+  ResourceNotFoundError | NotAuthorizedError,
+  { coordinator: Coordinator }
+>;
 
 export class EditCoordinator {
   constructor(private coordinatorRepository: CoordinatorRepository) {}
@@ -28,10 +32,10 @@ export class EditCoordinator {
     const coordinator =
       await this.coordinatorRepository.findById(coordinatorId);
 
-    if (!coordinator) throw new Error("coordinator not found");
+    if (!coordinator) return left(new ResourceNotFoundError());
 
     if (programmerType !== "ADM" && programmerType !== "PROGRAMAÇÃO")
-      throw new Error("Not authorized");
+      return left(new NotAuthorizedError());
 
     coordinator.name = name ?? coordinator.name;
     coordinator.password = password ?? coordinator.password;
@@ -40,6 +44,6 @@ export class EditCoordinator {
 
     await this.coordinatorRepository.save(coordinator);
 
-    return { coordinator };
+    return right({ coordinator });
   }
 }

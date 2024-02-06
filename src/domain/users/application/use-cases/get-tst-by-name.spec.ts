@@ -26,13 +26,14 @@ describe("Get Tst By Tst", () => {
     await inMemoryTstRepository.create(newTst2);
     await inMemoryTstRepository.create(newTst3);
 
-    const { tst } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       name: "João",
     });
 
-    expect(tst).toHaveLength(2);
-    expect(tst).not.toContain(newTst3);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.tst).toHaveLength(2);
+    expect(result.value?.tst).not.toContain(newTst3);
   });
 
   it("should be able to get a empty list of vehicle names when there is no vehicle names actives of the informed date", async () => {
@@ -50,12 +51,13 @@ describe("Get Tst By Tst", () => {
     await inMemoryTstRepository.create(newTst2);
     await inMemoryTstRepository.create(newTst3);
 
-    const { tst } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       name: "Max",
     });
 
-    expect(tst).toHaveLength(0);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.tst).toHaveLength(0);
   });
 
   it("should be able paginate a list of tsts of a date", async () => {
@@ -67,11 +69,12 @@ describe("Get Tst By Tst", () => {
       );
     }
 
-    const { tst } = await sut.execute({
+    const result = await sut.execute({
       page: 2,
       name: "João da Pamonha?",
     });
 
-    expect(tst).toHaveLength(7);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.tst).toHaveLength(7);
   });
 });
