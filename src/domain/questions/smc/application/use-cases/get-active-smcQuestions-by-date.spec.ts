@@ -28,13 +28,14 @@ describe("Get SMCQuestion By SMCQuestion", () => {
     await inMemorySmcQuestionRepository.create(newSMCQuestion2);
     await inMemorySmcQuestionRepository.create(newSMCQuestion3);
 
-    const { smcquestion } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       date: new Date("2023-12-15"),
     });
 
-    expect(smcquestion).toHaveLength(2);
-    expect(smcquestion).not.toContain(newSMCQuestion3);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.smcquestion).toHaveLength(2);
+    expect(result.value?.smcquestion).not.toContain(newSMCQuestion3);
   });
 
   it("should be able to get a empty list of smc questions when there is no smc questions actives of the informed date", async () => {
@@ -54,12 +55,13 @@ describe("Get SMCQuestion By SMCQuestion", () => {
     await inMemorySmcQuestionRepository.create(newSMCQuestion2);
     await inMemorySmcQuestionRepository.create(newSMCQuestion3);
 
-    const { smcquestion } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       date: new Date("2023-12-05"),
     });
 
-    expect(smcquestion).toHaveLength(0);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.smcquestion).toHaveLength(0);
   });
 
   it("should be able paginate a list of smcquestions of a date", async () => {
@@ -72,11 +74,12 @@ describe("Get SMCQuestion By SMCQuestion", () => {
       );
     }
 
-    const { smcquestion } = await sut.execute({
+    const result = await sut.execute({
       page: 2,
       date: new Date("2023-12-15"),
     });
 
-    expect(smcquestion).toHaveLength(7);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.smcquestion).toHaveLength(7);
   });
 });

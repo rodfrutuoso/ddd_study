@@ -4,6 +4,8 @@ import { SmcQuestionRepository } from "../repositories/smcQuestion-repository";
 import { SmcResponseRepository } from "../repositories/smcResponse-repository";
 import { SMCQuestion } from "../../enterprise/entities/smcQuestion";
 import { SMCResponse } from "../../enterprise/entities/smcResponse";
+import { Either, left, right } from "@/core/either";
+import { ResourceNotFoundError } from "@/domain/errors/resource-not-found-error";
 
 interface SMCResponsesByQuestionsAvailable {
   question: string;
@@ -17,9 +19,10 @@ interface GetSMCResponseByShiftInterfaceRequest {
   page: number;
 }
 
-interface GetSMCResponseByShiftInterfaceResponse {
-  smcResponse: Array<SMCResponsesByQuestionsAvailable>;
-}
+type GetSMCResponseByShiftInterfaceResponse = Either<
+  ResourceNotFoundError,
+  { smcResponse: Array<SMCResponsesByQuestionsAvailable> }
+>;
 
 export class GetSMCResponseByShift {
   constructor(
@@ -34,7 +37,7 @@ export class GetSMCResponseByShift {
   }: GetSMCResponseByShiftInterfaceRequest): Promise<GetSMCResponseByShiftInterfaceResponse> {
     const shift = await this.shiftRepository.findById(shfitId);
 
-    if (!shift) throw new Error("Shift not found");
+    if (!shift) return left(new ResourceNotFoundError());
 
     const smcQuestions: SMCQuestion[] = [];
     let count = 1;
@@ -85,6 +88,6 @@ export class GetSMCResponseByShift {
       })
       .slice((page - 1) * 50, page * 50);
 
-    return { smcResponse };
+    return right({ smcResponse });
   }
 }

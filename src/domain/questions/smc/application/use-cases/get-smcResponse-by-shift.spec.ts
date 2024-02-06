@@ -60,12 +60,13 @@ describe("Get SMCResponse By SMCResponse", () => {
     await inMemorySmcResponseRepository.create(newSMCResponse1);
     await inMemorySmcResponseRepository.create(newSMCResponse2);
 
-    const { smcResponse } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       shfitId: shift1.id.toString(),
     });
 
-    expect(smcResponse).toHaveLength(3);
+    expect(result.isRight()).toBeTruthy();
+    if (result.isRight()) expect(result.value?.smcResponse).toHaveLength(3);
   });
 
   it("should be able to get a empty list of smc responses when there is no smc responses actives of the informed shift", async () => {
@@ -105,12 +106,13 @@ describe("Get SMCResponse By SMCResponse", () => {
     await inMemorySmcResponseRepository.create(newSMCResponse1);
     await inMemorySmcResponseRepository.create(newSMCResponse2);
 
-    const { smcResponse } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       shfitId: shift1.id.toString(),
     });
 
-    expect(smcResponse).toHaveLength(0);
+    expect(result.isRight()).toBeTruthy();
+    if (result.isRight()) expect(result.value?.smcResponse).toHaveLength(0);
   });
 
   it("should be able paginate a list of smcresponses of a date", async () => {
@@ -132,11 +134,12 @@ describe("Get SMCResponse By SMCResponse", () => {
       );
     }
 
-    const { smcResponse } = await sut.execute({
+    const result = await sut.execute({
       page: 2,
       shfitId: shift.id.toString(),
     });
 
-    expect(smcResponse).toHaveLength(7);
+    expect(result.isRight()).toBeTruthy();
+    if (result.isRight()) expect(result.value?.smcResponse).toHaveLength(7);
   });
 });

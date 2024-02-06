@@ -2,6 +2,7 @@
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { SMCResponse } from "../../enterprise/entities/smcResponse";
 import { SmcResponseRepository } from "../repositories/smcResponse-repository";
+import { Either, right } from "@/core/either";
 
 interface RegisterSmcResponseInterfaceRequest {
   questionId: string;
@@ -10,9 +11,10 @@ interface RegisterSmcResponseInterfaceRequest {
   cameraCode?: string;
 }
 
-interface RegisterSmcResponseInterfaceResponse {
-  smcResponse: SMCResponse;
-}
+type RegisterSmcResponseInterfaceResponse = Either<
+  null,
+  { smcResponse: SMCResponse }
+>;
 
 export class RegisterSmcResponse {
   constructor(private smcResponseRepository: SmcResponseRepository) {}
@@ -32,6 +34,6 @@ export class RegisterSmcResponse {
 
     await this.smcResponseRepository.create(smcResponse);
 
-    return { smcResponse };
+    return right({ smcResponse });
   }
 }

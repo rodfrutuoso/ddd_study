@@ -19,11 +19,12 @@ describe("Edit SMC Question By Id", () => {
 
     await inMemorySmcQuestionRepository.create(newSMCQuestion);
 
-    await sut.execute({
+    const result = await sut.execute({
       questionId: newSMCQuestion.id.toString(),
       programmerType: "PROGRAMAÇÃO",
     });
 
+    expect(result.isRight()).toBeTruthy();
     expect(await inMemorySmcQuestionRepository.items[0]).toMatchObject({
       id: newSMCQuestion.id,
       question: "FAZENDA-NUM-SEI-DAS-CONTAS",
@@ -40,11 +41,11 @@ describe("Edit SMC Question By Id", () => {
 
     await inMemorySmcQuestionRepository.create(newSMCQuestion);
 
-    expect(async () => {
-      return await sut.execute({
-        questionId: newSMCQuestion.id.toString(),
-        programmerType: "CAMPO",
-      });
-    }).rejects.toBeInstanceOf(Error);
+    const result = await sut.execute({
+      questionId: newSMCQuestion.id.toString(),
+      programmerType: "CAMPO",
+    });
+
+    expect(result.isLeft()).toBeTruthy();
   });
 });
