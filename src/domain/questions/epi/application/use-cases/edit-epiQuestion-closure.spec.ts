@@ -19,11 +19,12 @@ describe("Edit EPI Question By Id", () => {
 
     await inMemoryEpiQuestionRepository.create(newEPIQuestion);
 
-    await sut.execute({
+    const result = await sut.execute({
       questionId: newEPIQuestion.id.toString(),
       programmerType: "PROGRAMAÇÃO",
     });
 
+    expect(result.isRight()).toBeTruthy();
     expect(await inMemoryEpiQuestionRepository.items[0]).toMatchObject({
       id: newEPIQuestion.id,
       question: "FAZENDA-NUM-SEI-DAS-CONTAS",
@@ -40,11 +41,11 @@ describe("Edit EPI Question By Id", () => {
 
     await inMemoryEpiQuestionRepository.create(newEPIQuestion);
 
-    expect(async () => {
-      return await sut.execute({
-        questionId: newEPIQuestion.id.toString(),
-        programmerType: "CAMPO",
-      });
-    }).rejects.toBeInstanceOf(Error);
+    const result = await sut.execute({
+      questionId: newEPIQuestion.id.toString(),
+      programmerType: "CAMPO",
+    });
+
+    expect(result.isLeft()).toBeTruthy();
   });
 });

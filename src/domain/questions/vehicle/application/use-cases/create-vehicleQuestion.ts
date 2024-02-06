@@ -1,6 +1,6 @@
 /* eslint-disable no-useless-constructor */
-import { VehicleQuestion } from "../../../vehicle/enterprise/entities/vehicleQuestion";
-import { VehicleQuestionRepository } from "../../../vehicle/application/repositories/vehicleQuestion-repository";
+import { VehicleQuestion } from "../../enterprise/entities/vehicleQuestion";
+import { VehicleQuestionRepository } from "../repositories/vehicleQuestion-repository";
 import { Either, right } from "@/core/either";
 
 interface CreateVehicleQuestionInterfaceRequest {

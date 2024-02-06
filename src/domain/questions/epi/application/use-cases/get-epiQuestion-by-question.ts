@@ -1,15 +1,17 @@
 /* eslint-disable no-useless-constructor */
 import { EpiQuestionRepository } from "../repositories/epiQuestion-repository";
 import { EPIQuestion } from "../../enterprise/entities/epiQuestion";
+import { Either, right } from "@/core/either";
 
 interface GetEPIQuestionByQuestionInterfaceRequest {
   question: string;
   page: number;
 }
 
-interface GetEPIQuestionByQuestionInterfaceResponse {
-  epiquestion: Array<EPIQuestion>;
-}
+type GetEPIQuestionByQuestionInterfaceResponse = Either<
+  null,
+  { epiquestion: Array<EPIQuestion> }
+>;
 
 export class GetEPIQuestionByQuestion {
   constructor(private epiquestionRepository: EpiQuestionRepository) {}
@@ -24,6 +26,6 @@ export class GetEPIQuestionByQuestion {
       question
     );
 
-    return { epiquestion };
+    return right({ epiquestion });
   }
 }

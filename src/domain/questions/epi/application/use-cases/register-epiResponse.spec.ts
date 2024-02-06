@@ -13,13 +13,14 @@ describe("Register a Epiresponse-Shift", () => {
   });
 
   it("should create a EPI response of a question", async () => {
-    const { epiResponse } = await sut.execute({
+    const result = await sut.execute({
       questionId: "QuestionId",
       shiftId: "ShiftId",
       userId: "user id - 1",
     });
 
-    expect(epiResponse.id).toBeTruthy();
-    expect(epiResponse.userId).toBeInstanceOf(UniqueEntityId);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.epiResponse.id).toBeTruthy();
+    expect(result.value?.epiResponse.userId).toBeInstanceOf(UniqueEntityId);
   });
 });

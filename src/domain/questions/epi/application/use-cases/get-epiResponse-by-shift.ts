@@ -4,6 +4,8 @@ import { EpiQuestionRepository } from "../repositories/epiQuestion-repository";
 import { EpiResponseRepository } from "../repositories/epiResponse-repository";
 import { EPIQuestion } from "../../enterprise/entities/epiQuestion";
 import { EPIResponse } from "../../enterprise/entities/epiResponse";
+import { Either, left, right } from "@/core/either";
+import { ResourceNotFoundError } from "@/domain/errors/resource-not-found-error";
 
 interface EPIResponsesByQuestionsAvailable {
   question: string;
@@ -16,9 +18,10 @@ interface GetEPIResponseByShiftInterfaceRequest {
   page: number;
 }
 
-interface GetEPIResponseByShiftInterfaceResponse {
-  epiResponse: Array<EPIResponsesByQuestionsAvailable>;
-}
+type GetEPIResponseByShiftInterfaceResponse = Either<
+  ResourceNotFoundError,
+  { epiResponse: Array<EPIResponsesByQuestionsAvailable> }
+>;
 
 export class GetEPIResponseByShift {
   constructor(
@@ -33,7 +36,7 @@ export class GetEPIResponseByShift {
   }: GetEPIResponseByShiftInterfaceRequest): Promise<GetEPIResponseByShiftInterfaceResponse> {
     const shift = await this.shiftRepository.findById(shfitId);
 
-    if (!shift) throw new Error("Shift not found");
+    if (!shift) return left(new ResourceNotFoundError("Turno não encontrado"));
 
     const epiQuestions: EPIQuestion[] = [];
     let count = 1;
@@ -81,6 +84,6 @@ export class GetEPIResponseByShift {
       })
       .slice((page - 1) * 50, page * 50);
 
-    return { epiResponse };
+    return right({ epiResponse });
   }
 }

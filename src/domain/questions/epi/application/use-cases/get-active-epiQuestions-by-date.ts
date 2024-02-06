@@ -1,15 +1,17 @@
 /* eslint-disable no-useless-constructor */
 import { EpiQuestionRepository } from "../repositories/epiQuestion-repository";
 import { EPIQuestion } from "../../enterprise/entities/epiQuestion";
+import { Either, right } from "@/core/either";
 
 interface GetEPIQuestionByDateInterfaceRequest {
   date: Date;
   page: number;
 }
 
-interface GetEPIQuestionByDateInterfaceResponse {
-  epiquestion: Array<EPIQuestion>;
-}
+type GetEPIQuestionByDateInterfaceResponse = Either<
+  null,
+  { epiquestion: Array<EPIQuestion> }
+>;
 
 export class GetEPIQuestionByDate {
   constructor(private epiQuestionRepository: EpiQuestionRepository) {}
@@ -23,6 +25,6 @@ export class GetEPIQuestionByDate {
       date
     );
 
-    return { epiquestion };
+    return right({ epiquestion });
   }
 }

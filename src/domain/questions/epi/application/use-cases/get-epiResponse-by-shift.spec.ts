@@ -60,12 +60,13 @@ describe("Get EPIResponse By EPIResponse", () => {
     await inMemoryEpiResponseRepository.create(newEPIResponse1);
     await inMemoryEpiResponseRepository.create(newEPIResponse2);
 
-    const { epiResponse } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       shfitId: shift1.id.toString(),
     });
 
-    expect(epiResponse).toHaveLength(3);
+    expect(result.isRight()).toBeTruthy();
+    if (result.isRight()) expect(result.value?.epiResponse).toHaveLength(3);
   });
 
   it("should be able to get a empty list of epi responses when there is no epi responses actives of the informed shift", async () => {
@@ -104,12 +105,13 @@ describe("Get EPIResponse By EPIResponse", () => {
     await inMemoryEpiResponseRepository.create(newEPIResponse1);
     await inMemoryEpiResponseRepository.create(newEPIResponse2);
 
-    const { epiResponse } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       shfitId: shift1.id.toString(),
     });
 
-    expect(epiResponse).toHaveLength(0);
+    expect(result.isRight()).toBeTruthy();
+    if (result.isRight()) expect(result.value?.epiResponse).toHaveLength(0);
   });
 
   it("should be able paginate a list of epiresponses of a date", async () => {
@@ -130,11 +132,12 @@ describe("Get EPIResponse By EPIResponse", () => {
       );
     }
 
-    const { epiResponse } = await sut.execute({
+    const result = await sut.execute({
       page: 2,
       shfitId: shift.id.toString(),
     });
 
-    expect(epiResponse).toHaveLength(7);
+    expect(result.isRight()).toBeTruthy();
+    if (result.isRight()) expect(result.value?.epiResponse).toHaveLength(7);
   });
 });

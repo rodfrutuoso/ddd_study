@@ -2,6 +2,7 @@
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { EPIResponse } from "../../enterprise/entities/epiResponse";
 import { EpiResponseRepository } from "../repositories/epiResponse-repository";
+import { Either, right } from "@/core/either";
 
 interface RegisterEpiResponseInterfaceRequest {
   questionId: string;
@@ -9,9 +10,10 @@ interface RegisterEpiResponseInterfaceRequest {
   userId: string;
 }
 
-interface RegisterEpiResponseInterfaceResponse {
-  epiResponse: EPIResponse;
-}
+type RegisterEpiResponseInterfaceResponse = Either<
+  null,
+  { epiResponse: EPIResponse }
+>;
 
 export class RegisterEpiResponse {
   constructor(private epiResponseRepository: EpiResponseRepository) {}
@@ -29,6 +31,6 @@ export class RegisterEpiResponse {
 
     await this.epiResponseRepository.create(epiResponse);
 
-    return { epiResponse };
+    return right({ epiResponse });
   }
 }

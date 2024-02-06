@@ -26,13 +26,14 @@ describe("Get EPIQuestion By EPIQuestion", () => {
     await inMemoryEpiQuestionRepository.create(newEPIQuestion2);
     await inMemoryEpiQuestionRepository.create(newEPIQuestion3);
 
-    const { epiquestion } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       question: "Houve problema com a camera",
     });
 
-    expect(epiquestion).toHaveLength(2);
-    expect(epiquestion).not.toContain(newEPIQuestion3);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.epiquestion).toHaveLength(2);
+    expect(result.value?.epiquestion).not.toContain(newEPIQuestion3);
   });
 
   it("should be able to get a empty list of epi questions when there is no epi questions actives of the informed date", async () => {
@@ -50,12 +51,13 @@ describe("Get EPIQuestion By EPIQuestion", () => {
     await inMemoryEpiQuestionRepository.create(newEPIQuestion2);
     await inMemoryEpiQuestionRepository.create(newEPIQuestion3);
 
-    const { epiquestion } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       question: "Pergunta de teste",
     });
 
-    expect(epiquestion).toHaveLength(0);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.epiquestion).toHaveLength(0);
   });
 
   it("should be able paginate a list of epiquestions of a date", async () => {
@@ -67,11 +69,12 @@ describe("Get EPIQuestion By EPIQuestion", () => {
       );
     }
 
-    const { epiquestion } = await sut.execute({
+    const result = await sut.execute({
       page: 2,
       question: "Houve problema com a camera?",
     });
 
-    expect(epiquestion).toHaveLength(7);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.epiquestion).toHaveLength(7);
   });
 });
