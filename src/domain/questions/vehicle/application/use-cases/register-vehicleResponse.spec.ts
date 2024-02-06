@@ -13,13 +13,15 @@ describe("Register a Vehicleresponse-Shift", () => {
   });
 
   it("should create a VEHICLE response of a question", async () => {
-    const { vehicleResponse } = await sut.execute({
+    const result = await sut.execute({
       questionId: "QuestionId",
       shiftId: "ShiftId",
       vehicleId: "vehicle id - 1",
     });
 
-    expect(vehicleResponse.id).toBeTruthy();
-    expect(vehicleResponse.vehicleId).toBeInstanceOf(UniqueEntityId);
+    expect(result.value?.vehicleResponse.id).toBeTruthy();
+    expect(result.value?.vehicleResponse.vehicleId).toBeInstanceOf(
+      UniqueEntityId
+    );
   });
 });

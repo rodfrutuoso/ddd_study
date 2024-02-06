@@ -4,6 +4,8 @@ import { VehicleQuestionRepository } from "../repositories/vehicleQuestion-repos
 import { VehicleResponseRepository } from "../repositories/vehicleResponse-repository";
 import { VehicleQuestion } from "../../enterprise/entities/vehicleQuestion";
 import { VehicleResponse } from "../../enterprise/entities/vehicleResponse";
+import { Either, left, right } from "@/core/either";
+import { ResourceNotFoundError } from "@/domain/errors/resource-not-found-error";
 
 interface VEHICLEResponsesByQuestionsAvailable {
   question: string;
@@ -17,9 +19,10 @@ interface GetVEHICLEResponseByShiftInterfaceRequest {
   page: number;
 }
 
-interface GetVEHICLEResponseByShiftInterfaceResponse {
-  vehicleResponse: Array<VEHICLEResponsesByQuestionsAvailable>;
-}
+type GetVEHICLEResponseByShiftInterfaceResponse = Either<
+  ResourceNotFoundError,
+  { vehicleResponse: Array<VEHICLEResponsesByQuestionsAvailable> }
+>;
 
 export class GetVEHICLEResponseByShift {
   constructor(
@@ -34,7 +37,7 @@ export class GetVEHICLEResponseByShift {
   }: GetVEHICLEResponseByShiftInterfaceRequest): Promise<GetVEHICLEResponseByShiftInterfaceResponse> {
     const shift = await this.shiftRepository.findById(shfitId);
 
-    if (!shift) throw new Error("Shift not found");
+    if (!shift) return left(new ResourceNotFoundError("Turno não encontrado"));
 
     const vehicleQuestions: VehicleQuestion[] = [];
     let count = 1;
@@ -83,6 +86,6 @@ export class GetVEHICLEResponseByShift {
       })
       .slice((page - 1) * 50, page * 50);
 
-    return { vehicleResponse };
+    return right({ vehicleResponse });
   }
 }

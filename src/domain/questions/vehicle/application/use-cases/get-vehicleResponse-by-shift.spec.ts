@@ -66,12 +66,13 @@ describe("Get VEHICLEResponse By VEHICLEResponse", () => {
     await inMemoryVehicleResponseRepository.create(newVEHICLEResponse1);
     await inMemoryVehicleResponseRepository.create(newVEHICLEResponse2);
 
-    const { vehicleResponse } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       shfitId: shift1.id.toString(),
     });
 
-    expect(vehicleResponse).toHaveLength(3);
+    expect(result.isRight()).toBeTruthy();
+    if (result.isRight()) expect(result.value?.vehicleResponse).toHaveLength(3);
   });
 
   it("should be able to get a empty list of vehicle responses when there is no vehicle responses actives of the informed shift", async () => {
@@ -116,12 +117,13 @@ describe("Get VEHICLEResponse By VEHICLEResponse", () => {
     await inMemoryVehicleResponseRepository.create(newVEHICLEResponse1);
     await inMemoryVehicleResponseRepository.create(newVEHICLEResponse2);
 
-    const { vehicleResponse } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       shfitId: shift1.id.toString(),
     });
 
-    expect(vehicleResponse).toHaveLength(0);
+    expect(result.isRight()).toBeTruthy();
+    if (result.isRight()) expect(result.value?.vehicleResponse).toHaveLength(0);
   });
 
   it("should be able paginate a list of vehicleresponses of a date", async () => {
@@ -146,11 +148,12 @@ describe("Get VEHICLEResponse By VEHICLEResponse", () => {
       );
     }
 
-    const { vehicleResponse } = await sut.execute({
+    const result = await sut.execute({
       page: 2,
       shfitId: shift.id.toString(),
     });
 
-    expect(vehicleResponse).toHaveLength(7);
+    expect(result.isRight()).toBeTruthy();
+    if (result.isRight()) expect(result.value?.vehicleResponse).toHaveLength(7);
   });
 });

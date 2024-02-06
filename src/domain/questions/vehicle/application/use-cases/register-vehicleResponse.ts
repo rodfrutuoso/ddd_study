@@ -2,6 +2,7 @@
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { VehicleResponse } from "../../enterprise/entities/vehicleResponse";
 import { VehicleResponseRepository } from "../repositories/vehicleResponse-repository";
+import { Either, right } from "@/core/either";
 
 interface RegisterVehicleResponseInterfaceRequest {
   questionId: string;
@@ -9,9 +10,10 @@ interface RegisterVehicleResponseInterfaceRequest {
   vehicleId?: string;
 }
 
-interface RegisterVehicleResponseInterfaceResponse {
-  vehicleResponse: VehicleResponse;
-}
+type RegisterVehicleResponseInterfaceResponse = Either<
+  null,
+  { vehicleResponse: VehicleResponse }
+>;
 
 export class RegisterVehicleResponse {
   constructor(private vehicleResponseRepository: VehicleResponseRepository) {}
@@ -29,6 +31,6 @@ export class RegisterVehicleResponse {
 
     await this.vehicleResponseRepository.create(vehicleResponse);
 
-    return { vehicleResponse };
+    return right({ vehicleResponse });
   }
 }

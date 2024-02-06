@@ -26,13 +26,14 @@ describe("Get VEHICLEQuestion By VEHICLEQuestion", () => {
     await inMemoryVehicleQuestionRepository.create(newVEHICLEQuestion2);
     await inMemoryVehicleQuestionRepository.create(newVEHICLEQuestion3);
 
-    const { vehiclequestion } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       question: "Houve problema com a camera",
     });
 
-    expect(vehiclequestion).toHaveLength(2);
-    expect(vehiclequestion).not.toContain(newVEHICLEQuestion3);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.vehiclequestion).toHaveLength(2);
+    expect(result.value?.vehiclequestion).not.toContain(newVEHICLEQuestion3);
   });
 
   it("should be able to get a empty list of vehicle questions when there is no vehicle questions actives of the informed date", async () => {
@@ -50,12 +51,13 @@ describe("Get VEHICLEQuestion By VEHICLEQuestion", () => {
     await inMemoryVehicleQuestionRepository.create(newVEHICLEQuestion2);
     await inMemoryVehicleQuestionRepository.create(newVEHICLEQuestion3);
 
-    const { vehiclequestion } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       question: "Pergunta de teste",
     });
 
-    expect(vehiclequestion).toHaveLength(0);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.vehiclequestion).toHaveLength(0);
   });
 
   it("should be able paginate a list of vehiclequestions of a date", async () => {
@@ -67,11 +69,12 @@ describe("Get VEHICLEQuestion By VEHICLEQuestion", () => {
       );
     }
 
-    const { vehiclequestion } = await sut.execute({
+    const result = await sut.execute({
       page: 2,
       question: "Houve problema com a camera?",
     });
 
-    expect(vehiclequestion).toHaveLength(7);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.vehiclequestion).toHaveLength(7);
   });
 });

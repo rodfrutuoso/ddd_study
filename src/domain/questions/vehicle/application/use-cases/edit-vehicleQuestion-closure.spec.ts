@@ -19,11 +19,12 @@ describe("Edit VEHICLE Question By Id", () => {
 
     await inMemoryVehicleQuestionRepository.create(newVEHICLEQuestion);
 
-    await sut.execute({
+    const result = await sut.execute({
       questionId: newVEHICLEQuestion.id.toString(),
       programmerType: "PROGRAMAÇÃO",
     });
 
+    expect(result.isRight()).toBeTruthy();
     expect(await inMemoryVehicleQuestionRepository.items[0]).toMatchObject({
       id: newVEHICLEQuestion.id,
       question: "FAZENDA-NUM-SEI-DAS-CONTAS",
@@ -40,11 +41,11 @@ describe("Edit VEHICLE Question By Id", () => {
 
     await inMemoryVehicleQuestionRepository.create(newVEHICLEQuestion);
 
-    expect(async () => {
-      return await sut.execute({
-        questionId: newVEHICLEQuestion.id.toString(),
-        programmerType: "CAMPO",
-      });
-    }).rejects.toBeInstanceOf(Error);
+    const result = await sut.execute({
+      questionId: newVEHICLEQuestion.id.toString(),
+      programmerType: "CAMPO",
+    });
+
+    expect(result.isLeft()).toBeTruthy();
   });
 });
