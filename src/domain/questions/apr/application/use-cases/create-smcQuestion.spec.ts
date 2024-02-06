@@ -12,12 +12,13 @@ describe("Register a SmcQuestion-Shift", () => {
   });
 
   it("should create a SMC Question", async () => {
-    const { smcQuestion } = await sut.execute({
+    const result = await sut.execute({
       question: "A câmera está funcionando corretamente?",
     });
 
-    expect(smcQuestion.id).toBeTruthy();
-    expect(smcQuestion.question).toEqual(
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.smcQuestion.id).toBeTruthy();
+    expect(result.value?.smcQuestion.question).toEqual(
       "A câmera está funcionando corretamente?"
     );
   });

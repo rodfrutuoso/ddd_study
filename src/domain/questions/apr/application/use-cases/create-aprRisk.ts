@@ -1,4 +1,5 @@
 /* eslint-disable no-useless-constructor */
+import { Either, right } from "@/core/either";
 import { APRRisk } from "../../enterprise/entities/aprRisk";
 import { AprRiskRepository } from "../repositories/aprRisk-repository";
 
@@ -7,9 +8,7 @@ interface CreateAprRiskInterfaceRequest {
   category: string;
 }
 
-interface CreateAprRiskInterfaceResponse {
-  aprRisk: APRRisk;
-}
+type CreateAprRiskInterfaceResponse = Either<null, { aprRisk: APRRisk }>;
 
 export class CreateAprRisk {
   constructor(private aprRiskRepository: AprRiskRepository) {}
@@ -25,6 +24,6 @@ export class CreateAprRisk {
 
     await this.aprRiskRepository.create(aprRisk);
 
-    return { aprRisk };
+    return right({ aprRisk });
   }
 }

@@ -12,12 +12,13 @@ describe("Register a VehicleQuestion-Shift", () => {
   });
 
   it("should create a VEHICLE Question", async () => {
-    const { vehicleQuestion } = await sut.execute({
+    const result = await sut.execute({
       question: "A câmera está funcionando corretamente?",
     });
 
-    expect(vehicleQuestion.id).toBeTruthy();
-    expect(vehicleQuestion.question).toEqual(
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.vehicleQuestion.id).toBeTruthy();
+    expect(result.value?.vehicleQuestion.question).toEqual(
       "A câmera está funcionando corretamente?"
     );
   });

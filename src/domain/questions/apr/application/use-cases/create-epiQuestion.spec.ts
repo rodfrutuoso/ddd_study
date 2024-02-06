@@ -12,12 +12,13 @@ describe("Register a EpiQuestion-Shift", () => {
   });
 
   it("should create a EPI Question", async () => {
-    const { epiQuestion } = await sut.execute({
+    const result = await sut.execute({
       question: "A câmera está funcionando corretamente?",
     });
 
-    expect(epiQuestion.id).toBeTruthy();
-    expect(epiQuestion.question).toEqual(
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.epiQuestion.id).toBeTruthy();
+    expect(result.value?.epiQuestion.question).toEqual(
       "A câmera está funcionando corretamente?"
     );
   });

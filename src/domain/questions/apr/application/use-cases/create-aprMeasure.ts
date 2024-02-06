@@ -1,4 +1,5 @@
 /* eslint-disable no-useless-constructor */
+import { Either, right } from "@/core/either";
 import { APRMeasure } from "../../enterprise/entities/aprMeasure";
 import { AprMeasureRepository } from "../repositories/aprMeasure-repository";
 
@@ -7,9 +8,10 @@ interface CreateAprMeasureInterfaceRequest {
   category: string;
 }
 
-interface CreateAprMeasureInterfaceResponse {
-  aprMeasure: APRMeasure;
-}
+type CreateAprMeasureInterfaceResponse = Either<
+  null,
+  { aprMeasure: APRMeasure }
+>;
 
 export class CreateAprMeasure {
   constructor(private aprMeasureRepository: AprMeasureRepository) {}
@@ -25,6 +27,6 @@ export class CreateAprMeasure {
 
     await this.aprMeasureRepository.create(aprMeasure);
 
-    return { aprMeasure };
+    return right({ aprMeasure });
   }
 }

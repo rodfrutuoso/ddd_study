@@ -26,13 +26,14 @@ describe("Get AprRisk By AprRisk", () => {
     await inMemoryAprRiskRepository.create(newAprRisk2);
     await inMemoryAprRiskRepository.create(newAprRisk3);
 
-    const { aprrisk } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       category: "Houve problema com a camera",
     });
 
-    expect(aprrisk).toHaveLength(2);
-    expect(aprrisk).not.toContain(newAprRisk3);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.aprrisk).toHaveLength(2);
+    expect(result.value?.aprrisk).not.toContain(newAprRisk3);
   });
 
   it("should be able to get a empty list of apr risks when there is no apr categorys of the informed category", async () => {
@@ -50,12 +51,13 @@ describe("Get AprRisk By AprRisk", () => {
     await inMemoryAprRiskRepository.create(newAprRisk2);
     await inMemoryAprRiskRepository.create(newAprRisk3);
 
-    const { aprrisk } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       category: "Pergunta de teste",
     });
 
-    expect(aprrisk).toHaveLength(0);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.aprrisk).toHaveLength(0);
   });
 
   it("should be able paginate a list of aprrisks of a category", async () => {
@@ -67,11 +69,12 @@ describe("Get AprRisk By AprRisk", () => {
       );
     }
 
-    const { aprrisk } = await sut.execute({
+    const result = await sut.execute({
       page: 2,
       category: "Houve problema com a camera?",
     });
 
-    expect(aprrisk).toHaveLength(7);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.aprrisk).toHaveLength(7);
   });
 });

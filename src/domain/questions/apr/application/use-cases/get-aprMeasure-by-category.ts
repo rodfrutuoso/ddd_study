@@ -1,15 +1,17 @@
 /* eslint-disable no-useless-constructor */
 import { AprMeasureRepository } from "../repositories/aprMeasure-repository";
 import { APRMeasure } from "../../enterprise/entities/aprMeasure";
+import { Either, right } from "@/core/either";
 
 interface GetAprMeasureByCategoryInterfaceRequest {
   category: string;
   page: number;
 }
 
-interface GetAprMeasureByCategoryInterfaceResponse {
-  aprmeasure: Array<APRMeasure>;
-}
+type GetAprMeasureByCategoryInterfaceResponse = Either<
+  null,
+  { aprmeasure: Array<APRMeasure> }
+>;
 
 export class GetAprMeasureByCategory {
   constructor(private aprmeasureRepository: AprMeasureRepository) {}
@@ -25,6 +27,6 @@ export class GetAprMeasureByCategory {
       category
     );
 
-    return { aprmeasure };
+    return right({ aprmeasure });
   }
 }

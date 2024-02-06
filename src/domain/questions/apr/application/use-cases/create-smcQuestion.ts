@@ -1,14 +1,16 @@
 /* eslint-disable no-useless-constructor */
 import { SMCQuestion } from "../../../smc/enterprise/entities/smcQuestion";
 import { SmcQuestionRepository } from "../../../smc/application/repositories/smcQuestion-repository";
+import { Either, right } from "@/core/either";
 
 interface CreateSmcQuestionInterfaceRequest {
   question: string;
 }
 
-interface CreateSmcQuestionInterfaceResponse {
-  smcQuestion: SMCQuestion;
-}
+type CreateSmcQuestionInterfaceResponse = Either<
+  null,
+  { smcQuestion: SMCQuestion }
+>;
 
 export class CreateSmcQuestion {
   constructor(private smcQuestionRepository: SmcQuestionRepository) {}
@@ -22,6 +24,6 @@ export class CreateSmcQuestion {
 
     await this.smcQuestionRepository.create(smcQuestion);
 
-    return { smcQuestion };
+    return right({ smcQuestion });
   }
 }

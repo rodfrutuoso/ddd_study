@@ -1,15 +1,17 @@
 /* eslint-disable no-useless-constructor */
 import { AprRiskRepository } from "../repositories/aprRisk-repository";
 import { APRRisk } from "../../enterprise/entities/aprRisk";
+import { Either, right } from "@/core/either";
 
 interface GetAprRiskByRiskInterfaceRequest {
   question: string;
   page: number;
 }
 
-interface GetAprRiskByRiskInterfaceResponse {
-  aprrisk: Array<APRRisk>;
-}
+type GetAprRiskByRiskInterfaceResponse = Either<
+  null,
+  { aprrisk: Array<APRRisk> }
+>;
 
 export class GetAprRiskByRisk {
   constructor(private aprriskRepository: AprRiskRepository) {}
@@ -24,6 +26,6 @@ export class GetAprRiskByRisk {
       question
     );
 
-    return { aprrisk };
+    return right({ aprrisk });
   }
 }

@@ -1,15 +1,17 @@
 /* eslint-disable no-useless-constructor */
 import { AprRiskRepository } from "../repositories/aprRisk-repository";
 import { APRRisk } from "../../enterprise/entities/aprRisk";
+import { Either, right } from "@/core/either";
 
 interface GetAprRiskByDateInterfaceRequest {
   date: Date;
   page: number;
 }
 
-interface GetAprRiskByDateInterfaceResponse {
-  aprrisk: Array<APRRisk>;
-}
+type GetAprRiskByDateInterfaceResponse = Either<
+  null,
+  { aprrisk: Array<APRRisk> }
+>;
 
 export class GetAprRiskByDate {
   constructor(private aprRiskRepository: AprRiskRepository) {}
@@ -20,6 +22,6 @@ export class GetAprRiskByDate {
   }: GetAprRiskByDateInterfaceRequest): Promise<GetAprRiskByDateInterfaceResponse> {
     const aprrisk = await this.aprRiskRepository.findMany({ page }, date);
 
-    return { aprrisk };
+    return right({ aprrisk });
   }
 }

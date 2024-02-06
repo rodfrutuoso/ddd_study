@@ -2,6 +2,7 @@
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { APRReport } from "../../enterprise/entities/aprReport";
 import { AprReportRepository } from "../repositories/aprReport-repository";
+import { Either, right } from "@/core/either";
 
 interface RegisterAprReportInterfaceRequest {
   projectShiftId: string;
@@ -10,9 +11,10 @@ interface RegisterAprReportInterfaceRequest {
   activity: string;
 }
 
-interface RegisterAprReportInterfaceResponse {
-  aprReport: APRReport;
-}
+type RegisterAprReportInterfaceResponse = Either<
+  null,
+  { aprReport: APRReport }
+>;
 
 export class RegisterAprReport {
   constructor(private aprReportRepository: AprReportRepository) {}
@@ -37,6 +39,6 @@ export class RegisterAprReport {
 
     await this.aprReportRepository.create(aprReport);
 
-    return { aprReport };
+    return right({ aprReport });
   }
 }

@@ -1,15 +1,17 @@
 /* eslint-disable no-useless-constructor */
 import { AprMeasureRepository } from "../repositories/aprMeasure-repository";
 import { APRMeasure } from "../../enterprise/entities/aprMeasure";
+import { Either, right } from "@/core/either";
 
 interface GetAprMeasureByDateInterfaceRequest {
   date: Date;
   page: number;
 }
 
-interface GetAprMeasureByDateInterfaceResponse {
-  aprmeasure: Array<APRMeasure>;
-}
+type GetAprMeasureByDateInterfaceResponse = Either<
+  null,
+  { aprmeasure: Array<APRMeasure> }
+>;
 
 export class GetAprMeasureByDate {
   constructor(private aprMeasureRepository: AprMeasureRepository) {}
@@ -20,6 +22,6 @@ export class GetAprMeasureByDate {
   }: GetAprMeasureByDateInterfaceRequest): Promise<GetAprMeasureByDateInterfaceResponse> {
     const aprmeasure = await this.aprMeasureRepository.findMany({ page }, date);
 
-    return { aprmeasure };
+    return right({ aprmeasure });
   }
 }

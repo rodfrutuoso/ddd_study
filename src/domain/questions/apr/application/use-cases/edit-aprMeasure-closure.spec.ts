@@ -19,11 +19,12 @@ describe("Edit APR Response By Id", () => {
 
     await inMemoryAprMeasureRepository.create(newAprMeasure);
 
-    await sut.execute({
+    const result = await sut.execute({
       questionId: newAprMeasure.id.toString(),
       programmerType: "PROGRAMAÇÃO",
     });
 
+    expect(result.isRight()).toBeTruthy();
     expect(await inMemoryAprMeasureRepository.items[0]).toMatchObject({
       id: newAprMeasure.id,
       response: "FAZENDA-NUM-SEI-DAS-CONTAS",
@@ -40,11 +41,11 @@ describe("Edit APR Response By Id", () => {
 
     await inMemoryAprMeasureRepository.create(newAprMeasure);
 
-    expect(async () => {
-      return await sut.execute({
-        questionId: newAprMeasure.id.toString(),
-        programmerType: "CAMPO",
-      });
-    }).rejects.toBeInstanceOf(Error);
+    const result = await sut.execute({
+      questionId: newAprMeasure.id.toString(),
+      programmerType: "CAMPO",
+    });
+
+    expect(result.isLeft()).toBeTruthy();
   });
 });

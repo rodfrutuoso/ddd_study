@@ -12,13 +12,16 @@ describe("Register a AprRisk-Shift", () => {
   });
 
   it("should create a EPI Question", async () => {
-    const { aprRisk } = await sut.execute({
+    const result = await sut.execute({
       question: "Há risco de choque na rede?",
       category: "Risco Elétrico",
     });
 
-    expect(aprRisk.id).toBeTruthy();
-    expect(aprRisk.question).toEqual("Há risco de choque na rede?");
-    expect(aprRisk.category).toEqual("Risco Elétrico");
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.aprRisk.id).toBeTruthy();
+    expect(result.value?.aprRisk.question).toEqual(
+      "Há risco de choque na rede?"
+    );
+    expect(result.value?.aprRisk.category).toEqual("Risco Elétrico");
   });
 });

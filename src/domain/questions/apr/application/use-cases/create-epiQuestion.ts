@@ -1,14 +1,16 @@
 /* eslint-disable no-useless-constructor */
 import { EPIQuestion } from "../../../epi/enterprise/entities/epiQuestion";
 import { EpiQuestionRepository } from "../../../epi/application/repositories/epiQuestion-repository";
+import { Either, right } from "@/core/either";
 
 interface CreateEpiQuestionInterfaceRequest {
   question: string;
 }
 
-interface CreateEpiQuestionInterfaceResponse {
-  epiQuestion: EPIQuestion;
-}
+type CreateEpiQuestionInterfaceResponse = Either<
+  null,
+  { epiQuestion: EPIQuestion }
+>;
 
 export class CreateEpiQuestion {
   constructor(private epiQuestionRepository: EpiQuestionRepository) {}
@@ -22,6 +24,6 @@ export class CreateEpiQuestion {
 
     await this.epiQuestionRepository.create(epiQuestion);
 
-    return { epiQuestion };
+    return right({ epiQuestion });
   }
 }

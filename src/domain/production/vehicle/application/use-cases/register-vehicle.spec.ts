@@ -17,6 +17,7 @@ describe("Register a Vehicle-Shift", () => {
       type: "LEVE",
     });
 
+    expect(result.isRight()).toBeTruthy();
     expect(result.value?.vehicle.id).toBeTruthy();
     expect(result.value?.vehicle.plate).toEqual("RPA2J17");
     expect(result.value?.vehicle.type).toEqual("LEVE");

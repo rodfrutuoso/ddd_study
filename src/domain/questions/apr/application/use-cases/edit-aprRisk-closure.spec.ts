@@ -40,11 +40,11 @@ describe("Edit APR Risk By Id", () => {
 
     await inMemoryAprRiskRepository.create(newAprRisk);
 
-    expect(async () => {
-      return await sut.execute({
-        questionId: newAprRisk.id.toString(),
-        programmerType: "CAMPO",
-      });
-    }).rejects.toBeInstanceOf(Error);
+    const result = await sut.execute({
+      questionId: newAprRisk.id.toString(),
+      programmerType: "CAMPO",
+    });
+
+    expect(result.isLeft()).toBeTruthy();
   });
 });

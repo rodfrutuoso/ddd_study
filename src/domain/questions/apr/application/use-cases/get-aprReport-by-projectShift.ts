@@ -4,6 +4,8 @@ import { AprReportRepository } from "../repositories/aprReport-repository";
 import { ProjectShiftRepository } from "@/domain/production/projectShift/application/repositories/projectShift-repository";
 import { AprMeasureRepository } from "../repositories/aprMeasure-repository";
 import { AprRiskRepository } from "../repositories/aprRisk-repository";
+import { Either, left, right } from "@/core/either";
+import { ResourceNotFoundError } from "@/domain/errors/resource-not-found-error";
 
 interface RiskProp {
   title: string;
@@ -20,9 +22,10 @@ interface GetAprReportByProjectShiftInterfaceRequest {
   projectShiftId: string;
 }
 
-interface GetAprReportByProjectShiftInterfaceResponse {
-  aprReport: AprReportByCategory[];
-}
+type GetAprReportByProjectShiftInterfaceResponse = Either<
+  ResourceNotFoundError,
+  { aprReport: AprReportByCategory[] }
+>;
 
 export class GetAprReportByProjectShift {
   constructor(
@@ -39,13 +42,14 @@ export class GetAprReportByProjectShift {
     const projectShift =
       await this.projectShiftRepository.findById(projectShiftId);
 
-    if (!projectShift) throw new Error("ProjectShift not found");
+    if (!projectShift)
+      return left(new ResourceNotFoundError("projetoTurno não encontrado"));
 
     const shift = await this.shiftRepository.findById(
       projectShift.shiftId.toString()
     );
 
-    if (!shift) throw new Error("Shift not found");
+    if (!shift) return left(new ResourceNotFoundError("turno não encontrado"));
 
     const count = 1;
 
@@ -117,6 +121,6 @@ export class GetAprReportByProjectShift {
       })
     );
 
-    return { aprReport };
+    return right({ aprReport });
   }
 }

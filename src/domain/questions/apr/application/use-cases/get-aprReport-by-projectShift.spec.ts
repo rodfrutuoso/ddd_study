@@ -104,14 +104,17 @@ describe("Get AprReport By AprReport", () => {
 
     await inMemoryAprReportRepository.create(newAprReport1);
 
-    const { aprReport } = await sut.execute({
+    const result = await sut.execute({
       projectShiftId: projectShift.id.toString(),
     });
 
-    expect(aprReport).toHaveLength(2);
-    expect(aprReport[0].risks).toHaveLength(3);
-    expect(aprReport[1].measures).toHaveLength(1);
-    expect(aprReport).not.toContain(aprRisk4);
+    expect(result.isRight()).toBeTruthy();
+    if (result.isRight()) {
+      expect(result.value?.aprReport).toHaveLength(2);
+      expect(result.value?.aprReport[0].risks).toHaveLength(3);
+      expect(result.value?.aprReport[1].measures).toHaveLength(1);
+      expect(result.value?.aprReport).not.toContain(aprRisk4);
+    }
   });
 
   it("should be able to get a empty list of apr reports when there is no apr risks or measures in the informed projectShift date", async () => {
@@ -185,11 +188,12 @@ describe("Get AprReport By AprReport", () => {
 
     await inMemoryAprReportRepository.create(newAprReport1);
 
-    const { aprReport } = await sut.execute({
+    const result = await sut.execute({
       projectShiftId: projectShift.id.toString(),
     });
 
-    expect(aprReport).toHaveLength(0);
+    expect(result.isRight()).toBeTruthy();
+    if (result.isRight()) expect(result.value?.aprReport).toHaveLength(0);
   });
 
   it("should be able to throw a new error when there is no apr report from the informed projectShift", async () => {
@@ -263,10 +267,10 @@ describe("Get AprReport By AprReport", () => {
 
     await inMemoryAprReportRepository.create(newAprReport1);
 
-    expect(async () => {
-      return await sut.execute({
-        projectShiftId: "projectShift with no apr",
-      });
-    }).rejects.toBeInstanceOf(Error);
+    const result = await sut.execute({
+      projectShiftId: "projectShift with no apr",
+    });
+
+    expect(result.isLeft()).toBeTruthy();
   });
 });

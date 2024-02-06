@@ -26,13 +26,14 @@ describe("Get AprMeasure By caregory", () => {
     await inMemoryAprMeasureRepository.create(newAprMeasure2);
     await inMemoryAprMeasureRepository.create(newAprMeasure3);
 
-    const { aprmeasure } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       category: "Houve problema com a camera",
     });
 
-    expect(aprmeasure).toHaveLength(2);
-    expect(aprmeasure).not.toContain(newAprMeasure3);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.aprmeasure).toHaveLength(2);
+    expect(result.value?.aprmeasure).not.toContain(newAprMeasure3);
   });
 
   it("should be able to get a empty list of apr measures when there is no apr measures of the informed category", async () => {
@@ -50,12 +51,13 @@ describe("Get AprMeasure By caregory", () => {
     await inMemoryAprMeasureRepository.create(newAprMeasure2);
     await inMemoryAprMeasureRepository.create(newAprMeasure3);
 
-    const { aprmeasure } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       category: "Pergunta de teste",
     });
 
-    expect(aprmeasure).toHaveLength(0);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.aprmeasure).toHaveLength(0);
   });
 
   it("should be able paginate a list of apr measures of a category", async () => {
@@ -67,11 +69,12 @@ describe("Get AprMeasure By caregory", () => {
       );
     }
 
-    const { aprmeasure } = await sut.execute({
+    const result = await sut.execute({
       page: 2,
       category: "Houve problema com a camera?",
     });
 
-    expect(aprmeasure).toHaveLength(7);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.aprmeasure).toHaveLength(7);
   });
 });

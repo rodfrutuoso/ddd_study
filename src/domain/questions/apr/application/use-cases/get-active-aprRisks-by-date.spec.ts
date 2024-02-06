@@ -28,13 +28,14 @@ describe("Get AprRisk By AprRisk", () => {
     await inMemoryAprRiskRepository.create(newAprRisk2);
     await inMemoryAprRiskRepository.create(newAprRisk3);
 
-    const { aprrisk } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       date: new Date("2023-12-15"),
     });
 
-    expect(aprrisk).toHaveLength(2);
-    expect(aprrisk).not.toContain(newAprRisk3);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.aprrisk).toHaveLength(2);
+    expect(result.value?.aprrisk).not.toContain(newAprRisk3);
   });
 
   it("should be able to get a empty list of apr risks when there is no apr risk actives of the informed date", async () => {
@@ -54,12 +55,13 @@ describe("Get AprRisk By AprRisk", () => {
     await inMemoryAprRiskRepository.create(newAprRisk2);
     await inMemoryAprRiskRepository.create(newAprRisk3);
 
-    const { aprrisk } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       date: new Date("2023-12-05"),
     });
 
-    expect(aprrisk).toHaveLength(0);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.aprrisk).toHaveLength(0);
   });
 
   it("should be able paginate a list of apr risks of a date", async () => {
@@ -72,11 +74,12 @@ describe("Get AprRisk By AprRisk", () => {
       );
     }
 
-    const { aprrisk } = await sut.execute({
+    const result = await sut.execute({
       page: 2,
       date: new Date("2023-12-15"),
     });
 
-    expect(aprrisk).toHaveLength(7);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.aprrisk).toHaveLength(7);
   });
 });

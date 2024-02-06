@@ -13,15 +13,18 @@ describe("Register a AprReport-Shift", () => {
   });
 
   it("should create a EPI response of a question", async () => {
-    const { aprReport } = await sut.execute({
+    const result = await sut.execute({
       projectShiftId: "project shift id 1",
       risksId: ["riskId1", "riskId3", "riskId3"],
       measuresId: ["measureId1", "measureId3"],
       activity: "user id - 1",
     });
 
-    expect(aprReport.id).toBeTruthy();
-    expect(aprReport.activity).toEqual("user id - 1");
-    expect(aprReport.risksId).toBeInstanceOf(Array<UniqueEntityId>);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.aprReport.id).toBeTruthy();
+    expect(result.value?.aprReport.activity).toEqual("user id - 1");
+    expect(result.value?.aprReport.risksId).toBeInstanceOf(
+      Array<UniqueEntityId>
+    );
   });
 });
