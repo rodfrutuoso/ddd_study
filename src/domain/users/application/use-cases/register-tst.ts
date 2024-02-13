@@ -3,6 +3,10 @@
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { Tst } from "../../enterprise/entities/tst";
 import { TstRepository } from "../repositories/tst-repository";
+import { Either, left, right } from "@/core/either";
+import { EmailAlreadyRegistered } from "@/domain/errors/email-already-registered";
+import { EmailNotEcoeletrica } from "@/domain/errors/email-not-ecoeletrica";
+import { CpfAlreadyRegistered } from "@/domain/errors/cpf-already-registered";
 
 interface RegisterTstInterfaceRequest {
   name: string;
@@ -13,9 +17,10 @@ interface RegisterTstInterfaceRequest {
   created_by: string;
 }
 
-interface RegisterTstInterfaceResponse {
-  tst: Tst;
-}
+type RegisterTstInterfaceResponse = Either<
+  EmailAlreadyRegistered | EmailNotEcoeletrica | CpfAlreadyRegistered,
+  { tst: Tst }
+>;
 
 export class RegisterTst {
   constructor(private tstRepository: TstRepository) {}
@@ -29,7 +34,7 @@ export class RegisterTst {
     created_by,
   }: RegisterTstInterfaceRequest): Promise<RegisterTstInterfaceResponse> {
     if (!email?.includes("@ecoeletrica.com.br"))
-      throw new Error("O email precisa ser do domínio da Ecoelétrica");
+      return left(new EmailNotEcoeletrica());
 
     const verifyEmail = await this.tstRepository.findMany({ page: 1 }, email);
     const verifyCpf = await this.tstRepository.findMany(
@@ -38,8 +43,8 @@ export class RegisterTst {
       cpf
     );
 
-    if (verifyEmail.length !== 0) throw new Error("E-mail já cadastrado");
-    if (verifyCpf.length !== 0) throw new Error("CPF já cadastrado");
+    if (verifyEmail.length !== 0) return left(new EmailAlreadyRegistered());
+    if (verifyCpf.length !== 0) return left(new CpfAlreadyRegistered());
 
     const tst = Tst.create({
       name,
@@ -52,6 +57,6 @@ export class RegisterTst {
 
     await this.tstRepository.create(tst);
 
-    return { tst };
+    return right({ tst });
   }
 }

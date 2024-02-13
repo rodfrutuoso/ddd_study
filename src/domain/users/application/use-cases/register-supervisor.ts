@@ -3,6 +3,10 @@
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { Supervisor } from "../../enterprise/entities/supervisor";
 import { SupervisorRepository } from "../repositories/supervisor-repository";
+import { Either, left, right } from "@/core/either";
+import { EmailAlreadyRegistered } from "@/domain/errors/email-already-registered";
+import { EmailNotEcoeletrica } from "@/domain/errors/email-not-ecoeletrica";
+import { CpfAlreadyRegistered } from "@/domain/errors/cpf-already-registered";
 
 interface RegisterSupervisorInterfaceRequest {
   name: string;
@@ -13,9 +17,10 @@ interface RegisterSupervisorInterfaceRequest {
   created_by: string;
 }
 
-interface RegisterSupervisorInterfaceResponse {
-  supervisor: Supervisor;
-}
+type RegisterSupervisorInterfaceResponse = Either<
+  EmailAlreadyRegistered | EmailNotEcoeletrica | CpfAlreadyRegistered,
+  { supervisor: Supervisor }
+>;
 
 export class RegisterSupervisor {
   constructor(private supervisorRepository: SupervisorRepository) {}
@@ -29,7 +34,7 @@ export class RegisterSupervisor {
     created_by,
   }: RegisterSupervisorInterfaceRequest): Promise<RegisterSupervisorInterfaceResponse> {
     if (!email?.includes("@ecoeletrica.com.br"))
-      throw new Error("O email precisa ser do domínio da Ecoelétrica");
+      return left(new EmailNotEcoeletrica());
 
     const verifyEmail = await this.supervisorRepository.findMany(
       { page: 1 },
@@ -41,8 +46,8 @@ export class RegisterSupervisor {
       cpf
     );
 
-    if (verifyEmail.length !== 0) throw new Error("E-mail já cadastrado");
-    if (verifyCpf.length !== 0) throw new Error("CPF já cadastrado");
+    if (verifyEmail.length !== 0) return left(new EmailAlreadyRegistered());
+    if (verifyCpf.length !== 0) return left(new CpfAlreadyRegistered());
 
     const supervisor = Supervisor.create({
       name,
@@ -55,6 +60,6 @@ export class RegisterSupervisor {
 
     await this.supervisorRepository.create(supervisor);
 
-    return { supervisor };
+    return right({ supervisor });
   }
 }

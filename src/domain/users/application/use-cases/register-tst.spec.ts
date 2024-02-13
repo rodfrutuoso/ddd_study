@@ -3,6 +3,9 @@ import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { RegisterTst } from "./register-tst";
 import { InMemoryTstRepository } from "test/repositories/in-memory-tst-repository";
 import { makeTst } from "test/factories/make-tst";
+import { EmailAlreadyRegistered } from "@/domain/errors/email-already-registered";
+import { CpfAlreadyRegistered } from "@/domain/errors/cpf-already-registered";
+import { EmailNotEcoeletrica } from "@/domain/errors/email-not-ecoeletrica";
 
 let inMemoryTstRepository: InMemoryTstRepository;
 let sut: RegisterTst; // system under test
@@ -14,7 +17,7 @@ describe("Register a Tst-Shift", () => {
   });
 
   it("should create a TST user", async () => {
-    const { tst } = await sut.execute({
+    const result = await sut.execute({
       name: "João da Pamonha",
       cpf: 12345678,
       email: "joaopamonha@ecoeletrica.com.br",
@@ -23,8 +26,11 @@ describe("Register a Tst-Shift", () => {
       created_by: "uuid-da-pessoa-que-criou",
     });
 
-    expect(tst.id).toBeTruthy();
-    expect(tst.created_by).toBeInstanceOf(UniqueEntityId);
+    expect(result.isRight()).toBeTruthy();
+    if (result.isRight()) {
+      expect(result.value?.tst.id).toBeTruthy();
+      expect(result.value?.tst.created_by).toBeInstanceOf(UniqueEntityId);
+    }
   });
 
   it("should not be able to create a tst with an unsed email", async () => {
@@ -32,16 +38,17 @@ describe("Register a Tst-Shift", () => {
 
     await inMemoryTstRepository.create(newTst);
 
-    expect(async () => {
-      return await sut.execute({
-        name: "João da Pamonha",
-        cpf: 12345678,
-        email: "joaopamonha@ecoeletrica.com.br",
-        password: "minhaSenha",
-        type: "tst",
-        created_by: "uuid-da-pessoa-que-criou",
-      });
-    }).rejects.toBeInstanceOf(Error);
+    const result = await sut.execute({
+      name: "João da Pamonha",
+      cpf: 12345678,
+      email: "joaopamonha@ecoeletrica.com.br",
+      password: "minhaSenha",
+      type: "tst",
+      created_by: "uuid-da-pessoa-que-criou",
+    });
+
+    expect(result.isLeft()).toBeTruthy();
+    expect(result.value).toBeInstanceOf(EmailAlreadyRegistered);
   });
 
   it("should not be able to create a tst with an unsed cpf", async () => {
@@ -49,28 +56,30 @@ describe("Register a Tst-Shift", () => {
 
     await inMemoryTstRepository.create(newTst);
 
-    expect(async () => {
-      return await sut.execute({
-        name: "João da Pamonha",
-        cpf: 12345678910,
-        email: "joaopamonha@ecoeletrica.com.br",
-        password: "minhaSenha",
-        type: "tst",
-        created_by: "uuid-da-pessoa-que-criou",
-      });
-    }).rejects.toBeInstanceOf(Error);
+    const result = await sut.execute({
+      name: "João da Pamonha",
+      cpf: 12345678910,
+      email: "joaopamonha@ecoeletrica.com.br",
+      password: "minhaSenha",
+      type: "tst",
+      created_by: "uuid-da-pessoa-que-criou",
+    });
+
+    expect(result.isLeft()).toBeTruthy();
+    expect(result.value).toBeInstanceOf(CpfAlreadyRegistered);
   });
 
   it("should not be able to create a tst with an email that is not from ecoeletrica.com.br", async () => {
-    expect(async () => {
-      return await sut.execute({
-        name: "João da Pamonha",
-        cpf: 12345678910,
-        email: "joaopamonha@gmail.com.br",
-        password: "minhaSenha",
-        type: "tst",
-        created_by: "uuid-da-pessoa-que-criou",
-      });
-    }).rejects.toBeInstanceOf(Error);
+    const result = await sut.execute({
+      name: "João da Pamonha",
+      cpf: 12345678910,
+      email: "joaopamonha@gmail.com.br",
+      password: "minhaSenha",
+      type: "tst",
+      created_by: "uuid-da-pessoa-que-criou",
+    });
+
+    expect(result.value).toBeInstanceOf(EmailNotEcoeletrica);
+    expect(result.isLeft()).toBeTruthy();
   });
 });

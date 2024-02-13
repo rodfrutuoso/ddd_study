@@ -3,6 +3,10 @@
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { Request } from "../../enterprise/entities/request";
 import { RequestRepository } from "../repositories/request-repository";
+import { Either, left, right } from "@/core/either";
+import { EmailAlreadyRegistered } from "@/domain/errors/email-already-registered";
+import { EmailNotEcoeletrica } from "@/domain/errors/email-not-ecoeletrica";
+import { CpfAlreadyRegistered } from "@/domain/errors/cpf-already-registered";
 
 interface RegisterRequestInterfaceRequest {
   name: string;
@@ -14,9 +18,10 @@ interface RegisterRequestInterfaceRequest {
   teamId?: string;
 }
 
-interface RegisterRequestInterfaceResponse {
-  request: Request;
-}
+type RegisterRequestInterfaceResponse = Either<
+  EmailAlreadyRegistered | EmailNotEcoeletrica | CpfAlreadyRegistered,
+  { request: Request }
+>;
 
 export class RegisterRequest {
   constructor(private requestRepository: RequestRepository) {}
@@ -30,7 +35,7 @@ export class RegisterRequest {
     created_by,
   }: RegisterRequestInterfaceRequest): Promise<RegisterRequestInterfaceResponse> {
     if (!email?.includes("@ecoeletrica.com.br"))
-      throw new Error("O email precisa ser do domínio da Ecoelétrica");
+      return left(new EmailNotEcoeletrica());
 
     const verifyEmail = await this.requestRepository.findMany(
       { page: 1 },
@@ -42,8 +47,8 @@ export class RegisterRequest {
       cpf
     );
 
-    if (verifyEmail.length !== 0) throw new Error("E-mail já cadastrado");
-    if (verifyCpf.length !== 0) throw new Error("CPF já cadastrado");
+    if (verifyEmail.length !== 0) return left(new EmailAlreadyRegistered());
+    if (verifyCpf.length !== 0) return left(new CpfAlreadyRegistered());
 
     const request = Request.create({
       name,
@@ -56,6 +61,6 @@ export class RegisterRequest {
 
     await this.requestRepository.create(request);
 
-    return { request };
+    return right({ request });
   }
 }

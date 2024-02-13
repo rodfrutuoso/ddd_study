@@ -3,6 +3,10 @@
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { TeamLeader } from "../../enterprise/entities/teamLeader";
 import { TeamLeaderRepository } from "../repositories/teamLeader-repository";
+import { Either, left, right } from "@/core/either";
+import { CpfAlreadyRegistered } from "@/domain/errors/cpf-already-registered";
+import { EmailNotEcoeletrica } from "@/domain/errors/email-not-ecoeletrica";
+import { EmailAlreadyRegistered } from "@/domain/errors/email-already-registered";
 
 interface RegisterTeamLeaderInterfaceRequest {
   name: string;
@@ -14,9 +18,10 @@ interface RegisterTeamLeaderInterfaceRequest {
   teamId: string;
 }
 
-interface RegisterTeamLeaderInterfaceResponse {
-  teamleader: TeamLeader;
-}
+type RegisterTeamLeaderInterfaceResponse = Either<
+  EmailAlreadyRegistered | EmailNotEcoeletrica | CpfAlreadyRegistered,
+  { teamleader: TeamLeader }
+>;
 
 export class RegisterTeamLeader {
   constructor(private teamleaderRepository: TeamLeaderRepository) {}
@@ -31,7 +36,7 @@ export class RegisterTeamLeader {
     teamId,
   }: RegisterTeamLeaderInterfaceRequest): Promise<RegisterTeamLeaderInterfaceResponse> {
     if (!email?.includes("@ecoeletrica.com.br"))
-      throw new Error("O email precisa ser do domínio da Ecoelétrica");
+      return left(new EmailNotEcoeletrica());
 
     const verifyEmail = await this.teamleaderRepository.findMany(
       { page: 1 },
@@ -43,8 +48,8 @@ export class RegisterTeamLeader {
       cpf
     );
 
-    if (verifyEmail.length !== 0) throw new Error("E-mail já cadastrado");
-    if (verifyCpf.length !== 0) throw new Error("CPF já cadastrado");
+    if (verifyEmail.length !== 0) return left(new EmailAlreadyRegistered());
+    if (verifyCpf.length !== 0) return left(new CpfAlreadyRegistered());
 
     const teamleader = TeamLeader.create({
       name,
@@ -58,6 +63,6 @@ export class RegisterTeamLeader {
 
     await this.teamleaderRepository.create(teamleader);
 
-    return { teamleader };
+    return right({ teamleader });
   }
 }
