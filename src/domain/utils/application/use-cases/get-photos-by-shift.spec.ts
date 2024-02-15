@@ -27,13 +27,14 @@ describe("Get Photo By shift", () => {
     await inMemoryShitRepository.create(newPhoto2);
     await inMemoryShitRepository.create(newPhoto3);
 
-    const { photos } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       shiftId: "shift1",
     });
 
-    expect(photos).toHaveLength(2);
-    expect(photos).not.toContain(newPhoto2);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.photos).toHaveLength(2);
+    expect(result.value?.photos).not.toContain(newPhoto2);
   });
 
   it("should be able to get a empty list of photos when there is no shifts with the informed shiftId ", async () => {
@@ -45,12 +46,13 @@ describe("Get Photo By shift", () => {
     await inMemoryShitRepository.create(newPhoto2);
     await inMemoryShitRepository.create(newPhoto3);
 
-    const { photos } = await sut.execute({
+    const result = await sut.execute({
       shiftId: "shift1",
       page: 1,
     });
 
-    expect(photos).toHaveLength(0);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.photos).toHaveLength(0);
   });
 
   it("should be able paginate a list of photos of a shift", async () => {
@@ -62,11 +64,12 @@ describe("Get Photo By shift", () => {
       );
     }
 
-    const { photos } = await sut.execute({
+    const result = await sut.execute({
       shiftId: "shift1",
       page: 2,
     });
 
-    expect(photos).toHaveLength(7);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.photos).toHaveLength(7);
   });
 });

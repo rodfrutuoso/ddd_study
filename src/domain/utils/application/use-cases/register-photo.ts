@@ -3,6 +3,7 @@
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { Photo } from "../../enterprise/entities/photo";
 import { PhotoRepository } from "../repositories/photo-repository";
+import { Either, right } from "@/core/either";
 
 interface RegisterPhotoInterfaceRequest {
   type?: string;
@@ -11,9 +12,7 @@ interface RegisterPhotoInterfaceRequest {
   linkDrive: string;
 }
 
-interface RegisterPhotoInterfaceResponse {
-  photo: Photo;
-}
+type RegisterPhotoInterfaceResponse = Either<null, { photo: Photo }>;
 
 export class RegisterPhoto {
   constructor(private photoRepository: PhotoRepository) {}
@@ -33,6 +32,6 @@ export class RegisterPhoto {
 
     await this.photoRepository.create(photo);
 
-    return { photo };
+    return right({ photo });
   }
 }

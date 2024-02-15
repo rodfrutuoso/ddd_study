@@ -12,15 +12,16 @@ describe("Register a Photo-Shift", () => {
   });
 
   it("should register a photo in a specifc shift", async () => {
-    const { photo } = await sut.execute({
+    const result = await sut.execute({
       shiftId: "shift test id",
       linkDrive: "https://drive.google.com/drive/file/1nuh321kh4u2g4ku21g",
     });
 
-    expect(photo.id).toBeTruthy();
-    expect(photo.linkDrive).toEqual(
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.photo.id).toBeTruthy();
+    expect(result.value?.photo.linkDrive).toEqual(
       "https://drive.google.com/drive/file/1nuh321kh4u2g4ku21g"
     );
-    expect(photo.shiftId.toString()).toEqual("shift test id");
+    expect(result.value?.photo.shiftId.toString()).toEqual("shift test id");
   });
 });

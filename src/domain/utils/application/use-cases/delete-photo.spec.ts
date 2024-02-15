@@ -18,11 +18,12 @@ describe("Delete Photo By Id", () => {
 
     await inMemoryPhotoRepository.create(newPhoto);
 
-    await sut.execute({
+    const result = await sut.execute({
       photoId: "abc-123-xyz",
       programmerType: "ADM",
     });
 
+    expect(result.isRight()).toBeTruthy();
     expect(await inMemoryPhotoRepository.findById("abc-123-xyz")).toBeNull();
     expect(await inMemoryPhotoRepository.items).toHaveLength(0);
   });
@@ -32,13 +33,12 @@ describe("Delete Photo By Id", () => {
 
     await inMemoryPhotoRepository.create(newPhoto);
 
-    expect(async () => {
-      return await sut.execute({
-        photoId: "abc-123-xyz",
-        programmerType: "CAMPO",
-      });
-    }).rejects.toBeInstanceOf(Error);
+    const result = await sut.execute({
+      photoId: "abc-123-xyz",
+      programmerType: "CAMPO",
+    });
 
+    expect(result.isLeft()).toBeTruthy();
     expect(await inMemoryPhotoRepository.findById("abc-123-xyz")).toBeTruthy();
     expect(await inMemoryPhotoRepository.items).toHaveLength(1);
   });

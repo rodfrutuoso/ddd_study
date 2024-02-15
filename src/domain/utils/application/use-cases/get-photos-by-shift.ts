@@ -1,15 +1,14 @@
 /* eslint-disable no-useless-constructor */
 import { PhotoRepository } from "../repositories/photo-repository";
 import { Photo } from "../../enterprise/entities/photo";
+import { Either, right } from "@/core/either";
 
 interface GetPhotoByShiftInterfaceRequest {
   shiftId: string;
   page: number;
 }
 
-interface GetPhotoByShiftInterfaceResponse {
-  photos: Array<Photo>;
-}
+type GetPhotoByShiftInterfaceResponse = Either<null, { photos: Array<Photo> }>;
 
 export class GetPhotoByShift {
   constructor(private photoRepository: PhotoRepository) {}
@@ -20,6 +19,6 @@ export class GetPhotoByShift {
   }: GetPhotoByShiftInterfaceRequest): Promise<GetPhotoByShiftInterfaceResponse> {
     const photos = await this.photoRepository.findMany({ page }, shiftId);
 
-    return { photos };
+    return right({ photos });
   }
 }

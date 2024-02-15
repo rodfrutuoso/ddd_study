@@ -1,13 +1,18 @@
 /* eslint-disable no-useless-constructor */
+import { Either, left, right } from "@/core/either";
 import { PhotoRepository } from "../repositories/photo-repository";
+import { ResourceNotFoundError } from "@/domain/errors/resource-not-found-error";
+import { NotAuthorizedError } from "@/domain/errors/not-authorized-error";
 
 interface DeletePhotoInterfaceRequest {
   photoId: string;
   programmerType: string;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface DeletePhotoInterfaceResponse {}
+type DeletePhotoInterfaceResponse = Either<
+  ResourceNotFoundError | NotAuthorizedError,
+  object
+>;
 
 export class DeletePhoto {
   constructor(private photoRepository: PhotoRepository) {}
@@ -18,13 +23,13 @@ export class DeletePhoto {
   }: DeletePhotoInterfaceRequest): Promise<DeletePhotoInterfaceResponse> {
     const photo = await this.photoRepository.findById(photoId);
 
-    if (!photo) throw new Error("Photo not found");
+    if (!photo) return left(new ResourceNotFoundError());
 
     if (programmerType !== "ADM" && programmerType !== "PROGRAMAÇÂO")
-      throw new Error("Not authorized");
+      return left(new NotAuthorizedError());
 
     await this.photoRepository.delete(photo);
 
-    return {};
+    return right({});
   }
 }
