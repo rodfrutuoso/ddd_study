@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
-import { Entity } from "@/core/entities/entity";
 import { Optinal } from "@/core/types/optional";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
+import { AggregateRoot } from "@/core/entities/aggregate-root";
 
 export interface ShiftProps {
   teamId: UniqueEntityId;
@@ -16,7 +16,7 @@ export interface ShiftProps {
   created_at: Date;
 }
 
-export class Shift extends Entity<ShiftProps> {
+export class Shift extends AggregateRoot<ShiftProps> {
   get teamId() {
     return this.props.teamId;
   }
