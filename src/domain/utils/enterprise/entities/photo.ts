@@ -3,20 +3,20 @@ import { Entity } from "@/core/entities/entity";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 
 export interface PhotoProps {
-  type?: string;
-  typeId?: UniqueEntityId;
+  // type?: string;
+  // typeId?: UniqueEntityId;
   shiftId: UniqueEntityId;
   linkDrive: string;
 }
 
 export class Photo extends Entity<PhotoProps> {
-  get type() {
-    return this.props.type;
-  }
+  // get type() {
+  //   return this.props.type;
+  // }
 
-  get typeId() {
-    return this.props.typeId;
-  }
+  // get typeId() {
+  //   return this.props.typeId;
+  // }
 
   get shiftId() {
     return this.props.shiftId;
