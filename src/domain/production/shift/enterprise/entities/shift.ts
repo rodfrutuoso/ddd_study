@@ -2,6 +2,7 @@
 import { Optinal } from "@/core/types/optional";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { AggregateRoot } from "@/core/entities/aggregate-root";
+import { Photo } from "@/domain/utils/enterprise/entities/photo";
 
 export interface ShiftProps {
   teamId: UniqueEntityId;
@@ -14,6 +15,7 @@ export interface ShiftProps {
   odometer_end: number;
   vehicle_id: UniqueEntityId;
   created_at: Date;
+  photos: Photo[];
 }
 
 export class Shift extends AggregateRoot<ShiftProps> {
@@ -69,10 +71,18 @@ export class Shift extends AggregateRoot<ShiftProps> {
     return this.props.created_at;
   }
 
-  static create(props: Optinal<ShiftProps, "created_at">, id?: UniqueEntityId) {
+  get photos() {
+    return this.props.photos;
+  }
+
+  static create(
+    props: Optinal<ShiftProps, "created_at" | "photos">,
+    id?: UniqueEntityId
+  ) {
     const shift = new Shift(
       {
         ...props,
+        photos: props.photos ?? [],
         created_at: new Date(),
       },
       id
