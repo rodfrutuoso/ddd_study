@@ -41,3 +41,8 @@ Há 4 acamadas Infraestrutura, Adaptadores de Interface, Casos de Uso e Entidade
 [X] Falta criar as entidades de casos do tecnico de segurança
 [X] Falta criar as entidades de casos das solicitações de cadastro
 [ ] Refatorar os casos de uso que precisam de programmerType e enviar o authorId no lugar // fica pra dps
+
+# Subdomínios
+- Core: o que dá dinheiro, não pode parar `compra, catalogo, pagamento`
+- Supporting: dá suporte para o core funcionar `estoque, listas`
+- Generic: necessários, mas não são tão importantes `notificações, promoções, chat`
